@@ -3,6 +3,7 @@ package com.devcamp.loggingsystem.config;
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * This class contains all applications configuration.
@@ -20,5 +21,15 @@ public class ApplicationBeanConfiguration {
     @Bean
     public ModelMapper modelMapper() {
         return new ModelMapper();
+    }
+
+    /**
+     * This method makes the BCryptPasswordEncoder bean.
+     *
+     * @return new instance of BCryptPasswordEncoder class
+     */
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
