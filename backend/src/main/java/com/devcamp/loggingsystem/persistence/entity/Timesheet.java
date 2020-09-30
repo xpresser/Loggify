@@ -7,6 +7,8 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
@@ -18,10 +20,13 @@ import java.util.Set;
 @NoArgsConstructor
 public class Timesheet extends BaseEntity {
 
-    @OneToMany
-    @JoinColumn(name = "row_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "timesheet")
     private Set<TimesheetRow> rows;
 
     @Column(name = "total_hours")
     private Double totalHours;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }
