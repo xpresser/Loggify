@@ -2,7 +2,7 @@ package com.devcamp.loggingsystem.enumeration.timesheet;
 
 import lombok.Data;
 
-public enum TimesheetStatusEnum {
+public enum TimesheetStatus {
     OPEN,
     SUBMITTED
 }

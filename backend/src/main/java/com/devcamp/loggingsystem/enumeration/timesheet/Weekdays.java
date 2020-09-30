@@ -1,6 +1,6 @@
 package com.devcamp.loggingsystem.enumeration.timesheet;
 
-public enum WeekdaysEnum {
+public enum Weekdays {
     MONDAY,
     TUESDAY,
     WEDNESDAY,

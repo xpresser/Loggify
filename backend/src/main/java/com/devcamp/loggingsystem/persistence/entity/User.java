@@ -1,6 +1,6 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
-import com.devcamp.loggingsystem.enumeration.user.UserPositionEnum;
+import com.devcamp.loggingsystem.enumeration.user.UserPosition;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -10,7 +10,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -46,9 +45,8 @@ public class User extends BaseEntity {
     private String password;
 
     @Enumerated(EnumType.STRING)
-    private UserPositionEnum userPosition;
+    private UserPosition userPosition;
 
-    @OneToMany
-    @JoinColumn(name = "timesheet_id", referencedColumnName = "id")
+    @OneToMany(mappedBy = "user")
     private Set<Timesheet> timesheets;
 }
