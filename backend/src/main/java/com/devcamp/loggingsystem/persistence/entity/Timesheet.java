@@ -1,20 +1,16 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
-import com.devcamp.loggingsystem.enumeration.timesheet.TimesheetStatusEnum;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.LocalDate;
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "timesheets")
@@ -23,19 +19,13 @@ import java.util.List;
 @NoArgsConstructor
 public class Timesheet extends BaseEntity {
 
-    @Column(name = "starting_date")
-    private LocalDate startingDate;
+    @OneToMany(mappedBy = "timesheet")
+    private Set<TimesheetRow> rows;
 
-    @Enumerated(EnumType.STRING)
-    private TimesheetStatusEnum status;
+    @Column(name = "total_hours")
+    private Double totalHours;
 
-    @ManyToMany
-    @JoinTable(name = "timesheet_projects",
-            joinColumns = @JoinColumn(
-                    name = "project_id", referencedColumnName = "id"
-            ),
-            inverseJoinColumns = @JoinColumn(
-                    name = "timesheet_id", referencedColumnName = "id"
-            ))
-    private List<Project> projects;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

@@ -1,10 +1,13 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
+import com.devcamp.loggingsystem.enumeration.timesheet.Tasks;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
 @Entity
@@ -13,5 +16,7 @@ import javax.persistence.Table;
 @Data
 @NoArgsConstructor
 public class Task extends BaseEntity {
-    //private Map<WeekdaysEnum, Integer> hours;
+
+    @Enumerated(EnumType.STRING)
+    private Tasks name;
 }

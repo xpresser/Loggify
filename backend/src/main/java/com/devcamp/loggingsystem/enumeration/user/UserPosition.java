@@ -1,8 +1,6 @@
 package com.devcamp.loggingsystem.enumeration.user;
 
-import lombok.Data;
-
-public enum UserPositionEnum {
+public enum UserPosition {
     DEVELOPER,
     TRAINEE
 }
