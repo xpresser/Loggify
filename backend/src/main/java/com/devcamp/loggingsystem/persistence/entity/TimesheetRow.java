@@ -7,15 +7,21 @@ import org.springframework.validation.annotation.Validated;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "timesheets")
+@Table(name = "timesheet_row")
 @Validated
 @Data
 @NoArgsConstructor
 public class TimesheetRow extends BaseEntity {
+
+    @ManyToOne
+    @JoinColumn(name = "timesheet_id", referencedColumnName = "id")
+    private Timesheet timesheet;
 
     @OneToOne
     @JoinColumn(name = "project_id", referencedColumnName = "id")
