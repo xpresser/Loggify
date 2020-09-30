@@ -1,6 +1,7 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
+import { login } from "../../store/slices/auth";
 import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
 import { LoginValidationSchema } from "../../validations/schemas/login";
 import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
@@ -12,7 +13,7 @@ const LoginPage = () => {
       <Card.Body>
         <Formik
           initialValues={{ username: "", password: "" }}
-          onSubmit={() => {
+          onSubmit={async (values) => {
             console.log("submitted");
           }}
           validationSchema={LoginValidationSchema}
