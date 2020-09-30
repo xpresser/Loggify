@@ -1,8 +1,12 @@
 package com.devcamp.loggingsystem.service.bean;
 
+import com.devcamp.loggingsystem.exception.ResourceNotFoundException;
 import com.devcamp.loggingsystem.persistence.entity.User;
 import com.devcamp.loggingsystem.persistence.repository.UserRepository;
 import com.devcamp.loggingsystem.service.AuthenticationService;
+import com.devcamp.loggingsystem.service.TokenService;
+import com.devcamp.loggingsystem.service.dto.login.LoginRequestDTO;
+import com.devcamp.loggingsystem.service.dto.login.LoginResponseDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserRequestDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -20,15 +24,19 @@ public class AuthenticationServiceBean implements AuthenticationService {
 
     private final UserRepository userRepository;
 
+    private final TokenService tokenService;
+
     private final ModelMapper modelMapper;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
     public AuthenticationServiceBean(UserRepository userRepository,
+                                     TokenService tokenService,
                                      ModelMapper modelMapper,
                                      BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.tokenService = tokenService;
         this.modelMapper = modelMapper;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
@@ -45,5 +53,26 @@ public class AuthenticationServiceBean implements AuthenticationService {
         log.info("Successfully registered user with id: {}", registeredUser.getId());
 
         return modelMapper.map(registeredUser, UserResponseDTO.class);
+    }
+
+    @Override
+    public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
+        User user = this.userRepository
+                .findByUsername(loginRequestDTO.getUsername())
+                .orElseThrow(() -> new ResourceNotFoundException("No existing username or password"));
+
+        if (!bCryptPasswordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
+            throw new ResourceNotFoundException("No existing username or password");
+        }
+
+        return createLoginResponseDTO(user);
+    }
+
+    private LoginResponseDTO createLoginResponseDTO(User user) {
+        LoginResponseDTO loginResponseDTO = new LoginResponseDTO();
+
+        loginResponseDTO.setToken(tokenService.generateToken(user));
+
+        return loginResponseDTO;
     }
 }

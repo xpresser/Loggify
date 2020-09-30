@@ -18,7 +18,7 @@ public class UserRequestDTO {
 
     @NonNull
     @Size(min = 4, max = 40)
-    private String fullname;
+    private String fullName;
 
     @NonNull
     @Size(min = 4, max = 40)
