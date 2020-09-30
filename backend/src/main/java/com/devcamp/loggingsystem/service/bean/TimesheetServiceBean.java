@@ -11,7 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * @author - Mikael Parsekyan
@@ -39,14 +43,20 @@ public class TimesheetServiceBean implements TimesheetService {
     }
 
     @Override
-    public Page<TimesheetFullDTO> getAll(int page, Integer pageSize) {
+    public Page<TimesheetFullDTO> getAll(int page, Integer pageSize, boolean sortedAsc) {
         if (pageSize == null || pageSize <= 0) {
             pageSize = DEFAULT_PAGE_SIZE;
         }
 
-        Page<Timesheet> timesheetsPage = this.timesheetRepository.findAll(PageRequest.of(page, pageSize));
+        Page<Timesheet> allTimesheets;
 
-        return timesheetsPage.map(room -> this.modelMapper.map(room, TimesheetFullDTO.class));
+        if (sortedAsc) {
+            allTimesheets = this.timesheetRepository.findAllByOrderByStartingDateAsc(PageRequest.of(page, pageSize));
+        } else {
+            allTimesheets = this.timesheetRepository.findAll(PageRequest.of(page, pageSize));
+        }
+
+        return allTimesheets.map(room -> this.modelMapper.map(room, TimesheetFullDTO.class));
 
     }
 

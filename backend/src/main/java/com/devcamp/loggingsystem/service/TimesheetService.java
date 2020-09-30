@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 public interface TimesheetService {
     TimesheetFullDTO createTimesheet(TimesheetDTO timesheetDTO);
 
-    Page<TimesheetFullDTO> getAll(int page, Integer pageSize);
+    Page<TimesheetFullDTO> getAll(int page, Integer pageSize, boolean sortedAsc);
 
     TimesheetFullDTO updateTimesheetById(Long meetingId, TimesheetDTO timesheetDTO) throws TimesheetNotFoundException;
 

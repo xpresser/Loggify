@@ -53,8 +53,9 @@ public class TimesheetController {
     @GetMapping
     public ResponseEntity<Page<TimesheetFullDTO>> getAllTimesheets(@RequestParam("page") int page,
                                                                    @RequestParam(value = "pageSize", required = false)
-                                                                           Integer pageSize) {
-        return new ResponseEntity<>(this.timesheetService.getAll(page, pageSize), HttpStatus.OK);
+                                                                           Integer pageSize,
+                                                                   @RequestParam(value = "sortedAsc", required = false) boolean sortedAsc) {
+        return new ResponseEntity<>(this.timesheetService.getAll(page, pageSize, sortedAsc), HttpStatus.OK);
     }
 
     @Operation(summary = "This request method update timesheet.")
