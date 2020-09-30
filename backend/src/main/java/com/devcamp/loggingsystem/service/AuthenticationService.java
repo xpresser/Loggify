@@ -1,5 +1,7 @@
 package com.devcamp.loggingsystem.service;
 
+import com.devcamp.loggingsystem.service.dto.login.LoginRequestDTO;
+import com.devcamp.loggingsystem.service.dto.login.LoginResponseDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserRequestDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
 
@@ -14,4 +16,11 @@ public interface AuthenticationService {
      * @return returns Users Response DTO
      */
     UserResponseDTO register(UserRequestDTO userRequestDTO);
+
+    /**
+     * Method for authorization and authentication in the system
+     * @param loginRequestDTO users request containing username and password
+     * @return returns Bearer JWToken
+     */
+    LoginResponseDTO login(LoginRequestDTO loginRequestDTO);
 }
