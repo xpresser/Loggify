@@ -1,9 +1,13 @@
 package com.devcamp.loggingsystem.controller;
 
 import com.devcamp.loggingsystem.service.AuthenticationService;
+import com.devcamp.loggingsystem.service.dto.login.LoginRequestDTO;
+import com.devcamp.loggingsystem.service.dto.login.LoginResponseDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserRequestDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
 /**
  * @author Metodi Vladimirov
@@ -39,5 +44,22 @@ public class AuthenticationController {
     @PostMapping(value = "/signup")
     public ResponseEntity<UserResponseDTO> create(@RequestBody UserRequestDTO userRequestDTO) {
         return new ResponseEntity<>(this.authenticationService.register(userRequestDTO), HttpStatus.CREATED);
+    }
+
+    @Operation(description = "Login in the system", tags = {"login"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Bearer Token",
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = LoginResponseDTO.class))}),
+            @ApiResponse(responseCode = "401", description = "Invalid user credentials",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ResponseStatusException.class))),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = ResponseStatusException.class)))
+    })
+    @PostMapping(value = "/signin")
+    public LoginResponseDTO login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        return this.authenticationService.login(loginRequestDTO);
     }
 }
