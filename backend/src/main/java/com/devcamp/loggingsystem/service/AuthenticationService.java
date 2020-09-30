@@ -8,5 +8,10 @@ import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
  */
 public interface AuthenticationService {
 
+    /**
+     * Creates and registers given user in the database
+     * @param userRequestDTO users request
+     * @return returns Users Response DTO
+     */
     UserResponseDTO register(UserRequestDTO userRequestDTO);
 }
