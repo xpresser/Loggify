@@ -65,6 +65,8 @@ public class AuthenticationServiceBean implements AuthenticationService {
             throw new ResourceNotFoundException("No existing username or password");
         }
 
+        log.info("Successfully logged user: {} in the system", user.getUsername());
+
         return createLoginResponseDTO(user);
     }
 

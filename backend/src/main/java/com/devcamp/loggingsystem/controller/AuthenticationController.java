@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import javax.validation.Valid;
+
 /**
  * @author Metodi Vladimirov
  */
@@ -42,7 +44,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @PostMapping(value = "/signup")
-    public ResponseEntity<UserResponseDTO> register(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         return new ResponseEntity<>(this.authenticationService.register(userRequestDTO), HttpStatus.CREATED);
     }
 

@@ -17,15 +17,9 @@ public class UserPrincipal {
     @Schema(name = "id", description = "Id of currently logged user")
     private Long id;
 
-    @Schema(name = "userRoles", description = "Full name of currently logged user")
-    private String fullName;
-
     @Schema(name = "username", description = "Username of currently logged user")
     private String username;
 
     @Schema(name = "email", description = "Email of currently logged user")
     private String email;
-
-    @Schema(name = "position", description = "Job position of currently logged user")
-    private UserPosition userPosition;
 }
