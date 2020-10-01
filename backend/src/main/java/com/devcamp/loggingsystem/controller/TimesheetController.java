@@ -4,6 +4,7 @@ import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
 import com.devcamp.loggingsystem.service.TimesheetService;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetDTO;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetFullDTO;
+import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowFullDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author - Mikael Parsekyan
@@ -80,6 +82,16 @@ public class TimesheetController {
     @DeleteMapping("/{id}")
     public ResponseEntity<TimesheetFullDTO> deleteTimesheet(@PathVariable @NotNull @Min(1) Long id) throws TimesheetNotFoundException {
         return new ResponseEntity<>(this.timesheetService.deleteTimesheetById(id), HttpStatus.OK);
+    }
+
+    @Operation(summary = "This request method delete timesheet.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "This method deletes timesheet."),
+            @ApiResponse(responseCode = "404", description = "Timesheet not found."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
+    @DeleteMapping("/{id}")
+    public ResponseEntity<List<TimeSheetRowFullDTO>> getTimesheetRows(@PathVariable @NotNull @Min(1) Long id) throws TimesheetNotFoundException {
+        return new ResponseEntity<>(this.timesheetService.getTimesheetRows(id), HttpStatus.OK);
     }
 
 }
