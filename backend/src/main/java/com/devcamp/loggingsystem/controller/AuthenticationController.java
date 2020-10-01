@@ -44,7 +44,7 @@ public class AuthenticationController {
             @ApiResponse(responseCode = "500", description = "Internal Server Error")
     })
     @PostMapping(value = "/signup")
-    public ResponseEntity<UserResponseDTO> register(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<UserResponseDTO> register(@RequestBody @Valid UserRequestDTO userRequestDTO) {
         return new ResponseEntity<>(this.authenticationService.register(userRequestDTO), HttpStatus.CREATED);
     }
 
