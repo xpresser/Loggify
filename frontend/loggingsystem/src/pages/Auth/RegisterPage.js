@@ -33,6 +33,11 @@ const RegisterPage = () => {
                   type="password"
                   label="Password"
                 />
+                <TextInputField
+                  name="passwordConfirm"
+                  type="password"
+                  label="Confirm Password"
+                />
                 <TextInputField name="email" label="Email" />
                 <TextInputField
                   name="userPostion"
