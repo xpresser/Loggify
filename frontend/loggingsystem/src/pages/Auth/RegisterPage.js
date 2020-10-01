@@ -1,34 +1,45 @@
 import React from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
-// import { login } from "../../store/slices/auth";
 import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
-import { LoginValidationSchema } from "../../validations/schemas/login";
+import { SignupValidationSchema } from "../../validations/schemas/register";
 import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <Card>
-      <AuthTitle>Login</AuthTitle>
+      <AuthTitle>Sign Up</AuthTitle>
       <Card.Body>
         <Formik
-          initialValues={{ username: "", password: "" }}
-          onSubmit={async (values) => {
+          initialValues={{
+            fullName: "",
+            username: "",
+            password: "",
+            email: "",
+            userPostion: "",
+          }}
+          onSubmit={() => {
             console.log("submitted");
           }}
-          validationSchema={LoginValidationSchema}
+          validationSchema={SignupValidationSchema}
         >
           {({ isValid }) => {
             return (
               <Form>
+                <TextInputField name="fullName" label="Full name" />
                 <TextInputField name="username" label="Username" />
                 <TextInputField
                   name="password"
                   type="password"
                   label="Password"
                 />
+                <TextInputField name="email" label="Email" />
+                <TextInputField
+                  name="userPostion"
+                  label="Position in company"
+                />
                 <Button disabled={!isValid} type="submit">
-                  Login
+                  Sign Up
                 </Button>
               </Form>
             );
@@ -39,4 +50,4 @@ const LoginPage = () => {
   );
 };
 
-export { LoginPage };
+export { RegisterPage };
