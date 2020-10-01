@@ -4,6 +4,7 @@ import { Formik, Form } from "formik";
 import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
 import { SignupValidationSchema } from "../../validations/schemas/register";
 import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
+import { SignupRedirect } from "../../components/generic/redirects/register/SignupRedirect";
 
 const RegisterPage = () => {
   return (
@@ -33,11 +34,17 @@ const RegisterPage = () => {
                   type="password"
                   label="Password"
                 />
+                <TextInputField
+                  name="passwordConfirm"
+                  type="password"
+                  label="Confirm Password"
+                />
                 <TextInputField name="email" label="Email" />
                 <TextInputField
                   name="userPostion"
                   label="Position in company"
                 />
+                <SignupRedirect />
                 <Button disabled={!isValid} type="submit">
                   Sign Up
                 </Button>
