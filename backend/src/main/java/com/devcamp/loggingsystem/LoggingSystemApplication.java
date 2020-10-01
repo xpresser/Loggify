@@ -10,10 +10,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author - Mikael Parsekyan
  */
 @SpringBootApplication
-public class LoggingsystemApplication {
+public class LoggingSystemApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(LoggingsystemApplication.class, args);
+        SpringApplication.run(LoggingSystemApplication.class, args);
     }
 
 }
