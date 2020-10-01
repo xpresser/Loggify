@@ -4,7 +4,7 @@ export const timesheets = {
   timesheets: [
     {
       id: 1,
-      week: faker.date.recent(),
+      week: "01/01/2001",
       status: "Open",
       user: "Test Testov",
       rows: [
@@ -37,7 +37,7 @@ export const timesheets = {
     },
     {
       id: 1,
-      week: faker.date.recent(),
+      week: "01/01/2020",
       status: "Submitted",
       user: "Test Testov",
       rows: [
