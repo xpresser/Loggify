@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,9 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class Timesheet extends BaseEntity {
+
+    @Column(name = "starting_date")
+    private LocalDate startingDate;
 
     @OneToMany(mappedBy = "timesheet")
     private Set<TimesheetRow> rows;
