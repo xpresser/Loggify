@@ -21,3 +21,17 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+Temp*
+RationalValues*
+compiler.xml
+encodings.xml
+misc.xml
+uiDesigner.xml
+vcs.xml
+workspace.xml
