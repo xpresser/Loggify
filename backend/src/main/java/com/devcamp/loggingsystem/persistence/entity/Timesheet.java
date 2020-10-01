@@ -1,9 +1,8 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
@@ -13,15 +12,18 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Table(name = "timesheets")
 @Validated
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class Timesheet extends BaseEntity {
+
+    @Column(name = "starting_date")
+    private LocalDate startingDate;
 
     @JsonBackReference
     @OneToMany(mappedBy = "timesheet",fetch = FetchType.EAGER)
@@ -33,5 +35,4 @@ public class Timesheet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
-
 }

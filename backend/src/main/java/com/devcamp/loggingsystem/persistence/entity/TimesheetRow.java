@@ -90,4 +90,3 @@ public class TimesheetRow extends BaseEntity {
     }
 
 }
-
