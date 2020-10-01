@@ -20,6 +20,10 @@ const AppBar = () => {
             Create timesheet
           </Nav.Link>
 
+          <Nav.Link eventKey="1" as={NavLink} to="/" exact>
+            Logout
+          </Nav.Link>
+
           <Nav.Link eventKey="1" as={NavLink} to="/login" exact>
             Login
           </Nav.Link>
