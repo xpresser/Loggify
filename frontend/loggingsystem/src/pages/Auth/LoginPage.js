@@ -32,6 +32,7 @@ const LoginPage = () => {
           {({ isValid }) => {
             return (
               <Form>
+                {error && <Alert variant="danger">{error?.message}</Alert>}
                 <TextInputField name="username" label="Username" />
                 <TextInputField
                   name="password"
@@ -39,7 +40,7 @@ const LoginPage = () => {
                   label="Password"
                 />
                 <LoginRedirect />
-                <Button disabled={!isValid} type="submit">
+                <Button disabled={!isValid || isLoading} type="submit">
                   Login
                 </Button>
               </Form>
