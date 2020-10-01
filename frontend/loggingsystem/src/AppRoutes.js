@@ -8,6 +8,8 @@ const AppRoutes = () => {
   return (
     <Switch>
       <Route path="/login" exact component={LoginPage} />
+      <Route path="/signup" exact component={RegisterPage} />
+      <Redirect to="/login" />
     </Switch>
   );
 };
