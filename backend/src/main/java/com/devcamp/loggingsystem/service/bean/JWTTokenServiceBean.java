@@ -1,6 +1,5 @@
 package com.devcamp.loggingsystem.service.bean;
 
-import com.devcamp.loggingsystem.enumeration.user.UserPosition;
 import com.devcamp.loggingsystem.persistence.entity.User;
 import com.devcamp.loggingsystem.security.UserPrincipal;
 import com.devcamp.loggingsystem.service.TokenService;
@@ -41,6 +40,7 @@ public class JWTTokenServiceBean implements TokenService {
         String token = Jwts.builder()
                 .claim("id", user.getId())
                 .claim("username", user.getUsername())
+                .claim("email", user.getEmail())
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
@@ -63,16 +63,11 @@ public class JWTTokenServiceBean implements TokenService {
 
         String username = body.getSubject();
 
-        String fullName = body.get("fullName", String.class);
-
         String email = body.get("email", String.class);
-
-        UserPosition userPosition = body.get("userPosition", UserPosition.class);
 
         Long id = body.get("id", Long.class);
 
-
-        return new UserPrincipal(id, fullName, username, email, userPosition);
+        return new UserPrincipal(id, username, email);
     }
 
     private boolean validateToken(String token) {
