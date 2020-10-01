@@ -1,0 +1,72 @@
+import faker from "faker";
+
+export const timesheets = {
+  timesheets: [
+    {
+      id: 1,
+      week: faker.date.recent(),
+      status: "Open",
+      user: "Test Testov",
+      rows: [
+        {
+          project: "Devcamp",
+          task: "Learning",
+          monday: 4,
+          tuesday: 4,
+          wednesday: 4,
+          thursday: 4,
+          friday: 4,
+          saturday: null,
+          sunday: null,
+          total: 20,
+        },
+        {
+          project: "Devcamp",
+          task: "Administrative",
+          monday: 4,
+          tuesday: 4,
+          wednesday: 4,
+          thursday: 4,
+          friday: 4,
+          saturday: null,
+          sunday: null,
+          total: 20,
+        },
+      ],
+      total: 40,
+    },
+    {
+      id: 1,
+      week: faker.date.recent(),
+      status: "Submitted",
+      user: "Test Testov",
+      rows: [
+        {
+          project: "Devcamp",
+          task: "Learning",
+          monday: 4,
+          tuesday: 4,
+          wednesday: 4,
+          thursday: 4,
+          friday: 4,
+          saturday: null,
+          sunday: null,
+          total: 20,
+        },
+        {
+          project: "Devcamp",
+          task: "Administrative",
+          monday: 4,
+          tuesday: 4,
+          wednesday: 4,
+          thursday: 4,
+          friday: 4,
+          saturday: null,
+          sunday: null,
+          total: 20,
+        },
+      ],
+      total: 40,
+    },
+  ],
+};
