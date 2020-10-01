@@ -2,10 +2,12 @@ package com.devcamp.loggingsystem.service.bean;
 
 import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
 import com.devcamp.loggingsystem.persistence.entity.Timesheet;
+import com.devcamp.loggingsystem.persistence.entity.TimesheetRow;
 import com.devcamp.loggingsystem.persistence.repository.TimesheetRepository;
 import com.devcamp.loggingsystem.service.TimesheetService;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetDTO;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetFullDTO;
+import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowFullDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -13,7 +15,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -79,15 +83,30 @@ public class TimesheetServiceBean implements TimesheetService {
 
     @Override
     public TimesheetFullDTO deleteTimesheetById(Long meetingId) throws TimesheetNotFoundException {
-        Optional<Timesheet> meeting = this.timesheetRepository.findById(meetingId);
+        Optional<Timesheet> timesheet = this.timesheetRepository.findById(meetingId);
 
-        if (meeting.isEmpty()) {
+        if (timesheet.isEmpty()) {
             throw new TimesheetNotFoundException();
         }
 
         this.timesheetRepository.deleteById(meetingId);
-        return this.modelMapper.map(meeting.get(), TimesheetFullDTO.class);
+        return this.modelMapper.map(timesheet.get(), TimesheetFullDTO.class);
 
+    }
+
+    @Override
+    public List<TimeSheetRowFullDTO> getTimesheetRows(Long timesheetId) {
+        Optional<Timesheet> timesheet = this.timesheetRepository.findById(timesheetId);
+
+        if (timesheet.isEmpty()) {
+            throw new TimesheetNotFoundException();
+        }
+
+        Set<TimesheetRow> rows = timesheet.get().getRows();
+
+        return rows.stream()
+                .map(timesheetRow -> this.modelMapper.map(timesheetRow, TimeSheetRowFullDTO.class))
+                .collect(Collectors.toList());
     }
 
     private TimesheetFullDTO getTimesheetById(Long timesheetId) throws TimesheetNotFoundException {
@@ -101,6 +120,5 @@ public class TimesheetServiceBean implements TimesheetService {
         oldTimesheet.setRows(newTimesheet.getRows());
         oldTimesheet.setTotalHours(newTimesheet.getTotalHours());
         oldTimesheet.setUser(newTimesheet.getUser());
-
     }
 }
