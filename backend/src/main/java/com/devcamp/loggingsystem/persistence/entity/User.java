@@ -41,7 +41,7 @@ public class User extends BaseEntity {
     private String email;
 
     @NonNull
-    @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+    @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
             message = "Password must be minimum 8 symbols, and must contain one uppercase symbol and one digit")
     @Column
     private String password;
