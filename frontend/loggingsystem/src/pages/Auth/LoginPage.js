@@ -5,6 +5,7 @@ import { Formik, Form } from "formik";
 import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
 import { LoginValidationSchema } from "../../validations/schemas/login";
 import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
+import { LoginRedirect } from "../../components/generic/redirects/login/LoginRedirect";
 
 const LoginPage = () => {
   return (
@@ -27,6 +28,7 @@ const LoginPage = () => {
                   type="password"
                   label="Password"
                 />
+                <LoginRedirect />
                 <Button disabled={!isValid} type="submit">
                   Login
                 </Button>
