@@ -5,6 +5,7 @@ import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowDTO;
 import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowFullDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -32,6 +33,7 @@ import javax.validation.constraints.NotBlank;
  */
 @RestController
 @RequestMapping("api/v1/timesheetrows")
+@PreAuthorize("hasRole('USER')")
 public class TimeSheetRowController {
 
     private final TimeSheetRowServiceBean timeSheetRowService;
