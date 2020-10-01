@@ -1,9 +1,10 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
 import com.devcamp.loggingsystem.enumeration.user.UserPosition;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
@@ -20,7 +21,8 @@ import java.util.Set;
 @Entity
 @Table(name = "users")
 @Validated
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
 

@@ -1,29 +1,30 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.time.LocalDate;
 import java.util.Set;
 
 @Entity
 @Table(name = "timesheets")
 @Validated
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 public class Timesheet extends BaseEntity {
 
-    @Column(name = "starting_date")
-    private LocalDate startingDate;
-
-    @OneToMany(mappedBy = "timesheet")
+    @JsonBackReference
+    @OneToMany(mappedBy = "timesheet",fetch = FetchType.EAGER)
     private Set<TimesheetRow> rows;
 
     @Column(name = "total_hours")
@@ -32,4 +33,5 @@ public class Timesheet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
+
 }
