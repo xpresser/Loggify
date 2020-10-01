@@ -32,7 +32,7 @@ import javax.validation.constraints.NotBlank;
  * @author Stanislav Ivanov
  */
 @RestController
-@RequestMapping("api/v1/timesheetrows")
+@RequestMapping("/v1/timesheetrows")
 @PreAuthorize("hasRole('USER')")
 public class TimeSheetRowController {
 

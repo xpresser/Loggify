@@ -84,12 +84,12 @@ public class TimesheetController {
         return new ResponseEntity<>(this.timesheetService.deleteTimesheetById(id), HttpStatus.OK);
     }
 
-    @Operation(summary = "This request method delete timesheet.")
+    @Operation(summary = "This request method get timesheet rows.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "This method deletes timesheet."),
+            @ApiResponse(responseCode = "200", description = "This method get timesheet rows."),
             @ApiResponse(responseCode = "404", description = "Timesheet not found."),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
-    @DeleteMapping("/{id}")
+    @GetMapping("/{id}/rows")
     public ResponseEntity<List<TimeSheetRowFullDTO>> getTimesheetRows(@PathVariable @NotNull @Min(1) Long id) throws TimesheetNotFoundException {
         return new ResponseEntity<>(this.timesheetService.getTimesheetRows(id), HttpStatus.OK);
     }
