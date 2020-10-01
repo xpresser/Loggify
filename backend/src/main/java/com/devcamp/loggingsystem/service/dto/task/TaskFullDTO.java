@@ -1,6 +1,6 @@
 package com.devcamp.loggingsystem.service.dto.task;
 
-import com.devcamp.loggingsystem.enumeration.timesheet.Projects;
+import com.devcamp.loggingsystem.enumeration.timesheet.Tasks;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
@@ -14,5 +14,5 @@ public class TaskFullDTO {
     private Long id;
 
     @Schema(name = "taskName", description = "Task name")
-    private Projects name;
+    private String name;
 }

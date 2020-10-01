@@ -14,5 +14,5 @@ public class ProjectFullDTO {
     private Long id;
 
     @Schema(name = "projectName", description = "Project name")
-    private Projects name;
+    private String name;
 }
