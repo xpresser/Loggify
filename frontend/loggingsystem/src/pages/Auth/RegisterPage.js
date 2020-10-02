@@ -7,11 +7,13 @@ import { TextInputField } from "../../components/generic/TextInputField/TextInpu
 import { SignupRedirect } from "../../components/generic/redirects/register/SignupRedirect";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "src/store/slices/auth";
+import { useHistory } from "react-router-dom";
 
 const RegisterPage = () => {
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   return (
     <Card>
@@ -27,6 +29,7 @@ const RegisterPage = () => {
           }}
           onSubmit={(values) => {
             dispatch(register(values));
+            history.push("/");
           }}
           validationSchema={SignupValidationSchema}
         >
