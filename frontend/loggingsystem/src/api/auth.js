@@ -13,7 +13,7 @@ export const signIn = async ({ username, password }) => {
   return res.data;
 };
 
-export const signUp = async({ fullName, username, email, password, userPosition }) => {
+export const signUp = async ({ fullName, username, email, password, userPosition }) => {
   const res = await axios.post('/signup', {
     fullName,
     username,
@@ -23,4 +23,10 @@ export const signUp = async({ fullName, username, email, password, userPosition 
   });
 
   return res.data;
+};
+
+export const signOut = async () => {
+  const res = await axios.post('/signout');
+
+  return res;
 };
