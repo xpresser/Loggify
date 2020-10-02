@@ -54,13 +54,7 @@ export const login = ({ username, password }) => {
   };
 };
 
-export const register = ({
-  fullName,
-  username,
-  email,
-  password,
-  userPosition,
-}) => {
+export const register = ({ fullName, username, email, password }) => {
   return async (dispatch, getState) => {
     const isLoading = getState().auth.isLoading;
 
@@ -76,7 +70,6 @@ export const register = ({
         username,
         email,
         password,
-        userPosition,
       });
       dispatch(actions.authSuccess(user));
     } catch (err) {

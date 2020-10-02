@@ -25,7 +25,6 @@ const RegisterPage = () => {
             username: "",
             password: "",
             email: "",
-            userPostion: "",
           }}
           onSubmit={(values) => {
             dispatch(register(values));
@@ -50,10 +49,6 @@ const RegisterPage = () => {
                   label="Confirm Password"
                 />
                 <TextInputField name="email" label="Email" />
-                <TextInputField
-                  name="userPostion"
-                  label="Position in company"
-                />
                 <SignupRedirect />
                 <Button disabled={!isValid || isLoading} type="submit">
                   Sign Up
