@@ -1,10 +1,10 @@
 import React from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
-import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
-import { SignupValidationSchema } from "../../validations/schemas/register";
-import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
-import { SignupRedirect } from "../../components/generic/redirects/register/SignupRedirect";
+import { AuthTitle } from "src/components/generic/AuthTitle/AuthTitle.styled";
+import { SignupValidationSchema } from "src/validations/schemas/register";
+import { TextInputField } from "src/components/generic/TextInputField/TextInputField";
+import { SignupRedirect } from "src/components/generic/redirects/register/SignupRedirect";
 import { useDispatch, useSelector } from "react-redux";
 import { register } from "src/store/slices/auth";
 import { useHistory } from "react-router-dom";
