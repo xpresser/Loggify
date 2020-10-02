@@ -5,8 +5,13 @@ import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
 import { SignupValidationSchema } from "../../validations/schemas/register";
 import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
 import { SignupRedirect } from "../../components/generic/redirects/register/SignupRedirect";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "src/store/slices/auth";
 
 const RegisterPage = () => {
+  const error = useSelector((state) => state.auth.error);
+  const dispatch = useDispatch();
+
   return (
     <Card>
       <AuthTitle>Sign Up</AuthTitle>
@@ -20,13 +25,14 @@ const RegisterPage = () => {
             userPostion: "",
           }}
           onSubmit={() => {
-            console.log("submitted");
+            dispatch(register(values));
           }}
           validationSchema={SignupValidationSchema}
         >
           {({ isValid }) => {
             return (
               <Form>
+                {error && <Alert variant={"danger"}>{error}</Alert>}
                 <TextInputField name="fullName" label="Full name" />
                 <TextInputField name="username" label="Username" />
                 <TextInputField
