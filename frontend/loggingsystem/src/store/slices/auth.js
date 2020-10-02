@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signIn, signUp, signOut } from "src/api/auth";
+import { getMe } from "src/api/users";
 
 const initialState = {
   user: null,
@@ -81,6 +82,17 @@ export const register = ({
     } catch (err) {
       dispatch(actions.authFailure(err?.response?.data?.message));
     }
+  };
+};
+
+export const checkSession = () => {
+  return async (dispatch) => {
+    try {
+      const user = await getMe();
+      dispatch(actions.authSuccess(user));
+    } catch (err) {}
+
+    dispatch(actions.markSessionChecked());
   };
 };
 
