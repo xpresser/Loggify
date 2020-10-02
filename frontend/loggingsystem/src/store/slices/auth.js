@@ -37,12 +37,14 @@ export { authReducer };
 export const login = ({ username, password }) => {
   return async (dispatch, getState) => {
     const isLoading = getState().auth.isLoading;
+
     if (isLoading) {
       return;
     }
 
     try {
       dispatch(actions.authStart());
+      
       const user = await signIn({ username, password });
       dispatch(actions.authSuccess(user));
     } catch (err) {
