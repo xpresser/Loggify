@@ -7,7 +7,7 @@ export const signIn = async ({ username, password }) => {
   });
 
   const { token } = res.data;
-  axios.defaults.headers["Authorization"] = `${token}`;
+  httpClient.defaults.headers["Authorization"] = `${token}`;
   localStorage.setItem("token", token);
 
   return res.data;
