@@ -12,7 +12,7 @@ const AppBar = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
-          <Nav.Link eventKey="1" as={NavLink} to="/" exact>
+          <Nav.Link eventKey="1" as={NavLink} to="/timesheets" exact>
             All timesheets
           </Nav.Link>
 
