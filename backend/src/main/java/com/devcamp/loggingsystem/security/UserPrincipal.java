@@ -1,6 +1,5 @@
 package com.devcamp.loggingsystem.security;
 
-import com.devcamp.loggingsystem.enumeration.user.UserPosition;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Data;

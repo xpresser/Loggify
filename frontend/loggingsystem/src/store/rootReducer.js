@@ -3,6 +3,7 @@ import { authReducer } from "./slices/auth";
 
 export const appReducer = combineReducers({
   auth: authReducer,
+  timesheetRows: timesheetRowReducer,
 });
 
 export const rootReducer = (state, action) => {

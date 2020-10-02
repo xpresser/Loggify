@@ -5,8 +5,16 @@ import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
 import { SignupValidationSchema } from "../../validations/schemas/register";
 import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
 import { SignupRedirect } from "../../components/generic/redirects/register/SignupRedirect";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "src/store/slices/auth";
+import { useHistory } from "react-router-dom";
 
 const RegisterPage = () => {
+  const error = useSelector((state) => state.auth.error);
+  const isLoading = useSelector((state) => state.auth.isLoading);
+  const dispatch = useDispatch();
+  const history = useHistory();
+
   return (
     <Card>
       <AuthTitle>Sign Up</AuthTitle>
@@ -19,14 +27,16 @@ const RegisterPage = () => {
             email: "",
             userPostion: "",
           }}
-          onSubmit={() => {
-            console.log("submitted");
+          onSubmit={(values) => {
+            dispatch(register(values));
+            history.push("/");
           }}
           validationSchema={SignupValidationSchema}
         >
           {({ isValid }) => {
             return (
               <Form>
+                {error && <Alert variant={"danger"}>{error}</Alert>}
                 <TextInputField name="fullName" label="Full name" />
                 <TextInputField name="username" label="Username" />
                 <TextInputField
@@ -45,7 +55,7 @@ const RegisterPage = () => {
                   label="Position in company"
                 />
                 <SignupRedirect />
-                <Button disabled={!isValid} type="submit">
+                <Button disabled={!isValid || isLoading} type="submit">
                   Sign Up
                 </Button>
               </Form>

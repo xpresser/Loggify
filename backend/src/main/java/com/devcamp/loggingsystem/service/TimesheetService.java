@@ -1,5 +1,6 @@
 package com.devcamp.loggingsystem.service;
 
+import com.devcamp.loggingsystem.exception.ForbiddenTimesheetDeletion;
 import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetDTO;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetFullDTO;
@@ -20,7 +21,7 @@ public interface TimesheetService {
 
     TimesheetFullDTO updateTimesheetById(Long meetingId, TimesheetDTO timesheetDTO) throws TimesheetNotFoundException;
 
-    TimesheetFullDTO deleteTimesheetById(Long meetingId) throws TimesheetNotFoundException;
+    TimesheetFullDTO deleteTimesheetById(Long meetingId) throws TimesheetNotFoundException, ForbiddenTimesheetDeletion;
 
     List<TimeSheetRowFullDTO> getTimesheetRows(Long id);
 }

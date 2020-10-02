@@ -1,5 +1,7 @@
 package com.devcamp.loggingsystem.service.bean;
 
+import com.devcamp.loggingsystem.enumeration.timesheet.TimesheetStatus;
+import com.devcamp.loggingsystem.exception.ForbiddenTimesheetDeletion;
 import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
 import com.devcamp.loggingsystem.persistence.entity.Timesheet;
 import com.devcamp.loggingsystem.persistence.entity.TimesheetRow;
@@ -79,11 +81,15 @@ public class TimesheetServiceBean implements TimesheetService {
     }
 
     @Override
-    public TimesheetFullDTO deleteTimesheetById(Long meetingId) throws TimesheetNotFoundException {
+    public TimesheetFullDTO deleteTimesheetById(Long meetingId) throws TimesheetNotFoundException, ForbiddenTimesheetDeletion {
         Optional<Timesheet> timesheet = this.timesheetRepository.findById(meetingId);
 
         if (timesheet.isEmpty()) {
             throw new TimesheetNotFoundException();
+        }
+
+        if (timesheet.get().getStatus() == TimesheetStatus.SUBMITTED) {
+            throw new ForbiddenTimesheetDeletion();
         }
 
         this.timesheetRepository.deleteById(meetingId);

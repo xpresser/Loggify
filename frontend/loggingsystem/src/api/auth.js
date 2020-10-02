@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const signIn = async ({ username, password }) => {
-  const res = await axios.post("http://localhost:8080/v1/auth/signin", {
+  const res = await axios.post("/api/v1/auth/signin", {
     username,
     password,
   });
@@ -11,4 +11,30 @@ export const signIn = async ({ username, password }) => {
   localStorage.setItem("token", token);
 
   return res.data;
+};
+
+export const signUp = async ({
+  fullName,
+  username,
+  email,
+  password,
+  userPosition,
+}) => {
+  const res = await axios.post("/api/v1/auth/signup", {
+    fullName,
+    username,
+    email,
+    password,
+    userPosition,
+  });
+
+  console.log(fullName, username, email, password, userPosition);
+
+  return res.data;
+};
+
+export const signOut = async () => {
+  const res = await axios.post("/api/v1/auth/signout");
+
+  return res;
 };
