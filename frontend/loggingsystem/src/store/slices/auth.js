@@ -44,11 +44,42 @@ export const login = ({ username, password }) => {
 
     try {
       dispatch(actions.authStart());
-      
+
       const user = await signIn({ username, password });
       dispatch(actions.authSuccess(user));
     } catch (err) {
       dispatch(actions.authFailure(err));
+    }
+  };
+};
+
+export const register = ({
+  fullName,
+  username,
+  email,
+  password,
+  userPosition,
+}) => {
+  return async (dispatch, getState) => {
+    const isLoading = getState().auth.isLoading;
+
+    if (isLoading) {
+      return;
+    }
+
+    try {
+      dispatch(actions.authStart());
+
+      const user = await signUp({
+        fullName,
+        username,
+        email,
+        password,
+        userPosition,
+      });
+      dispatch(actions.authSuccess(user));
+    } catch (err) {
+      dispatch(actions.authFailure(err?.response?.data?.message));
     }
   };
 };
