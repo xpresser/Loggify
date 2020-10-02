@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const signIn = async ({ username, password }) => {
-  const res = await axios.post("http:/localhost:8080/api/v1/auth/signin", {
+  const res = await axios.post("/api/v1/auth/signin", {
     username,
     password,
   });
@@ -20,7 +20,7 @@ export const signUp = async ({
   password,
   userPosition,
 }) => {
-  const res = await axios.post("http:/localhost:8080/api/v1/auth/signup", {
+  const res = await axios.post("/api/v1/auth/signup", {
     fullName,
     username,
     email,
@@ -28,11 +28,13 @@ export const signUp = async ({
     userPosition,
   });
 
+  console.log(fullName, username, email, password, userPosition);
+
   return res.data;
 };
 
 export const signOut = async () => {
-  const res = await axios.post("http:/localhost:8080/api/v1/auth/signout");
+  const res = await axios.post("/api/v1/auth/signout");
 
   return res;
 };
