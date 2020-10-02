@@ -21,7 +21,11 @@ const Timesheet = ({ user, timesheet }) => {
         <StatusContainer timesheet={timesheet} />
       </CustomCol>
       <CustomCol sm="2" xs="2">
-        {timesheet.status === "Open" ? <EditButton /> : <ViewButton />}
+        {timesheet.status === "Open" ? (
+          <EditButton />
+        ) : (
+          <ViewButton timesheet={timesheet} />
+        )}
       </CustomCol>
       <CustomCol sm="2" xs="3">
         <DeleteButton user={user} timesheet={timesheet} />

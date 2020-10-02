@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -14,10 +15,12 @@ const Button = styled.button`
   padding: 0 1rem;
 `;
 
-const ViewButton = () => {
+const ViewButton = ({ timesheet }) => {
   return (
     <Container>
-      <Button>View</Button>
+      <Button>
+        <Link to={{ pathname: `/timesheet/${timesheet.id}` }}>View</Link>
+      </Button>
     </Container>
   );
 };
