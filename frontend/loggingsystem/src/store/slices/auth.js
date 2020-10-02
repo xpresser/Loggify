@@ -24,6 +24,11 @@ const { reducer: authReducer, actions } = createSlice({
       state.user = null;
       state.error = action.payload;
     },
+    logoutSuccess: (state, action) => {
+      state.user = null;
+      state.isLoading = false;
+      state.error = null;
+    },
   },
 });
 
