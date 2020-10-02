@@ -52,7 +52,7 @@ const RegisterPage = () => {
                   label="Position in company"
                 />
                 <SignupRedirect />
-                <Button disabled={!isValid || isLoding} type="submit">
+                <Button disabled={!isValid || isLoading} type="submit">
                   Sign Up
                 </Button>
               </Form>
