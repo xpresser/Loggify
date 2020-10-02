@@ -1,11 +1,16 @@
 package com.devcamp.loggingsystem.service.bean;
 
 import com.devcamp.loggingsystem.exception.TimeSheetRowNotFoundException;
+import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
+import com.devcamp.loggingsystem.persistence.entity.Timesheet;
 import com.devcamp.loggingsystem.persistence.entity.TimesheetRow;
 import com.devcamp.loggingsystem.persistence.repository.TimeSheetRowRepository;
 import com.devcamp.loggingsystem.service.TimeSheetRowService;
+import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetFullDTO;
 import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowDTO;
 import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowFullDTO;
+import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimesheetFullRowCollectionDTO;
+import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimesheetRowCollectionDTO;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.modelmapper.TypeMap;
@@ -13,6 +18,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Stanislav Ivanov
@@ -56,6 +64,21 @@ public class TimeSheetRowServiceBean implements TimeSheetRowService {
         TimesheetRow timesheetRow = modelMapper.map(timeSheetRowDTO, TimesheetRow.class);
         timeSheetRowRepository.save(timesheetRow);
         return modelMapper.map(timesheetRow, TimeSheetRowFullDTO.class);
+    }
+
+    @Override
+    public TimesheetFullRowCollectionDTO createTimeSheetRows(TimesheetRowCollectionDTO rowCollectionDTO) throws TimesheetNotFoundException {
+
+        List<TimeSheetRowDTO> rowsDTOs = rowCollectionDTO.getRows();
+
+        List<TimeSheetRowFullDTO> result = rowsDTOs.stream()
+                .map(this::createTimeSheetRow)
+                .collect(Collectors.toList());
+
+        TimesheetFullRowCollectionDTO fullRowCollectionDTO = new TimesheetFullRowCollectionDTO();
+        fullRowCollectionDTO.setRows(result);
+
+        return fullRowCollectionDTO;
     }
 
     @Override
