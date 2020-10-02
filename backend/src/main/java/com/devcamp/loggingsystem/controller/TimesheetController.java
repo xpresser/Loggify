@@ -1,5 +1,6 @@
 package com.devcamp.loggingsystem.controller;
 
+import com.devcamp.loggingsystem.exception.ForbiddenTimesheetDeletion;
 import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
 import com.devcamp.loggingsystem.service.TimesheetService;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetDTO;
@@ -13,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,7 +82,8 @@ public class TimesheetController {
             @ApiResponse(responseCode = "404", description = "Timesheet not found."),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @DeleteMapping("/{id}")
-    public ResponseEntity<TimesheetFullDTO> deleteTimesheet(@PathVariable @NotNull @Min(1) Long id) throws TimesheetNotFoundException {
+    public ResponseEntity<TimesheetFullDTO> deleteTimesheet(@PathVariable @NotNull @Min(1) Long id) throws TimesheetNotFoundException,
+            ForbiddenTimesheetDeletion {
         return new ResponseEntity<>(this.timesheetService.deleteTimesheetById(id), HttpStatus.OK);
     }
 
@@ -94,4 +97,8 @@ public class TimesheetController {
         return new ResponseEntity<>(this.timesheetService.getTimesheetRows(id), HttpStatus.OK);
     }
 
+    @ExceptionHandler(ForbiddenTimesheetDeletion.class)
+    public ResponseEntity<String> handleForbiddenTimesheetDeletion(ForbiddenTimesheetDeletion e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

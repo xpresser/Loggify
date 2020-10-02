@@ -1,5 +1,6 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
+import com.devcamp.loggingsystem.enumeration.timesheet.TimesheetStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,9 @@ public class Timesheet extends BaseEntity {
 
     @Column(name = "starting_date")
     private LocalDate startingDate;
+
+    @Column(name = "status")
+    private TimesheetStatus status;
 
     @JsonBackReference
     @OneToMany(mappedBy = "timesheet",fetch = FetchType.EAGER)
