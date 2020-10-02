@@ -11,7 +11,7 @@ const CustomCol = styled(Col)`
   border: 1px solid grey;
 `;
 
-const Timesheet = ({ timesheet }) => {
+const Timesheet = ({ user, timesheet }) => {
   return (
     <Row>
       <CustomCol sm="4" xs="4">
@@ -24,7 +24,7 @@ const Timesheet = ({ timesheet }) => {
         {timesheet.status === "Open" ? <EditButton /> : <ViewButton />}
       </CustomCol>
       <CustomCol sm="2" xs="3">
-        <DeleteButton timesheet={timesheet} />
+        <DeleteButton user={user} timesheet={timesheet} />
       </CustomCol>
     </Row>
   );

@@ -1,5 +1,3 @@
-import faker from "faker";
-
 export const timesheets = {
   timesheets: [
     {
@@ -36,7 +34,7 @@ export const timesheets = {
       total: 40,
     },
     {
-      id: 1,
+      id: 2,
       week: "01/01/2020",
       status: "Submitted",
       user: "Test Testov",

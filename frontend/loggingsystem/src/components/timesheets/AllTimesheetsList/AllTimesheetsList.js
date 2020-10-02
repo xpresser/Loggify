@@ -6,7 +6,7 @@ const AllTimesheetsList = ({ user }) => {
   return (
     <Container>
       {user.timesheets.timesheets.map((t) => {
-        return <Timesheet timesheet={t} />;
+        return <Timesheet user={user} timesheet={t} />;
       })}
     </Container>
   );
