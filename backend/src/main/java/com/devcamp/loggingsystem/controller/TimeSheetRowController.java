@@ -3,6 +3,8 @@ package com.devcamp.loggingsystem.controller;
 import com.devcamp.loggingsystem.service.bean.TimeSheetRowServiceBean;
 import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowDTO;
 import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimeSheetRowFullDTO;
+import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimesheetFullRowCollectionDTO;
+import com.devcamp.loggingsystem.service.dto.timesheetrowdto.TimesheetRowCollectionDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -32,7 +34,7 @@ import javax.validation.constraints.NotBlank;
  * @author Stanislav Ivanov
  */
 @RestController
-@RequestMapping("api/v1/timesheetrows")
+@RequestMapping("/v1/timesheetrows")
 @PreAuthorize("hasRole('USER')")
 public class TimeSheetRowController {
 
@@ -79,15 +81,15 @@ public class TimeSheetRowController {
         return ResponseEntity.ok(timeSheetRowService.updateTimeSheetRow(id, dto));
     }
 
-    @Operation(summary = "Create Time Sheet Row", description = "Creates new Time Sheet Row, " +
-            "check TimeSheetRow schema for constraints")
+    @Operation(summary = "Create Time Sheet Row collection", description = "Creates a collection of new timesheet rows")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Time Sheet Row created"),
             @ApiResponse(responseCode = "400", description = "Request body is invalid."),
             @ApiResponse(responseCode = "500", description = "Internal Server Error")})
     @PostMapping
-    public ResponseEntity<TimeSheetRowFullDTO> createTimesheetRow(@Valid @RequestBody TimeSheetRowDTO dto) {
-        return new ResponseEntity<>(timeSheetRowService.createTimeSheetRow(dto), HttpStatus.CREATED);
+    public ResponseEntity<TimesheetFullRowCollectionDTO> createTimesheetRowCollection(
+            @Valid @RequestBody TimesheetRowCollectionDTO rowCollectionDTO) {
+        return new ResponseEntity<>(timeSheetRowService.createTimeSheetRows(rowCollectionDTO), HttpStatus.CREATED);
     }
 
     @Operation(summary = "Delete Time Sheet Row by id",
