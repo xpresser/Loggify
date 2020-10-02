@@ -5,6 +5,7 @@ const initialState = {
   user: null,
   error: null,
   isLoading: null,
+  isSessionChecked: false,
 };
 
 const { reducer: authReducer, actions } = createSlice({
@@ -24,11 +25,10 @@ const { reducer: authReducer, actions } = createSlice({
       state.user = null;
       state.error = action.payload;
     },
-    logoutSuccess: (state, action) => {
-      state.user = null;
-      state.isLoading = false;
-      state.error = null;
+    markSessionChecked: (state) => {
+      state.isSessionChecked = true;
     },
+    logOut: () => ({ ...initialState, isSessionChecked: true }),
   },
 });
 
@@ -86,9 +86,12 @@ export const register = ({
 
 export const logout = () => {
   return async (dispatch) => {
+    dispatch(actions.logoutSuccess());
+
     try {
       await signOut();
-      dispatch(actions.logoutSuccess());
     } catch (ok) {}
   };
 };
+
+export const { logout } = actions;
