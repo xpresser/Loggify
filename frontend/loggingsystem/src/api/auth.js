@@ -1,13 +1,13 @@
-import httpClient from "./httpClient";
+import axios from "axios";
 
 export const signIn = async ({ username, password }) => {
-  const res = await httpClient.post("/auth/signin", {
+  const res = await axios.post("http:/localhost:8080/api/v1/auth/signin", {
     username,
     password,
   });
 
   const { token } = res.data;
-  httpClient.defaults.headers["Authorization"] = `${token}`;
+  axios.defaults.headers["Authorization"] = `${token}`;
   localStorage.setItem("token", token);
 
   return res.data;
@@ -20,7 +20,7 @@ export const signUp = async ({
   password,
   userPosition,
 }) => {
-  const res = await httpClient.post("/auth/signup", {
+  const res = await axios.post("http:/localhost:8080/api/v1/auth/signup", {
     fullName,
     username,
     email,
@@ -32,7 +32,7 @@ export const signUp = async ({
 };
 
 export const signOut = async () => {
-  const res = await httpClient.post("auth/signout");
+  const res = await axios.post("http:/localhost:8080/api/v1/auth/signout");
 
   return res;
 };
