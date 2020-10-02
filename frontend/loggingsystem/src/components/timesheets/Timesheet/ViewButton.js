@@ -15,11 +15,17 @@ const Button = styled.button`
   padding: 0 1rem;
 `;
 
+const StyledLink = styled(Link)`
+  color: black;
+`;
+
 const ViewButton = ({ timesheet }) => {
   return (
     <Container>
       <Button>
-        <Link to={{ pathname: `/timesheet/${timesheet.id}` }}>View</Link>
+        <StyledLink to={{ pathname: `/timesheet/${timesheet.id}` }}>
+          View
+        </StyledLink>
       </Button>
     </Container>
   );
