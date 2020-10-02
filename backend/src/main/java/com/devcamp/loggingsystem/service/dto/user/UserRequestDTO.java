@@ -1,12 +1,9 @@
 package com.devcamp.loggingsystem.service.dto.user;
 
-import com.devcamp.loggingsystem.enumeration.user.UserPosition;
 import lombok.Data;
 import lombok.NonNull;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -34,7 +31,4 @@ public class UserRequestDTO {
     @Pattern(regexp = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$",
             message = "Password must be minimum 8 symbols, and must contain one uppercase symbol and one digit")
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    private UserPosition userPosition;
 }

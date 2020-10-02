@@ -1,6 +1,5 @@
 package com.devcamp.loggingsystem.persistence.entity;
 
-import com.devcamp.loggingsystem.enumeration.user.UserPosition;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -9,8 +8,6 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -45,9 +42,6 @@ public class User extends BaseEntity {
             message = "Password must be minimum 8 symbols, and must contain one uppercase symbol and one digit")
     @Column
     private String password;
-
-    @Enumerated(EnumType.STRING)
-    private UserPosition userPosition;
 
     @OneToMany(mappedBy = "user")
     private Set<Timesheet> timesheets;
