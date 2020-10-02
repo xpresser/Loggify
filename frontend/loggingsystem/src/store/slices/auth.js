@@ -98,7 +98,7 @@ export const checkSession = () => {
 
 export const logout = () => {
   return async (dispatch) => {
-    dispatch(actions.logoutSuccess());
+    dispatch(actions.logOut());
 
     try {
       await signOut();
@@ -106,4 +106,4 @@ export const logout = () => {
   };
 };
 
-export const { logout } = actions;
+export const { logOut } = actions;
