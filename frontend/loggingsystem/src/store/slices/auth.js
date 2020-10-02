@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signIn, signUp } from "src/api/auth";
+import { signIn, signUp, signOut } from "src/api/auth";
 
 const initialState = {
   user: null,
@@ -81,5 +81,14 @@ export const register = ({
     } catch (err) {
       dispatch(actions.authFailure(err?.response?.data?.message));
     }
+  };
+};
+
+export const logout = () => {
+  return async (dispatch) => {
+    try {
+      await signOut();
+      dispatch(actions.logoutSuccess());
+    } catch (ok) {}
   };
 };
