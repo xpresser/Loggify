@@ -8,7 +8,7 @@ export const getTimesheetById = async ({ timesheetId }) => {
   return res.data;
 };
 
-export const deleteTimesheetRows = async ({ timesheetId }) => {
+export const getTimesheetRows = async ({ timesheetId }) => {
   const res = await axios.get(
     `http://localhost:8080/api/v1/timesheets/${timesheetId}/rows`
   );
