@@ -25,7 +25,7 @@ const RegisterPage = () => {
             email: "",
             userPostion: "",
           }}
-          onSubmit={() => {
+          onSubmit={(values) => {
             dispatch(register(values));
           }}
           validationSchema={SignupValidationSchema}
