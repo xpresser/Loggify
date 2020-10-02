@@ -10,6 +10,7 @@ import { register } from "src/store/slices/auth";
 
 const RegisterPage = () => {
   const error = useSelector((state) => state.auth.error);
+  const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
 
   return (
@@ -51,7 +52,7 @@ const RegisterPage = () => {
                   label="Position in company"
                 />
                 <SignupRedirect />
-                <Button disabled={!isValid} type="submit">
+                <Button disabled={!isValid || isLoding} type="submit">
                   Sign Up
                 </Button>
               </Form>
