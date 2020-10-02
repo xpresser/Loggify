@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { authReducer } from "./slices/auth";
+import { timesheetRowReducer } from "./slices/timeSheetRows";
 
 export const appReducer = combineReducers({
   auth: authReducer,

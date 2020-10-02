@@ -23,7 +23,6 @@ const SignupValidationSchema = yup.object({
     .string()
     .oneOf([yup.ref("password"), null], "Passwords must match"),
   email: yup.string().required("Email is required."),
-  userPosition: yup.string(),
 });
 
 export { SignupValidationSchema };
