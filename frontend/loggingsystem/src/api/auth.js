@@ -1,20 +1,22 @@
-import axios from "axios";
+import httpClient from "src/config/httpClient";
+import { REACT_APP_API_URL } from "src/constants/mainConstants";
 
 export const signIn = async ({ username, password }) => {
-  const res = await axios.post("http://localhost:8080/api/v1/auth/signin", {
+  const res = await httpClient.post(`${REACT_APP_API_URL}/api/v1/auth/signin`, {
     username,
     password,
   });
 
-  const { token } = res.data;
-  axios.defaults.headers["Authorization"] = `${token}`;
-  localStorage.setItem("token", token);
+  if (res.status === 200) {
+    const { token } = res.data;
+    localStorage.setItem("token", token);
+  }
 
-  return res.data;
+  return res;
 };
 
 export const signUp = async ({ fullName, username, email, password }) => {
-  const res = await axios.post("http://localhost:8080/api/v1/auth/signup", {
+  const res = await httpClient.post(`${REACT_APP_API_URL}/api/v1/auth/signup`, {
     fullName,
     username,
     email,
@@ -27,7 +29,7 @@ export const signUp = async ({ fullName, username, email, password }) => {
 };
 
 export const signOut = async () => {
-  const res = await axios.post("http://localhost:8080/api/v1/auth/signout");
+  const res = await httpClient.post(`${REACT_APP_API_URL}/api/v1/auth/signout`);
 
   return res;
 };

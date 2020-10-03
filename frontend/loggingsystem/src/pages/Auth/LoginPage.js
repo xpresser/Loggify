@@ -7,13 +7,11 @@ import { TextInputField } from "../../components/generic/TextInputField/TextInpu
 import { LoginRedirect } from "../../components/generic/redirects/login/LoginRedirect";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../store/slices/auth";
-import { useHistory } from "react-router-dom";
 
 const LoginPage = () => {
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-  const history = useHistory();
 
   return (
     <Card>
@@ -22,10 +20,7 @@ const LoginPage = () => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={async (values) => {
-            await dispatch(login(values));
-            history.push("/");
-
-            console.log("submitted");
+            dispatch(login(values));
           }}
           validationSchema={LoginValidationSchema}
         >
