@@ -17,7 +17,6 @@ const AppRoutes = () => {
         <Route path="/timesheet/:id" exact component={ViewTimesheetPage} />
         <Route path="/timesheets" exact component={AllTimesheetsPage} />
         <Route path="/create" exact component={InitialCreateTimesheetPage} />
-        <Route path="/signout" exact component={LoginPage} />
         <Redirect to="/" />
       </Switch>
     );

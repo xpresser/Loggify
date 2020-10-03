@@ -50,12 +50,14 @@ export const login = ({ username, password }) => {
       dispatch(actions.authStart());
 
       const res = await signIn({ username, password });
-      if (res.status === 200) {
-        dispatch(actions.authSuccess(res.data));
-      } else {
-        dispatch(actions.authFailure(res.data));
-      }
-    } catch (err) {}
+      const { token } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
+
+      dispatch(actions.authSuccess(res.data));
+    } catch (err) {
+      dispatch(actions.authFailure(err?.response?.data));
+    }
   };
 };
 
@@ -78,7 +80,7 @@ export const register = ({ fullName, username, email, password }) => {
       });
       dispatch(actions.authSuccess(user));
     } catch (err) {
-      dispatch(actions.authFailure(err?.response?.data?.message));
+      dispatch(actions.authFailure(err.response.data));
     }
   };
 };
@@ -88,6 +90,7 @@ export const logout = () => {
     try {
       await signOut();
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
       dispatch(actions.logOut());
     } catch (ok) {}
   };

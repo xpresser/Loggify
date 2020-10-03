@@ -1,11 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { Button } from "react-bootstrap";
+import { Button, Spinner } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
 import { createTimesheet } from "src/store/slices/timesheets.js";
 import { getCurrentUser } from "src/api/users";
+import { fetchUser } from "src/store/slices/auth";
 
 const Container = styled.div`
   width: 1200px;
@@ -27,7 +28,9 @@ const StyledNext = {
 
 const InitialForm = () => {
   const date = new Date();
+  const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user.username);
+  console.log(user);
   const currentUser = user.toString();
   const getLoggedUser = getCurrentUser(currentUser);
   const current = [];
@@ -37,7 +40,7 @@ const InitialForm = () => {
   });
 
   const currentDay = date.getDay();
-  const dispatch = useDispatch();
+
   const initialFormState = {
     status: "OPEN",
     totalHours: 0,
