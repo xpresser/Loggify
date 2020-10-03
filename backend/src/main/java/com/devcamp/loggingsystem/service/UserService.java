@@ -1,7 +1,7 @@
 package com.devcamp.loggingsystem.service;
 
 import com.devcamp.loggingsystem.exception.UserNotFoundException;
-import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
+import com.devcamp.loggingsystem.service.dto.user.UserFullDTO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,5 +9,5 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public interface UserService {
-    UserResponseDTO getUserByUsername(String username) throws UserNotFoundException;
+    UserFullDTO getUserByUsername(String username) throws UserNotFoundException;
 }

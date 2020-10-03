@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
+import javax.validation.constraints.Min;
 import java.time.LocalDate;
 
 /**
@@ -18,7 +19,7 @@ import java.time.LocalDate;
 @Validated
 public class TimesheetDTO {
 
-    @Column(name = "status")
+    @Schema(name = "status", description = "Timesheet status")
     private TimesheetStatus status;
 
     @Schema(name = "totalHours", description = "Timesheet total hours")
@@ -26,4 +27,8 @@ public class TimesheetDTO {
 
     @Schema(name = "startingDate", description = "Timesheet starting date")
     private LocalDate startingDate;
+
+    @Min(1)
+    @Schema(name = "authorId", description = "Timesheet author id")
+    private Long authorId;
 }

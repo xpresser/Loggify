@@ -8,6 +8,8 @@ import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -26,11 +28,12 @@ public class Timesheet extends BaseEntity {
     @Column(name = "starting_date")
     private LocalDate startingDate;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private TimesheetStatus status;
 
     @JsonBackReference
-    @OneToMany(mappedBy = "timesheet",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "timesheet", fetch = FetchType.EAGER)
     private Set<TimesheetRow> rows;
 
     @Column(name = "total_hours")
