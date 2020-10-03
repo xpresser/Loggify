@@ -20,6 +20,8 @@ public interface TimesheetService {
 
     Page<TimesheetFullDTO> getAll(int page, Integer pageSize, boolean sortedAsc, Long userId) throws UserNotFoundException;
 
+    TimesheetFullDTO getById(Long timesheetId) throws UserNotFoundException;
+
     TimesheetFullDTO updateTimesheetById(Long meetingId, TimesheetDTO timesheetDTO) throws TimesheetNotFoundException;
 
     TimesheetFullDTO deleteTimesheetById(Long meetingId) throws TimesheetNotFoundException, ForbiddenTimesheetDeletion;
