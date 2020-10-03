@@ -3,9 +3,12 @@ package com.devcamp.loggingsystem.service.bean;
 import com.devcamp.loggingsystem.enumeration.timesheet.TimesheetStatus;
 import com.devcamp.loggingsystem.exception.ForbiddenTimesheetDeletion;
 import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
+import com.devcamp.loggingsystem.exception.UserNotFoundException;
 import com.devcamp.loggingsystem.persistence.entity.Timesheet;
 import com.devcamp.loggingsystem.persistence.entity.TimesheetRow;
+import com.devcamp.loggingsystem.persistence.entity.User;
 import com.devcamp.loggingsystem.persistence.repository.TimesheetRepository;
+import com.devcamp.loggingsystem.persistence.repository.UserRepository;
 import com.devcamp.loggingsystem.service.TimesheetService;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetDTO;
 import com.devcamp.loggingsystem.service.dto.timesheet.TimesheetFullDTO;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -29,34 +33,57 @@ public class TimesheetServiceBean implements TimesheetService {
     private static final int DEFAULT_PAGE_SIZE = 20;
 
     private final TimesheetRepository timesheetRepository;
+
+    private final UserRepository userRepository;
+
     private final ModelMapper modelMapper;
 
-    public TimesheetServiceBean(TimesheetRepository timesheetRepository, ModelMapper modelMapper) {
+    public TimesheetServiceBean(TimesheetRepository timesheetRepository, UserRepository userRepository, ModelMapper modelMapper) {
         this.timesheetRepository = timesheetRepository;
+        this.userRepository = userRepository;
         this.modelMapper = modelMapper;
     }
 
-
     @Override
-    public TimesheetFullDTO createTimesheet(TimesheetDTO meetingDTO) {
-        Timesheet timesheet = this.modelMapper.map(meetingDTO, Timesheet.class);
-        Timesheet timesheetEntity = this.timesheetRepository.saveAndFlush(timesheet);
+    public TimesheetFullDTO createTimesheet(TimesheetDTO timesheetDTO) throws UserNotFoundException {
+        Timesheet timesheet = new Timesheet();
+        timesheet.setTotalHours(timesheetDTO.getTotalHours());
+        timesheet.setStatus(timesheetDTO.getStatus());
+        timesheet.setStartingDate(timesheetDTO.getStartingDate());
 
-        return this.modelMapper.map(timesheetEntity, TimesheetFullDTO.class);
+        Optional<User> user = this.userRepository.findById(timesheetDTO.getAuthorId());
+
+        if (user.isEmpty()) {
+            throw new UserNotFoundException();
+        }
+
+        timesheet.setUser(user.get());
+
+        Timesheet savedTimesheet = this.timesheetRepository.saveAndFlush(timesheet);
+
+        return this.modelMapper.map(savedTimesheet, TimesheetFullDTO.class);
     }
 
     @Override
-    public Page<TimesheetFullDTO> getAll(int page, Integer pageSize, boolean sortedAsc) {
+    public Page<TimesheetFullDTO> getAll(int page, Integer pageSize, boolean sortedAsc, Long userId) throws UserNotFoundException {
         if (pageSize == null || pageSize <= 0) {
             pageSize = DEFAULT_PAGE_SIZE;
+        }
+
+        Optional<User> userById = this.userRepository.findById(userId);
+
+        if (userById.isEmpty()) {
+            throw new UserNotFoundException();
         }
 
         Page<Timesheet> allTimesheets;
 
         if (sortedAsc) {
-            allTimesheets = this.timesheetRepository.findAllByOrderByStartingDateAsc(PageRequest.of(page, pageSize));
+            allTimesheets = this.timesheetRepository.findAllByUserOrderByStartingDateAsc(userById.get(),
+                    PageRequest.of(page, pageSize));
         } else {
-            allTimesheets = this.timesheetRepository.findAll(PageRequest.of(page, pageSize));
+            allTimesheets = this.timesheetRepository.findAllByUser(userById.get(),
+                    PageRequest.of(page, pageSize));
         }
 
         return allTimesheets.map(room -> this.modelMapper.map(room, TimesheetFullDTO.class));

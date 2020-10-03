@@ -1,5 +1,6 @@
 package com.devcamp.loggingsystem.service;
 
+import com.devcamp.loggingsystem.exception.UserSignUpException;
 import com.devcamp.loggingsystem.service.dto.login.LoginRequestDTO;
 import com.devcamp.loggingsystem.service.dto.login.LoginResponseDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserRequestDTO;
@@ -15,7 +16,7 @@ public interface AuthenticationService {
      * @param userRequestDTO users request
      * @return returns Users Response DTO
      */
-    UserResponseDTO register(UserRequestDTO userRequestDTO);
+    UserResponseDTO register(UserRequestDTO userRequestDTO) throws UserSignUpException;
 
     /**
      * Method for authorization and authentication in the system

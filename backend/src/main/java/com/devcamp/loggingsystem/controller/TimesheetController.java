@@ -34,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("v1/timesheets")
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 public class TimesheetController {
     private final TimesheetService timesheetService;
 
@@ -60,8 +60,9 @@ public class TimesheetController {
     public ResponseEntity<Page<TimesheetFullDTO>> getAllTimesheets(@RequestParam("page") int page,
                                                                    @RequestParam(value = "pageSize", required = false)
                                                                            Integer pageSize,
-                                                                   @RequestParam(value = "sortedAsc", required = false) boolean sortedAsc) {
-        return new ResponseEntity<>(this.timesheetService.getAll(page, pageSize, sortedAsc), HttpStatus.OK);
+                                                                   @RequestParam(value = "sortedAsc", required = false) boolean sortedAsc,
+                                                                   @RequestParam(value = "userId") Long userId) {
+        return new ResponseEntity<>(this.timesheetService.getAll(page, pageSize, sortedAsc, userId), HttpStatus.OK);
     }
 
     @Operation(summary = "This request method update timesheet.")

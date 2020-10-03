@@ -1,6 +1,7 @@
 package com.devcamp.loggingsystem.service.bean;
 
 import com.devcamp.loggingsystem.exception.ResourceNotFoundException;
+import com.devcamp.loggingsystem.exception.UserSignUpException;
 import com.devcamp.loggingsystem.persistence.entity.User;
 import com.devcamp.loggingsystem.persistence.repository.UserRepository;
 import com.devcamp.loggingsystem.service.AuthenticationService;
@@ -42,7 +43,14 @@ public class AuthenticationServiceBean implements AuthenticationService {
     }
 
     @Override
-    public UserResponseDTO register(UserRequestDTO userRequestDTO) {
+    public UserResponseDTO register(UserRequestDTO userRequestDTO) throws UserSignUpException {
+
+        User userByEmail = this.userRepository.findUserByEmail(userRequestDTO.getEmail());
+
+        if (userByEmail != null) {
+            throw new UserSignUpException();
+        }
+
         User userToRegister = this.modelMapper.map(userRequestDTO, User.class);
 
         String hashedPassword = this.bCryptPasswordEncoder.encode(userRequestDTO.getPassword());
