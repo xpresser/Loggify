@@ -1,8 +1,9 @@
 import axios from "axios";
+import { REACT_APP_API_URL } from "src/constants/mainConstants";
 
 export const getTimesheetById = async ({ timesheetId }) => {
   const res = await axios.get(
-    `http://localhost:8080/api/v1/timesheets/${timesheetId}`
+    `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}`
   );
 
   return res.data;
@@ -10,7 +11,7 @@ export const getTimesheetById = async ({ timesheetId }) => {
 
 export const getTimesheetRows = async ({ timesheetId }) => {
   const res = await axios.get(
-    `http://localhost:8080/api/v1/timesheets/${timesheetId}/rows`
+    `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}/rows`
   );
 
   return res.data;
@@ -21,7 +22,7 @@ export const createNewTimesheet = async ({
   totalHours,
   startingDate,
 }) => {
-  const res = await axios.post("http://localhost:8080/api/v1/timesheets/", {
+  const res = await axios.post(`${REACT_APP_API_URL}/api/v1/timesheets/`, {
     status,
     totalHours,
     startingDate,
@@ -37,7 +38,7 @@ export const updateTimesheet = async ({
   startingDate,
 }) => {
   const res = await axios.put(
-    `http://localhost:8080/api/v1/timesheets/${timesheetId}`,
+    `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}`,
     {
       status,
       totalHours,
@@ -50,7 +51,7 @@ export const updateTimesheet = async ({
 
 export const deleteTimesheet = async ({ timesheetId }) => {
   const res = await axios.delete(
-    `http://localhost:8080/api/v1/timesheets/${timesheetId}`
+    `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}`
   );
 
   return res.data;
