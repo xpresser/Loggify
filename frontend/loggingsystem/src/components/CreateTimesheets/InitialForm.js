@@ -30,6 +30,9 @@ const InitialForm = () => {
   const date = new Date();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user.username);
+  if (user === undefined) {
+    window.location.reload();
+  }
   console.log(user);
   const currentUser = user.toString();
   const getLoggedUser = getCurrentUser(currentUser);
