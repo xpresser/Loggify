@@ -4,6 +4,7 @@ import { Switch, Redirect, Route } from "react-router-dom";
 import { AllTimesheetsPage } from "./pages/AllTimesheetsPage";
 import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
+import { InitialCreateTimesheetPage } from "./pages/CreateTimesheets";
 import { ViewTimesheetPage } from "./pages/ViewTimesheetPage";
 
 const AppRoutes = () => {
@@ -15,6 +16,7 @@ const AppRoutes = () => {
         <Route path="/" exact component={AllTimesheetsPage} />
         <Route path="/timesheet/:id" exact component={ViewTimesheetPage} />
         <Route path="/timesheets" exact component={AllTimesheetsPage} />
+        <Route path="/create" exact component={InitialCreateTimesheetPage} />
         <Route path="/signout" exact component={LoginPage} />
         <Redirect to="/" />
       </Switch>

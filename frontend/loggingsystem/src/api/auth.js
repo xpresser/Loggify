@@ -10,6 +10,7 @@ export const signIn = async ({ username, password }) => {
   if (res.status === 200) {
     const { token } = res.data;
     localStorage.setItem("token", token);
+    localStorage.setItem("username", username);
   }
 
   return res;

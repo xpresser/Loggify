@@ -21,11 +21,13 @@ export const createNewTimesheet = async ({
   status,
   totalHours,
   startingDate,
+  authorId,
 }) => {
   const res = await axios.post(`${REACT_APP_API_URL}/api/v1/timesheets/`, {
     status,
     totalHours,
     startingDate,
+    authorId,
   });
 
   return res.data;
