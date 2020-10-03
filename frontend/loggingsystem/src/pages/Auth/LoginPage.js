@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
-import { AuthTitle } from "../../components/generic/AuthTitle/AuthTitle.styled";
-import { LoginValidationSchema } from "../../validations/schemas/login";
-import { TextInputField } from "../../components/generic/TextInputField/TextInputField";
-import { LoginRedirect } from "../../components/generic/redirects/login/LoginRedirect";
+import { AuthTitle } from "src/components/generic/AuthTitle/AuthTitle.styled";
+import { LoginValidationSchema } from "src/validations/schemas/login";
+import { TextInputField } from "src/components/generic/TextInputField/TextInputField";
+import { LoginRedirect } from "src/components/generic/redirects/login/LoginRedirect";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../store/slices/auth";
+import { login } from "src/store/slices/auth";
 
 const LoginPage = () => {
   const error = useSelector((state) => state.auth.error);
@@ -14,7 +14,10 @@ const LoginPage = () => {
   const dispatch = useDispatch();
 
   return (
-    <Card>
+    <Card
+      className={"col-md-6 col-md-offset-3"}
+      style={{ width: "35rem", margin: "0 auto", marginTop: "3rem" }}
+    >
       <AuthTitle>Login</AuthTitle>
       <Card.Body>
         <Formik
@@ -27,7 +30,11 @@ const LoginPage = () => {
           {({ isValid }) => {
             return (
               <Form>
-                {error && <Alert variant="danger">{error?.message}</Alert>}
+                {error && (
+                  <Alert variant="danger" dismissible>
+                    {error}
+                  </Alert>
+                )}
                 <TextInputField name="username" label="Username" />
                 <TextInputField
                   name="password"
