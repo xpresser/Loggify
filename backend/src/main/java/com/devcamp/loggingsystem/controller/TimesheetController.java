@@ -12,7 +12,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,6 +62,15 @@ public class TimesheetController {
                                                                    @RequestParam(value = "sortedAsc", required = false) boolean sortedAsc,
                                                                    @RequestParam(value = "userId") Long userId) {
         return new ResponseEntity<>(this.timesheetService.getAll(page, pageSize, sortedAsc, userId), HttpStatus.OK);
+    }
+
+    @Operation(summary = "This request method return timesheet.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "This method gets timesheet."),
+            @ApiResponse(responseCode = "500", description = "Internal Server Error")})
+    @GetMapping("/{id}")
+    public ResponseEntity<TimesheetFullDTO> getTimesheet(@PathVariable @NotNull @Min(1) Long id) throws TimesheetNotFoundException {
+        return new ResponseEntity<>(this.timesheetService.getById(id), HttpStatus.OK);
     }
 
     @Operation(summary = "This request method update timesheet.")
