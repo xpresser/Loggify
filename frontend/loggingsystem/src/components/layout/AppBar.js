@@ -1,10 +1,13 @@
 import React from "react";
-import { useSelector } from "react-redux";
-import { Navbar, Nav } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { Navbar, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+
+import { logout } from "src/store/slices/auth";
 
 const AppBar = () => {
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   if (user) {
     return (
@@ -24,7 +27,11 @@ const AppBar = () => {
               Create timesheet
             </Nav.Link>
 
-            <Nav.Link eventKey="1" as={NavLink} to="/" exact>
+            <Nav.Link
+              onClick={() => {
+                dispatch(logout());
+              }}
+            >
               Logout
             </Nav.Link>
           </Nav>
