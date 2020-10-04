@@ -23,7 +23,7 @@ const AppBar = () => {
               All timesheets
             </Nav.Link>
 
-            <Nav.Link eventKey="1" as={NavLink} to="/" exact>
+            <Nav.Link eventKey="1" as={NavLink} to="/create" exact>
               Create timesheet
             </Nav.Link>
 
