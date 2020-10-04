@@ -9,11 +9,16 @@ import { getCurrentUser } from "src/api/users";
 import { fetchUser } from "src/store/slices/auth";
 
 const Container = styled.div`
-  width: 1200px;
-  margin: 100px auto;
+  background: white;
+  padding: 1rem;
+  width: 50rem;
+  margin: 4rem auto;
   height: 20rem;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const SubContainer = styled.div`
