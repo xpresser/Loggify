@@ -59,7 +59,7 @@ export const updateTimesheet = async ({
   return res.data;
 };
 
-export const deleteTimesheet = async ({ timesheetId }) => {
+export const deleteTimesheetById = async ({ timesheetId }) => {
   const res = await axios.delete(
     `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}`
   );

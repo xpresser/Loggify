@@ -21,7 +21,7 @@ const Timesheet = ({ user, timesheet }) => {
         <StatusContainer timesheet={timesheet} />
       </CustomCol>
       <CustomCol sm="2" xs="2">
-        {timesheet.status === "Open" ? (
+        {timesheet.status === "OPEN" ? (
           <EditButton />
         ) : (
           <ViewButton timesheet={timesheet} />
