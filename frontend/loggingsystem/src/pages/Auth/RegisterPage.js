@@ -16,7 +16,10 @@ const RegisterPage = () => {
   const history = useHistory();
 
   return (
-    <Card>
+    <Card
+      class="col-md-6 col-md-offset-3"
+      style={{ width: "30rem", margin: "0 auto" }}
+    >
       <AuthTitle>Sign Up</AuthTitle>
       <Card.Body>
         <Formik
@@ -28,7 +31,6 @@ const RegisterPage = () => {
           }}
           onSubmit={(values) => {
             dispatch(register(values));
-            history.push("/");
           }}
           validationSchema={SignupValidationSchema}
         >

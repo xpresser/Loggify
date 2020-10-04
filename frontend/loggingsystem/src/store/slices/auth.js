@@ -80,7 +80,7 @@ export const register = ({ fullName, username, email, password }) => {
       });
       dispatch(actions.authSuccess(user));
     } catch (err) {
-      dispatch(actions.authFailure(err.response.data));
+      dispatch(actions.authFailure(err?.response?.data?.message));
     }
   };
 };
