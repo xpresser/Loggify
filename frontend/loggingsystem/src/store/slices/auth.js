@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signIn, signUp, signOut } from "src/api/auth";
-import { getMe } from "src/api/users";
+
+const userInitialState = localStorage.getItem("token")
+  ? {
+      token: localStorage.getItem("token"),
+      username: localStorage.getItem("username"),
+    }
+  : null;
 
 const initialState = {
-  user: null,
+  user: userInitialState,
   error: null,
   isLoading: null,
   isSessionChecked: false,
@@ -14,7 +20,7 @@ const { reducer: authReducer, actions } = createSlice({
   initialState,
   reducers: {
     authStart: (state) => {
-      state.isLoading = true;
+      state.isLoading = false;
     },
     authSuccess: (state, action) => {
       state.isLoading = false;
@@ -26,10 +32,7 @@ const { reducer: authReducer, actions } = createSlice({
       state.user = null;
       state.error = action.payload;
     },
-    markSessionChecked: (state) => {
-      state.isSessionChecked = true;
-    },
-    logOut: () => ({ ...initialState, isSessionChecked: true }),
+    logOut: () => ({ ...initialState, user: null }),
   },
 });
 
@@ -46,10 +49,14 @@ export const login = ({ username, password }) => {
     try {
       dispatch(actions.authStart());
 
-      const user = await signIn({ username, password });
-      dispatch(actions.authSuccess(user));
+      const res = await signIn({ username, password });
+      const { token } = res.data;
+      localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
+
+      dispatch(actions.authSuccess(res.data));
     } catch (err) {
-      dispatch(actions.authFailure(err));
+      dispatch(actions.authFailure(err?.response?.data));
     }
   };
 };
@@ -78,23 +85,13 @@ export const register = ({ fullName, username, email, password }) => {
   };
 };
 
-export const checkSession = () => {
-  return async (dispatch) => {
-    try {
-      const user = await getMe();
-      dispatch(actions.authSuccess(user));
-    } catch (err) {}
-
-    dispatch(actions.markSessionChecked());
-  };
-};
-
 export const logout = () => {
   return async (dispatch) => {
-    dispatch(actions.logOut());
-
     try {
       await signOut();
+      localStorage.removeItem("token");
+      localStorage.removeItem("username");
+      dispatch(actions.logOut());
     } catch (ok) {}
   };
 };

@@ -1,10 +1,10 @@
 import React from "react";
-import Switch from "react-bootstrap/esm/Switch";
 import { useSelector } from "react-redux";
-import { Redirect, Route } from "react-router-dom";
+import { Switch, Redirect, Route } from "react-router-dom";
 import { AllTimesheetsPage } from "./pages/AllTimesheetsPage";
 import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
+import { InitialCreateTimesheetPage } from "./pages/CreateTimesheets";
 import { ViewTimesheetPage } from "./pages/ViewTimesheetPage";
 
 const AppRoutes = () => {
@@ -14,8 +14,9 @@ const AppRoutes = () => {
     return (
       <Switch>
         <Route path="/" exact component={AllTimesheetsPage} />
-        <Route path="/timesheets" exact component={AllTimesheetsPage} />
         <Route path="/timesheet/:id" exact component={ViewTimesheetPage} />
+        <Route path="/timesheets" exact component={AllTimesheetsPage} />
+        <Route path="/create" exact component={InitialCreateTimesheetPage} />
         <Redirect to="/" />
       </Switch>
     );

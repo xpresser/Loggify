@@ -4,6 +4,7 @@ import com.devcamp.loggingsystem.exception.UserNotFoundException;
 import com.devcamp.loggingsystem.persistence.entity.User;
 import com.devcamp.loggingsystem.persistence.repository.UserRepository;
 import com.devcamp.loggingsystem.service.UserService;
+import com.devcamp.loggingsystem.service.dto.user.UserFullDTO;
 import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -26,13 +27,13 @@ public class UserServiceBean implements UserService {
     }
 
     @Override
-    public UserResponseDTO getUserByUsername(String username) {
+    public UserFullDTO getUserByUsername(String username) {
         Optional<User> user = this.userRepository.findByUsername(username);
 
         if (user.isEmpty()) {
             throw new UserNotFoundException();
         }
 
-        return this.modelMapper.map(user.get(), UserResponseDTO.class);
+        return this.modelMapper.map(user.get(), UserFullDTO.class);
     }
 }

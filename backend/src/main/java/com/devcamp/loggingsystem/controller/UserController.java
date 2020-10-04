@@ -2,7 +2,7 @@ package com.devcamp.loggingsystem.controller;
 
 import com.devcamp.loggingsystem.exception.UserNotFoundException;
 import com.devcamp.loggingsystem.service.UserService;
-import com.devcamp.loggingsystem.service.dto.user.UserResponseDTO;
+import com.devcamp.loggingsystem.service.dto.user.UserFullDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,7 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/{username}")
-    public ResponseEntity<UserResponseDTO> getUserById(@PathVariable @NotNull String username) throws UserNotFoundException {
+    public ResponseEntity<UserFullDTO> getUserById(@PathVariable @NotNull String username) throws UserNotFoundException {
         return new ResponseEntity<>(this.userService.getUserByUsername(username), HttpStatus.OK);
     }
 }
