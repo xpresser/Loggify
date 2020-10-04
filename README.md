@@ -9,6 +9,7 @@ how many hours they have worked during this week. There is also an option to rec
 * Java 11   
 * Maven  
 * Node  
+* Npm  6.14.6  
 * IDE of your choice  
 
 #### How to run the application  
