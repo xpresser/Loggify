@@ -18,9 +18,17 @@ const RegisterPage = () => {
   return (
     <Card
       class="col-md-6 col-md-offset-3"
-      style={{ width: "30rem", margin: "0 auto" }}
+      style={{
+        width: "30rem",
+        margin: "0 auto",
+        border: "none",
+        borderRadius: "10px",
+        fontSize: "very-small",
+        boxShadow:
+          "0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2)",
+      }}
     >
-      <AuthTitle>Sign Up</AuthTitle>
+      <AuthTitle style={{ textAlign: "center" }}>Sign Up</AuthTitle>
       <Card.Body>
         <Formik
           initialValues={{
@@ -37,7 +45,11 @@ const RegisterPage = () => {
           {({ isValid }) => {
             return (
               <Form>
-                {error && <Alert variant={"danger"}>{error}</Alert>}
+                {error && (
+                  <Alert variant={"danger"} dismissible>
+                    {error}
+                  </Alert>
+                )}
                 <TextInputField name="fullName" label="Full name" />
                 <TextInputField name="username" label="Username" />
                 <TextInputField
@@ -52,7 +64,16 @@ const RegisterPage = () => {
                 />
                 <TextInputField name="email" label="Email" />
                 <SignupRedirect />
-                <Button disabled={!isValid || isLoading} type="submit">
+                <Button
+                  disabled={!isValid || isLoading}
+                  type="submit"
+                  style={{
+                    fontWeight: "bold",
+                    width: "30%",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                >
                   Sign Up
                 </Button>
               </Form>
