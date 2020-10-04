@@ -9,6 +9,14 @@ export const getTimesheetById = async ({ timesheetId }) => {
   return res.data;
 };
 
+export const getUserTimesheets = async ({ userId, page, pageSize }) => {
+  const res = await axios.get(`${REACT_APP_API_URL}/api/v1/timesheets/`, {
+    params: { userId, page, pageSize },
+  });
+
+  return res.data;
+};
+
 export const getTimesheetRows = async ({ timesheetId }) => {
   const res = await axios.get(
     `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}/rows`

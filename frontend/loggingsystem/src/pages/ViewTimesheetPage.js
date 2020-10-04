@@ -4,6 +4,7 @@ import { Link, useRouteMatch } from "react-router-dom";
 import { Week } from "../components/timesheets/Timesheet/Week";
 import { user } from "../mocks/user";
 import styled from "styled-components";
+import { getTimesheetById } from "../api/timesheets";
 
 const CustomCol = styled(Col)`
   border: 1px solid grey;
@@ -27,9 +28,20 @@ const ViewTimesheetPage = () => {
     params: { id },
   } = useRouteMatch();
 
-  const [timesheet, setTimesheet] = useState(
-    user.timesheets.timesheets.filter((t) => t.id === Number(id))[0]
-  );
+  const [timesheet, setTimesheet] = React.useState(null);
+  const [isTimesheetFetch, setIsTimesheetFetch] = React.useState(false);
+
+  const timesheetQuery = getTimesheetById({ timesheetId: id });
+
+  timesheetQuery.then(function (response) {
+    if (!isTimesheetFetch) {
+      let content = response;
+      setTimesheet(content);
+      setIsTimesheetFetch(true);
+    }
+  });
+
+  console.log(timesheet);
 
   const getTotalHoursForDay = (day) => {
     let totalHours = 0;
