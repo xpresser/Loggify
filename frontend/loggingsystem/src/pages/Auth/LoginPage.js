@@ -16,9 +16,17 @@ const LoginPage = () => {
   return (
     <Card
       className={"col-md-6 col-md-offset-3"}
-      style={{ width: "35rem", margin: "0 auto", marginTop: "3rem" }}
+      style={{
+        width: "35rem",
+        margin: "0 auto",
+        marginTop: "3rem",
+        border: "none",
+        borderRadius: "10px",
+        boxShadow:
+          "0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2)",
+      }}
     >
-      <AuthTitle>Login</AuthTitle>
+      <AuthTitle style={{ textAlign: "center" }}>Login</AuthTitle>
       <Card.Body>
         <Formik
           initialValues={{ username: "", password: "" }}
@@ -42,7 +50,16 @@ const LoginPage = () => {
                   label="Password"
                 />
                 <LoginRedirect />
-                <Button disabled={!isValid || isLoading} type="submit">
+                <Button
+                  disabled={!isValid || isLoading}
+                  type="submit"
+                  style={{
+                    fontWeight: "bold",
+                    width: "30%",
+                    display: "block",
+                    margin: "0 auto",
+                  }}
+                >
                   Login
                 </Button>
               </Form>

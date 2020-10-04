@@ -6,7 +6,7 @@ const Container = styled.div`
 `;
 
 const WeekContainer = ({ timesheet }) => {
-  return <Container>Week {timesheet.week}</Container>;
+  return <Container>Week {timesheet.startingDate}</Container>;
 };
 
 export { WeekContainer };
