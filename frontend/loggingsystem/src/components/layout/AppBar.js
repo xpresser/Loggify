@@ -44,7 +44,7 @@ const AppBar = () => {
     return (
       <Navbar bg="dark" variant="dark" fixed="top" expand="sm">
         <Navbar.Brand as={NavLink} to="/">
-          DevCamp
+          Loggify
         </Navbar.Brand>
       </Navbar>
     );
