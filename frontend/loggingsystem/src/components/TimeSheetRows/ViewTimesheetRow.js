@@ -1,7 +1,7 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
 
-export const ViewTimesheetRow = ({ timesheetRow }) => {
+export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
   const secondColStyle = {
     border: "1px solid black",
     textAlign: "center",
@@ -36,10 +36,10 @@ export const ViewTimesheetRow = ({ timesheetRow }) => {
         {console.log(timesheetRow)}
         <Row fluid="md">
           <Col style={secondColStyle} xs={2}>
-            <p>{timesheetRow.project}</p>
+            <p>DevCamp</p>
           </Col>
           <Col style={secondColStyle} xs={2}>
-            <p>{timesheetRow.task}</p>
+            <p>Administrative</p>
           </Col>
           <Col style={secondColStyle}>
             <p style={StyledInput} size="1.5">

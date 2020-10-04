@@ -4,6 +4,8 @@ import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { timesheets as timesheet } from "../mocks/timesheets";
 import { ViewTimesheetRow } from "../components/TimeSheetRows/ViewTimesheetRow";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRowsPerTimeSheet } from "../store/slices/timeSheetRows";
 
 const CustomCol = styled(Col)`
   border: 1px solid grey;
@@ -26,54 +28,44 @@ const ViewTimesheetPage = () => {
   const {
     params: { id },
   } = useRouteMatch();
+  console.log(id);
+  let test = id;
+  console.log(test);
+  const timesheetRowsState = useSelector(
+    (state) => state.timesheetRows.timesheetsRows
+  );
+  let timesheetRows = [];
+  if (timesheetRowsState !== null) {
+    timesheetRows = timesheetRowsState;
+  }
+  console.log(timesheetRows);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchRowsPerTimeSheet(test));
+  }, [dispatch]);
 
-  // const [timesheet, setTimesheet] = React.useState(null);
-  // const [isTimesheetFetch, setIsTimesheetFetch] = React.useState(false);
-  //
-  // const timesheetQuery = getTimesheetById({ timesheetId: id });
-  //
-  // timesheetQuery.then(function (response) {
-  //   if (!isTimesheetFetch) {
-  //     let content = response;
-  //     setTimesheet(content);
-  //     setIsTimesheetFetch(true);
-  //   }
-  // });
-
-  // const [timesheetRows, setTimesheetRows] = React.useState(null);
-  // const [isTimesheetRowsFetch, setIsTimesheetRowsFetch] = React.useState(false);
-  //
-  // const timesheetRowsQuery = getTimesheetRows({ timesheetId: id });
-  //
-  // timesheetRowsQuery.then(function (response) {
-  //   if (!isTimesheetRowsFetch) {
-  //     let content = response;
-  //     console.log(content);
-  //     setTimesheetRows(response);
-  //     console.log(timesheetRows);
-  //     setIsTimesheetRowsFetch(true);
-  //   }
-  // });
-
-  console.log(timesheet.timesheets[0]);
-
-  // if (timesheetRows === undefined) {
-  //   return (
-  //       <Spinner animation="border" variant="primary">
-  //         <span className="sr-only">Loading...</span>
-  //       </Spinner>
-  //   )
-  // }
-
+  console.log(timesheetRows);
   return (
     <div>
       <h1 className={"text-center mb-4"}>
         Timesheet for week {timesheet.timesheets[0].week}:
       </h1>
 
-      {timesheet.timesheets[0].rows.map((timesheetRow) => (
-        <ViewTimesheetRow key={timesheetRow.id} timesheetRow={timesheetRow} />
-      ))}
+      {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
+        .length === 0 ? (
+        <div className="alert alert-info" role="alert">
+          This timesheet do not have any rows!
+        </div>
+      ) : (
+        timesheetRows
+          .filter((value) => value.timesheetId === timesheet.id)
+          .map((timesheetRow) => (
+            <ViewTimesheetRow
+              key={timesheetRow.id}
+              timesheetRow={timesheetRow}
+            />
+          ))
+      )}
     </div>
 
     // const getTotalHoursForDay = (day) => {
