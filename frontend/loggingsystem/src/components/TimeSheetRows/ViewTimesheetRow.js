@@ -3,13 +3,16 @@ import { Col, Container, Row } from "react-bootstrap";
 
 export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
   const secondColStyle = {
-    border: "1px solid black",
+    borderLeft: "1px solid black",
+    borderBottom: "1px solid black",
     textAlign: "center",
     height: "3rem",
   };
 
   const secondColRightStyle = {
-    border: "1px solid black",
+    borderRight: "1px solid black",
+    borderLeft: "1px solid black",
+    borderBottom: "1px solid black",
     textAlign: "center",
     height: "3rem",
   };
@@ -35,6 +38,7 @@ export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
       <div>
         {console.log(timesheetRow)}
         <Row fluid="md">
+          <Col style={secondColStyle} xs={1}></Col>
           <Col style={secondColStyle} xs={2}>
             <p>DevCamp</p>
           </Col>
