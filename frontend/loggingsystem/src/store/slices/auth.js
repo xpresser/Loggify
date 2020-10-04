@@ -2,7 +2,10 @@ import { createSlice } from "@reduxjs/toolkit";
 import { signIn, signUp, signOut } from "src/api/auth";
 
 const userInitialState = localStorage.getItem("token")
-  ? { token: localStorage.getItem("token") }
+  ? {
+      token: localStorage.getItem("token"),
+      username: localStorage.getItem("username"),
+    }
   : null;
 
 const initialState = {
@@ -49,6 +52,7 @@ export const login = ({ username, password }) => {
       const res = await signIn({ username, password });
       const { token } = res.data;
       localStorage.setItem("token", token);
+      localStorage.setItem("username", username);
 
       dispatch(actions.authSuccess(res.data));
     } catch (err) {
@@ -76,7 +80,7 @@ export const register = ({ fullName, username, email, password }) => {
       });
       dispatch(actions.authSuccess(user));
     } catch (err) {
-      dispatch(actions.authFailure(err.response.data));
+      dispatch(actions.authFailure(err?.response?.data?.message));
     }
   };
 };
@@ -86,6 +90,7 @@ export const logout = () => {
     try {
       await signOut();
       localStorage.removeItem("token");
+      localStorage.removeItem("username");
       dispatch(actions.logOut());
     } catch (ok) {}
   };
