@@ -193,7 +193,7 @@ const InitialForm = () => {
                   {renderDates[4].value}
                 </option>
               </select>
-              <Button onClick={onSubmitClick} type="submit" style={StyledNext}>
+              <Button type="submit" style={StyledNext}>
                 Next
               </Button>
             </Form>
