@@ -35,7 +35,6 @@ import javax.validation.constraints.NotBlank;
  */
 @RestController
 @RequestMapping("/v1/timesheetrows")
-@PreAuthorize("hasRole('USER')")
 public class TimeSheetRowController {
 
     private final TimeSheetRowServiceBean timeSheetRowService;
