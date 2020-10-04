@@ -1,12 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
-import { createTimesheet } from "src/store/slices/timesheets.js";
 import { getCurrentUser } from "src/api/users";
-import { fetchUser } from "src/store/slices/auth";
+import { createNewTimesheet } from "src/api/timesheets";
 
 const Container = styled.div`
   background: white;
@@ -46,7 +45,8 @@ const InitialForm = () => {
     let content = value;
     current.push(value);
   });
-
+  let timesheetId = null;
+  let id = null;
   const currentDay = date.getDay();
 
   const initialFormState = {
@@ -84,7 +84,10 @@ const InitialForm = () => {
           <Formik
             initialValues={initialFormState}
             onSubmit={async (values) => {
-              await createTimesheet(values)(dispatch);
+              console.log(values);
+              timesheetId = await createNewTimesheet(values);
+              id = timesheetId.id;
+              window.location.href = `createnext/${id}`;
             }}
           >
             <Form>
@@ -155,6 +158,7 @@ const InitialForm = () => {
       initialFormState.authorId = current[0].id;
       console.log(e);
     };
+
     return (
       <Container>
         <h1 style={{ fontSize: "4rem" }}>Create Timesheet</h1>
@@ -162,7 +166,10 @@ const InitialForm = () => {
           <Formik
             initialValues={initialFormState}
             onSubmit={async (values) => {
-              await createTimesheet(values)(dispatch);
+              console.log(values);
+              timesheetId = await createNewTimesheet(values);
+              id = timesheetId.id;
+              window.location.href = `createnext/${id}`;
             }}
           >
             <Form>
@@ -186,7 +193,7 @@ const InitialForm = () => {
                   {renderDates[4].value}
                 </option>
               </select>
-              <Button type="submit" style={StyledNext}>
+              <Button onClick={onSubmitClick} type="submit" style={StyledNext}>
                 Next
               </Button>
             </Form>

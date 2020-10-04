@@ -11,9 +11,9 @@ import { REACT_APP_API_URL } from "src/constants/mainConstants";
 //       }
 //   });
 
-export const getTimeSheetRowsForTimeSheet = async () => {
+export const getTimeSheetRowsForTimeSheet = async ({ timesheetId }) => {
   const res = await httpClient.get(
-    `${REACT_APP_API_URL}/api/v1/timesheets/1/rows`
+    `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}/rows`
   );
   return res.data;
 };
