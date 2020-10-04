@@ -1,73 +1,83 @@
-import React from 'react';
-import { Container, Spinner } from 'react-bootstrap';
+import React from "react";
+import { Container, Spinner } from "react-bootstrap";
 import { getTimeSheetRowsForTimeSheet } from "../../api/timeSheetRows";
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import { TimesheetRow } from './TimesheetRow';
-import { fetchNewsFeedPosts, getRowsForTimesheet } from '../../store/slices/timeSheetRows';
+import styled from "styled-components";
+import { useDispatch, useSelector } from "react-redux";
+import { TimesheetRow } from "../CreateTimesheets/CreateTimesheetRow";
+import { fetchRowsPerTimeSheet } from "../../store/slices/timeSheetRows";
+import { useRouteMatch } from "react-router-dom";
+import { getTimesheetById } from "src/api/timesheets";
 
 const LoadMoreButton = styled.span`
-color: #969696;
-cursor: pointer;
-margin-bottom: .75rem;
-display:inline-block;
-`
+  color: #969696;
+  cursor: pointer;
+  margin-bottom: 0.75rem;
+  display: inline-block;
+`;
 
 function TimesheetRowList() {
+  const {
+    params: { id },
+  } = useRouteMatch();
+  console.log(id);
+  let test = id;
+  console.log(test);
+  const timesheetRowsState = useSelector(
+    (state) => state.timesheetRows.timesheetsRows
+  );
+  let timesheetRows = [];
+  if (timesheetRowsState !== null) {
+    timesheetRows = timesheetRowsState;
+  }
+  console.log(timesheetRows);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    dispatch(fetchRowsPerTimeSheet(test));
+  }, [dispatch]);
 
-    const timesheetRows = useSelector(state => state.timesheetRows.timesheetsRows)
-    console.log(timesheetRows)
-    const dispatch = useDispatch();
-    React.useEffect(() => {
-        dispatch(fetchNewsFeedPosts())
-    }, [dispatch])
-
-    if (timesheetRows === undefined) {
-        return (
-            <Spinner animation="border" variant="primary">
-                <span className="sr-only">Loading...</span>
-            </Spinner>
-        )
-    }  
-
-
+  if (timesheetRows === undefined) {
     return (
-
-        <div>
-
-            {timesheetRows.map((timesheetRow) => (
-
-                <TimesheetRow key={timesheetRow.id} timesheetRow={timesheetRow}></TimesheetRow>
-            ))}
-
-        </div>
+      <Spinner animation="border" variant="primary">
+        <span className="sr-only">Loading...</span>
+      </Spinner>
     );
+  }
 
-
-    // const dispatch = useDispatch();
-    // const timesheetState = useSelector((state) => state.comments?.[timesheet.id]);
-    // const timesheetsRows = timesheetState?.data || [];
-    // const isLoading = timesheetState?.isLoading ?? false;
-    // const cursor = timesheetState?.cursor;
-    // const hasMore = !!(timesheetsRows.length && cursor)
-
-
-    // return (
-    //     <Container>
-    //         <div>
-    //         {timesheetsRows.map((timesheetsRow) => (
-    //             <TimesheetRow key={timesheetsRow?.id} timesheetsRow={timesheetsRow} timesheetId={timesheet} />
-    //         ))}
-
-    //         {(hasMore) && cursor !==null && (<LoadMoreButton onClick={() => {
-    //             dispatch(getRowsForTimesheet(timesheet.id))
-    //         }}>
-    //             {timesheetsRows.length > 0 ? 'Show more timesheets' : 'Show comments'}
-    //         </LoadMoreButton>
-    //         )}
-    //         </div>
-    //     </Container>
-    // )
+  return (
+    <div>
+      {timesheetRows.map((timesheetRow) => (
+        <TimesheetRow
+          key={timesheetRow.id}
+          timesheetRow={timesheetRow}
+        ></TimesheetRow>
+      ))}
+    </div>
+  );
 }
 
-export { TimesheetRowList }
+export { TimesheetRowList };
+
+// const timesheet = getTimesheetById({ timesheetId: test })
+// console.log(timesheet)
+// const current = [];
+// const currentRows = [];
+// timesheet.then((timesheetRow) => {
+//     let content = timesheetRow;
+//     current.push(content);
+// });
+// console.log(current)
+// const dispatch = useDispatch();
+// React.useEffect(() => {
+//     dispatch(getRowsForTimesheet(test))
+// }, [dispatch])
+
+// const rows = useSelector(state => state.timesheetRows.timesheetsRows) || [];
+// // rows.then((value) => {
+// //     let content = value;
+// //     currentRows.push(content);
+// // });
+// const testArray = [];
+// testArray.push(1,2,3,4)
+// console.log(testArray)
+// console.log(currentRows[0])
+// console.log((currentRows))

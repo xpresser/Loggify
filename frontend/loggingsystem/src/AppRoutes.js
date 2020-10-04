@@ -5,6 +5,7 @@ import { AllTimesheetsPage } from "./pages/AllTimesheetsPage";
 import { LoginPage } from "./pages/Auth/LoginPage";
 import { RegisterPage } from "./pages/Auth/RegisterPage";
 import { InitialCreateTimesheetPage } from "./pages/CreateTimesheets";
+import { TimesheetForms } from "./pages/TimesheetForms.js/index.js";
 import { ViewTimesheetPage } from "./pages/ViewTimesheetPage";
 
 const AppRoutes = () => {
@@ -16,6 +17,7 @@ const AppRoutes = () => {
         <Route path="/" exact component={AllTimesheetsPage} />
         <Route path="/timesheet/:id" exact component={ViewTimesheetPage} />
         <Route path="/timesheets" exact component={AllTimesheetsPage} />
+        <Route path="/createnext/:id" exact component={TimesheetForms} />
         <Route path="/create" exact component={InitialCreateTimesheetPage} />
         <Redirect to="/" />
       </Switch>

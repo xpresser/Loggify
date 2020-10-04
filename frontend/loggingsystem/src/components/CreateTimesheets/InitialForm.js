@@ -1,19 +1,23 @@
 import React from "react";
 import styled from "styled-components";
 import moment from "moment";
-import { Button, Spinner } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Formik } from "formik";
-import { createTimesheet } from "src/store/slices/timesheets.js";
 import { getCurrentUser } from "src/api/users";
-import { fetchUser } from "src/store/slices/auth";
+import { createNewTimesheet } from "src/api/timesheets";
 
 const Container = styled.div`
-  width: 1200px;
-  margin: 100px auto;
+  background: white;
+  padding: 1rem;
+  width: 50rem;
+  margin: 4rem auto;
   height: 20rem;
   box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   text-align: center;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const SubContainer = styled.div`
@@ -41,7 +45,8 @@ const InitialForm = () => {
     let content = value;
     current.push(value);
   });
-
+  let timesheetId = null;
+  let id = null;
   const currentDay = date.getDay();
 
   const initialFormState = {
@@ -79,7 +84,10 @@ const InitialForm = () => {
           <Formik
             initialValues={initialFormState}
             onSubmit={async (values) => {
-              await createTimesheet(values)(dispatch);
+              console.log(values);
+              timesheetId = await createNewTimesheet(values);
+              id = timesheetId.id;
+              window.location.href = `createnext/${id}`;
             }}
           >
             <Form>
@@ -150,6 +158,7 @@ const InitialForm = () => {
       initialFormState.authorId = current[0].id;
       console.log(e);
     };
+
     return (
       <Container>
         <h1 style={{ fontSize: "4rem" }}>Create Timesheet</h1>
@@ -157,7 +166,10 @@ const InitialForm = () => {
           <Formik
             initialValues={initialFormState}
             onSubmit={async (values) => {
-              await createTimesheet(values)(dispatch);
+              console.log(values);
+              timesheetId = await createNewTimesheet(values);
+              id = timesheetId.id;
+              window.location.href = `createnext/${id}`;
             }}
           >
             <Form>
@@ -181,7 +193,7 @@ const InitialForm = () => {
                   {renderDates[4].value}
                 </option>
               </select>
-              <Button type="submit" style={StyledNext}>
+              <Button onClick={onSubmitClick} type="submit" style={StyledNext}>
                 Next
               </Button>
             </Form>
