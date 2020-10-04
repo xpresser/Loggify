@@ -1,27 +1,14 @@
 import React, { useState } from "react";
 import { Modal, Button } from "react-bootstrap";
 import styled from "styled-components";
+import { deleteTimesheetById } from "../../../api/timesheets";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const StyledButton = styled.button`
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 0.5rem;
-  margin: 0.5rem;
-  padding: 0 1rem;
-`;
-
-const StyledNoButton = styled(Button)`
-  margin-right: 2rem;
-  padding: 0.375rem 2rem;
-`;
-
 const StyledYesButton = styled(Button)`
-  margin-right: 14rem;
   padding: 0.375rem 2rem;
 `;
 
@@ -33,51 +20,46 @@ const DeleteButton = ({ user, timesheet }) => {
 
   //this would be replaced with function from backend
   const deleteTimesheet = () => {
-    console.log(user.timesheets.timesheets.length);
-    for (let i = 0; i < user.timesheets.timesheets.length; i++) {
-      if (user.timesheets.timesheets[i].id === timesheet.id) {
-        user.timesheets.timesheets.splice(i, 1);
-      }
-    }
-    console.log(user.timesheets.timesheets.length);
+    deleteTimesheetById({ timesheetId: timesheet.id });
+    window.location.reload();
     handleClose();
   };
 
   return (
     <div>
-      {timesheet.status === "Open" ? (
+      {timesheet.status === "OPEN" ? (
         <Container>
-          <StyledButton
-            style={{ backgroundColor: "#F6ABAB" }}
-            onClick={handleShow}
-          >
+          <Button variant={"danger"} className={"m-1"} onClick={handleShow}>
             Delete
-          </StyledButton>
+          </Button>
 
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
               <Modal.Title>
-                Are you sure you want to delete timesheet for Week{" "}
-                {timesheet.week} ?
+                <p className={"text-danger"}>Delete timesheet?</p>
               </Modal.Title>
             </Modal.Header>
-
+            <Modal.Body>
+              Are you sure you want to delete timesheet for week{" "}
+              {timesheet.startingDate}?
+            </Modal.Body>
             <Modal.Footer>
-              <StyledYesButton variant="primary" onClick={deleteTimesheet}>
+              <StyledYesButton
+                className="btn btn-danger"
+                block
+                onClick={deleteTimesheet}
+              >
                 {" "}
-                Yes
+                Delete
               </StyledYesButton>
-
-              <StyledNoButton variant="secondary" onClick={handleClose}>
-                {" "}
-                No{" "}
-              </StyledNoButton>
             </Modal.Footer>
           </Modal>
         </Container>
       ) : (
         <Container>
-          <StyledButton disabled={true}>Delete</StyledButton>
+          <Button variant={"danger"} className={"m-1"} disabled={true}>
+            Delete
+          </Button>
         </Container>
       )}
     </div>

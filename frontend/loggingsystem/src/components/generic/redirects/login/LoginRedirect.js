@@ -5,10 +5,10 @@ import { RedirectLink } from "../RedirectLink.styled";
 
 const LoginRedirect = () => {
   return (
-    <div>
+    <div style={{ textAlign: "center" }}>
       <RedirectQuestion>Don't have an account?</RedirectQuestion>
       <Link to={{ pathname: `/signup` }}>
-        <RedirectLink>Register</RedirectLink>
+        <RedirectLink style={{ fontWeight: "bold" }}>Register</RedirectLink>
       </Link>
     </div>
   );
