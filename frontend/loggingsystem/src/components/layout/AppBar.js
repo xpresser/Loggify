@@ -4,6 +4,7 @@ import { Navbar, Nav, Button } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
 
 import { logout } from "src/store/slices/auth";
+import { NavbarUserName } from "../generic/NavbarUserName/NavbarUserName.styled";
 
 const AppBar = () => {
   const user = useSelector((state) => state.auth.user);
@@ -19,7 +20,7 @@ const AppBar = () => {
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
-            <NavbarUserName>User: {user.fullName} </NavbarUserName>
+            <NavbarUserName>User: {user.username} </NavbarUserName>
             <Nav.Link eventKey="1" as={NavLink} to="/timesheets" exact>
               All timesheets
             </Nav.Link>
