@@ -19,9 +19,9 @@ how many hours they have worked during this week. There is also an option to rec
 spring.datasource.username=yourUsername
 spring.datasource.password=yourPassword
 ```   
-* Run LoggingSystemApplication  
+* Run Backend LoggingSystemApplication  
 * Run Frontend with 'npm start'  
-* Access application on http://localhost:8080  
+* Access application on http://localhost:3000  
   
 #### Authors  
 Metodi Vladimirov  
