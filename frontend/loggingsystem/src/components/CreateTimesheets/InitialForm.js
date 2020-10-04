@@ -21,7 +21,7 @@ const Container = styled.div`
 `;
 
 const SubContainer = styled.div`
-  padding-top: 5rem;
+  padding-top: 1rem;
   width: 100%;
   height: 5rem;
 `;
@@ -162,6 +162,7 @@ const InitialForm = () => {
     return (
       <Container>
         <h1 style={{ fontSize: "4rem" }}>Create Timesheet</h1>
+        <p className="text-center mt-4">Please select a week:</p>
         <SubContainer>
           <Formik
             initialValues={initialFormState}
