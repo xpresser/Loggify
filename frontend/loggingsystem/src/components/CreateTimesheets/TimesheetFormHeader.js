@@ -82,7 +82,7 @@ const TimesheetHeader = () => {
     dispatch(fetchCurrentTimeSheet(test));
   }, [dispatch]);
 
-  console.log(timesheetState.totalHours);
+  //console.log(timesheetState.totalHours);
 
   return (
     <SubContainer>
@@ -93,12 +93,12 @@ const TimesheetHeader = () => {
         <Button style={DeleteButtonStyled}>DELETE</Button>
         <Button
           onClick={() => {
-            updateTimesheet({
-              timesheetId: id,
-              status: "OPEN",
-              authorId: timesheetState.authorId,
-              totalHours: timesheetState.totalHours,
-            });
+            // updateTimesheet({
+            //   timesheetId: id,
+            //   status: "OPEN",
+            //   authorId: timesheetState.authorId,
+            //   totalHours: timesheetState.totalHours,
+            // });
           }}
           style={SaveButtonStyled}
         >

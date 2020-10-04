@@ -9,12 +9,14 @@ import { NavbarUserName } from "../generic/NavbarUserName/NavbarUserName.styled"
 const AppBar = () => {
   const user = useSelector((state) => state.auth.user);
   const dispatch = useDispatch();
-
   if (user) {
+    if (user.username === undefined) {
+      window.location.reload();
+    }
     return (
       <Navbar bg="dark" variant="dark" fixed="top" expand="sm">
         <Navbar.Brand as={NavLink} to="/">
-          DevCamp
+          Loggify
         </Navbar.Brand>
 
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
@@ -44,7 +46,7 @@ const AppBar = () => {
     return (
       <Navbar bg="dark" variant="dark" fixed="top" expand="sm">
         <Navbar.Brand as={NavLink} to="/">
-          DevCamp
+          Loggify
         </Navbar.Brand>
       </Navbar>
     );
