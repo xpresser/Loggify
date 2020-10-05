@@ -46,6 +46,7 @@ export const updateTimesheet = async ({
   status,
   totalHours,
   startingDate,
+  authorId,
 }) => {
   const res = await axios.put(
     `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}`,
@@ -53,6 +54,7 @@ export const updateTimesheet = async ({
       status,
       totalHours,
       startingDate,
+      authorId,
     }
   );
 
