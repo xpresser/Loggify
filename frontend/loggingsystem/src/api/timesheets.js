@@ -1,7 +1,7 @@
 import axios from "axios";
 import { REACT_APP_API_URL } from "src/constants/mainConstants";
 
-export const getTimesheetById = async ({ timesheetId }) => {
+export const getTimesheetById = async (timesheetId) => {
   const res = await axios.get(
     `${REACT_APP_API_URL}/api/v1/timesheets/${timesheetId}`
   );

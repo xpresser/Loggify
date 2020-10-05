@@ -61,47 +61,23 @@ const TimesheetHeader = () => {
   console.log(id);
   let test = id;
 
-  // const initialFormState = {
-  //     timesheetId: timesheets.id,
-  //     status: "SUBMITTED", totalHours:
-  //     timesheets.totalHours,
-  //     authorId : timesheets.authorId
-  // };
+  const timesheetState = useSelector((state) => state.timesheets.updateSheet);
+  const testSheet = timesheetState?.[0] || [];
 
-  const timesheetState = useSelector(
-    (state) => state.timesheets.updateSheet.results
-  );
-
-  console.log(timesheetState);
   const dispatch = useDispatch();
-  // let timesheets = [];
-  // if(timesheetState !== null){
-  //     timesheets = timesheetState
   // }
   React.useEffect(() => {
     dispatch(fetchCurrentTimeSheet(test));
   }, [dispatch]);
 
-  //console.log(timesheetState.totalHours);
-
   return (
     <SubContainer>
       <TimeSheetInfo>
-        <h5>Timesheet for Week 20.04.2020</h5>
+        <h5>Timesheet for week : {testSheet.startingDate}</h5>
       </TimeSheetInfo>
       <ButtoneLayout>
         <Button style={DeleteButtonStyled}>DELETE</Button>
-        <Button
-          onClick={() => {
-            // updateTimesheet({
-            //   timesheetId: id,
-            //   status: "OPEN",
-            //   authorId: timesheetState.authorId,
-            //   totalHours: timesheetState.totalHours,
-            // });
-          }}
-          style={SaveButtonStyled}
-        >
+        <Button onClick={() => {}} style={SaveButtonStyled}>
           SAVE
         </Button>
         <Button style={SubmitButtonStyled}>SUBMIT</Button>
