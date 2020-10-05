@@ -10,24 +10,23 @@ import { createNewTimesheet } from "src/api/timesheets";
 const Container = styled.div`
   background: white;
   padding: 1rem;
-  width: 50rem;
   margin: 4rem auto;
-  height: 20rem;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
   text-align: center;
   border: none;
   border-radius: 10px;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2),
+    0 1rem 2rem 0 rgba(0, 0, 0, 0.2);
 `;
 
 const SubContainer = styled.div`
   padding-top: 1rem;
-  width: 100%;
-  height: 5rem;
 `;
 
 const StyledNext = {
-  marginTop: "2rem",
+  fontWeight: "bold",
+  width: "6rem",
+  display: "block",
+  margin: "2rem auto",
 };
 
 const InitialForm = () => {
@@ -78,8 +77,8 @@ const InitialForm = () => {
     });
 
     return (
-      <Container>
-        <h1 style={{ fontSize: "4rem" }}>Create Timesheet</h1>
+      <Container className={"col-md-6 col-md-offset-3"}>
+        <h1>Create Timesheet</h1>
         <SubContainer>
           <Formik
             initialValues={initialFormState}
