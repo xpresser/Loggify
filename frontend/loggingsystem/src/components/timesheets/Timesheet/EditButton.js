@@ -1,23 +1,25 @@
 import React from "react";
 import styled from "styled-components";
+import Button from "react-bootstrap/Button";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
 `;
 
-const Button = styled.button`
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 0.5rem;
-  margin: 0.5rem;
-  padding: 0 1.2rem;
-`;
-
-const EditButton = () => {
+const EditButton = ({ timesheetId }) => {
   return (
     <Container>
-      <Button>Edit</Button>
+      <Button
+        onClick={(e) => {
+          window.location.href = `/createnext/${timesheetId}`;
+        }}
+        variant={"info"}
+        className={"m-1"}
+        style={{ border: "1px solid black" }}
+      >
+        Edit
+      </Button>
     </Container>
   );
 };

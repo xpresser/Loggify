@@ -22,7 +22,7 @@ const Timesheet = ({ user, timesheet }) => {
       </CustomCol>
       <CustomCol sm="2" xs="2">
         {timesheet.status === "OPEN" ? (
-          <EditButton />
+          <EditButton timesheetId={timesheet.id} />
         ) : (
           <ViewButton timesheet={timesheet} />
         )}

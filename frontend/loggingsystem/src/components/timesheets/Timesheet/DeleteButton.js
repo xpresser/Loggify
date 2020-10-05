@@ -29,7 +29,12 @@ const DeleteButton = ({ user, timesheet }) => {
     <div>
       {timesheet.status === "OPEN" ? (
         <Container>
-          <Button variant={"danger"} className={"m-1"} onClick={handleShow}>
+          <Button
+            variant={"danger"}
+            className={"m-1"}
+            onClick={handleShow}
+            style={{ border: "1px solid black" }}
+          >
             Delete
           </Button>
 

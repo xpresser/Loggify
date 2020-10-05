@@ -1,18 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Button from "react-bootstrap/Button";
 
 const Container = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const Button = styled.button`
-  font-size: 14px;
-  font-weight: bold;
-  border-radius: 0.5rem;
-  margin: 0.5rem;
-  padding: 0 1rem;
 `;
 
 const StyledLink = styled(Link)`
@@ -22,10 +15,14 @@ const StyledLink = styled(Link)`
 const ViewButton = ({ timesheet }) => {
   return (
     <Container>
-      <Button>
-        <StyledLink to={{ pathname: `/timesheet/${timesheet.id}` }}>
-          View
-        </StyledLink>
+      <Button
+        variant={"success"}
+        className={"m-1"}
+        style={{ border: "1px solid black" }}
+        as={Link}
+        to={{ pathname: `/timesheet/${timesheet.id}` }}
+      >
+        View
       </Button>
     </Container>
   );
