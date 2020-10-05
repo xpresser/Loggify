@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signIn, signUp, signOut } from "src/api/auth";
+import { getCurrentUser } from "src/api/users";
 
 const userInitialState = localStorage.getItem("token")
   ? {
@@ -9,6 +10,7 @@ const userInitialState = localStorage.getItem("token")
   : null;
 
 const initialState = {
+  users: [],
   user: userInitialState,
   error: null,
   isLoading: null,
@@ -33,6 +35,19 @@ const { reducer: authReducer, actions } = createSlice({
       state.error = action.payload;
     },
     logOut: () => ({ ...initialState, user: null }),
+    fetchUserStart: (state) => {
+      state.isGetting = true;
+    },
+    fetchfetchUserStartSuccess: (state, action) => {
+      state.isGetting = false;
+      state.users.unshift(action.payload);
+      state.error = null;
+    },
+    fetchTfetchUserStartFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    reset: () => initialState,
   },
 });
 
@@ -96,4 +111,23 @@ export const logout = () => {
   };
 };
 
+export const fetchCurrentUser = (userId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(actions.fetchUserStart());
+      console.log(userId);
+      const results = await getCurrentUser(userId);
+      console.log(results);
+      console.log(results);
+      dispatch(actions.fetchfetchUserStartSuccess(results));
+    } catch (err) {
+      dispatch(
+        actions.fetchTfetchUserStartFailure(err?.response?.data?.message)
+      );
+    }
+  };
+};
+
 export const { logOut } = actions;
+
+export const resetUser = actions.reset;

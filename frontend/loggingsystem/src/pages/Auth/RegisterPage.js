@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { AuthTitle } from "src/components/generic/AuthTitle/AuthTitle.styled";
@@ -14,6 +14,7 @@ const RegisterPage = () => {
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
   const history = useHistory();
+  const [show, setShow] = useState(true);
 
   return (
     <Card
@@ -39,6 +40,8 @@ const RegisterPage = () => {
           }}
           onSubmit={(values) => {
             dispatch(register(values));
+            // <Alert variant="success">Successfully Created User!</Alert>
+            window.location.href = "/login";
           }}
           validationSchema={SignupValidationSchema}
         >
@@ -46,7 +49,12 @@ const RegisterPage = () => {
             return (
               <Form>
                 {error && (
-                  <Alert variant={"danger"} dismissible>
+                  <Alert
+                    show={show}
+                    variant={"danger"}
+                    onClose={() => setShow(false)}
+                    dismissible
+                  >
                     {error}
                   </Alert>
                 )}

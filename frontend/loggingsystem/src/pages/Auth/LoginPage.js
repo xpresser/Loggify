@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { AuthTitle } from "src/components/generic/AuthTitle/AuthTitle.styled";
@@ -12,6 +12,7 @@ const LoginPage = () => {
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
+  const [show, setShow] = useState(true);
 
   return (
     <Card
@@ -39,7 +40,12 @@ const LoginPage = () => {
             return (
               <Form>
                 {error && (
-                  <Alert variant="danger" dismissible>
+                  <Alert
+                    show={show}
+                    variant="danger"
+                    onClose={() => setShow(false)}
+                    dismissible
+                  >
                     {error}
                   </Alert>
                 )}
