@@ -112,7 +112,7 @@ const InitialForm = () => {
                 </option>
               </select>
 
-              <Button type="submit" style={StyledNext}>
+              <Button block type="submit" style={StyledNext}>
                 Next
               </Button>
             </Form>
@@ -194,7 +194,7 @@ const InitialForm = () => {
                   {renderDates[4].value}
                 </option>
               </select>
-              <Button type="submit" style={StyledNext}>
+              <Button block type="submit" style={StyledNext}>
                 Next
               </Button>
             </Form>

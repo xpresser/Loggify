@@ -28,7 +28,7 @@ const TimesheetHeader = () => {
     fontSize: "1rem",
     margin: "1rem",
     padding: "0.25rem 1rem",
-    border: "none",
+    border: "1px solid black",
     borderRradius: "3px",
     float: "right",
     backgroundColor: "green",
@@ -38,10 +38,10 @@ const TimesheetHeader = () => {
     fontSize: "1rem",
     margin: "1rem",
     padding: "0.25rem 1rem",
-    border: "none",
     borderRradius: "3px",
     float: "right",
     color: "black",
+    border: "1px solid black",
     backgroundColor: "yellow",
   };
 
@@ -49,8 +49,8 @@ const TimesheetHeader = () => {
     fontSize: "1rem",
     margin: "1rem",
     padding: "0.25rem 1rem",
-    border: "none",
-    borderRradius: "3px",
+    border: "1px solid black",
+    borderRadius: "4px",
     float: "right",
     backgroundColor: "red",
   };

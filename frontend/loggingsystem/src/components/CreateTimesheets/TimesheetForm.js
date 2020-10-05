@@ -6,9 +6,13 @@ import { TimesheetBottom } from "./TimesheetFormBottom";
 import { TimesheetHeader } from "./TimesheetFormHeader";
 
 const Container = styled.div`
-  width: 1200px;
+  width: 80%;
   margin: 100px auto;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  padding: 1%;
+  background-color: white;
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2);
 `;
 
 const TimesheetForm = ({ timesheet }) => {
