@@ -5,12 +5,14 @@ import styled from "styled-components";
 import { timesheets as timesheet } from "../mocks/timesheets";
 import { ViewTimesheetRow } from "../components/TimeSheetRows/ViewTimesheetRow";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRowsPerTimeSheet } from "../store/slices/timeSheetRows";
 import {
-  TimesheetBottom,
-  TimesheetFormBody,
-} from "../components/CreateTimesheets";
-import { fetchCurrentTimeSheet } from "../store/slices/timesheets";
+  fetchRowsPerTimeSheet,
+  refreshRowsState,
+  resetTimesheetsRow,
+} from "../store/slices/timeSheetRows";
+import { fetchCurrentTimeSheet, resetSheets } from "../store/slices/timesheets";
+import { ViewTimesheetFormBody } from "../components/TimeSheetRows/ViewTimesheetFormBody";
+import { ViewTimesheetBottom } from "../components/TimeSheetRows/ViewTimesheetBottom";
 
 const CustomCol = styled(Col)`
   border: 1px solid grey;
@@ -45,6 +47,13 @@ const ViewTimesheetPage = () => {
   }
   console.log(timesheetRows);
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(resetTimesheetsRow());
+    };
+  }, [dispatch]);
+
   React.useEffect(() => {
     dispatch(fetchRowsPerTimeSheet(test));
   }, [dispatch]);
@@ -72,7 +81,7 @@ const ViewTimesheetPage = () => {
       <h1 className={"text-center mb-4"}>
         Timesheet for week {testSheet.startingDate}:
       </h1>
-      <TimesheetFormBody />
+      <ViewTimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
         <div
@@ -92,7 +101,7 @@ const ViewTimesheetPage = () => {
             />
           ))
       )}
-      <TimesheetBottom />
+      <ViewTimesheetBottom timesheetRows={timesheetRows} />
     </div>
   );
 };

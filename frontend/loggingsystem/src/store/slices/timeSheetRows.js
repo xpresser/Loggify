@@ -47,3 +47,5 @@ export const fetchRowsPerTimeSheet = (timesheetId) => {
     }
   };
 };
+
+export const resetTimesheetsRow = actions.reset;

@@ -1,12 +1,14 @@
 import React from "react";
 import { Col, Container, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects, fetchTasks } from "../../store/slices/seeds";
 
-export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
+export const ViewTimesheetRow = ({ timesheetRow }) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
     textAlign: "center",
-    height: "3rem",
+    height: "5rem",
   };
 
   const secondColRightStyle = {
@@ -14,7 +16,7 @@ export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
     textAlign: "center",
-    height: "3rem",
+    height: "5rem",
   };
 
   const StyledDropButton = {
@@ -33,17 +35,45 @@ export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
     marginTop: "0.45rem",
   };
 
+  function calcTotalHours() {
+    return (
+      timesheetRow.mondayHours +
+      timesheetRow.tuesdayHours +
+      timesheetRow.wednesdayHours +
+      timesheetRow.thursdayHours +
+      timesheetRow.fridayHours +
+      timesheetRow.saturdayHours +
+      timesheetRow.sundayHours
+    );
+  }
+
+  const projectsState = useSelector((state) => state.seeds.projects);
+  const projects = projectsState?.[0] || [];
+  const tasksState = useSelector((state) => state.seeds.tasks);
+  const tasks = tasksState?.[0] || [];
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
+  let timesheetProject = projects[timesheetRow.projectId];
+  let taskProject = tasks[timesheetRow.taskId];
+
   return (
     <Container>
       <div>
-        {console.log(timesheetRow)}
         <Row fluid="md">
-          <Col style={secondColStyle} xs={1}></Col>
           <Col style={secondColStyle} xs={2}>
-            <p>DevCamp</p>
+            {timesheetProject ? <p>{timesheetProject.name}</p> : null}
           </Col>
           <Col style={secondColStyle} xs={2}>
-            <p>Administrative</p>
+            {taskProject ? <p>{timesheetProject.name}</p> : null}
           </Col>
           <Col style={secondColStyle}>
             <p style={StyledInput} size="1.5">
@@ -80,7 +110,7 @@ export const ViewTimesheetRow = ({ timesheet, timesheetRow }) => {
               {timesheetRow.sundayHours}
             </p>
           </Col>
-          <Col style={secondColRightStyle}>{timesheetRow.totalHours}</Col>
+          <Col style={secondColRightStyle}>{calcTotalHours()}</Col>
         </Row>
       </div>
     </Container>
