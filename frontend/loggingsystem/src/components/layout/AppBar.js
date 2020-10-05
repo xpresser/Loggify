@@ -48,14 +48,17 @@ const AppBar = () => {
         <Navbar.Brand as={NavLink} to="/">
           Loggify
         </Navbar.Brand>
-        <Nav className="ml-auto">
-          <Nav.Link eventKey="1" as={NavLink} to="/login" exact>
-            Sing in
-          </Nav.Link>
-          <Nav.Link eventKey="2" as={NavLink} to="/signup" exact>
-            Sing up
-          </Nav.Link>
-        </Nav>
+        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+        <Navbar.Collapse id="responsive-navbar-nav">
+          <Nav className="ml-auto">
+            <Nav.Link eventKey="1" as={NavLink} to="/login" exact>
+              Sing in
+            </Nav.Link>
+            <Nav.Link eventKey="2" as={NavLink} to="/signup" exact>
+              Sing up
+            </Nav.Link>
+          </Nav>
+        </Navbar.Collapse>
       </Navbar>
     );
   }

@@ -17,13 +17,12 @@ const LoginPage = () => {
     <Card
       className={"col-md-6 col-md-offset-3"}
       style={{
-        width: "35rem",
         margin: "0 auto",
         marginTop: "3rem",
         border: "none",
         borderRadius: "10px",
         boxShadow:
-          "0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2)",
+          "0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 2rem 0 rgba(0, 0, 0, 0.2)",
       }}
     >
       <AuthTitle style={{ textAlign: "center" }}>Login</AuthTitle>
@@ -55,7 +54,7 @@ const LoginPage = () => {
                   type="submit"
                   style={{
                     fontWeight: "bold",
-                    width: "30%",
+                    width: "6rem",
                     display: "block",
                     margin: "0 auto",
                   }}
