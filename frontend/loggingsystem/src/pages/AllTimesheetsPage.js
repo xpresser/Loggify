@@ -10,7 +10,6 @@ const AllTimesheetsPage = () => {
   if (user === undefined) {
     window.location.reload();
   }
-  console.log(user);
   const currentUser = user.toString();
   const getLoggedUser = getCurrentUser(currentUser);
   const current = [];
