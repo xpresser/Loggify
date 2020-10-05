@@ -107,9 +107,14 @@ public class TimesheetServiceBean implements TimesheetService {
         if (timesheetById == null) {
             throw new TimesheetNotFoundException();
         }
+        Optional<User> user = userRepository.findById(updatedTimesheet.getAuthorId());
 
+        if(user.isEmpty()){
+            throw new UserNotFoundException();
+        }
         Timesheet timesheet = this.modelMapper.map(timesheetById, Timesheet.class);
         Timesheet newTimesheet = this.modelMapper.map(updatedTimesheet, Timesheet.class);
+        timesheet.setUser(user.get());
 
         this.update(timesheet, newTimesheet);
 
@@ -159,6 +164,6 @@ public class TimesheetServiceBean implements TimesheetService {
     private void update(Timesheet oldTimesheet, Timesheet newTimesheet) {
         oldTimesheet.setRows(newTimesheet.getRows());
         oldTimesheet.setTotalHours(newTimesheet.getTotalHours());
-        oldTimesheet.setUser(newTimesheet.getUser());
+        oldTimesheet.setStatus(newTimesheet.getStatus());
     }
 }

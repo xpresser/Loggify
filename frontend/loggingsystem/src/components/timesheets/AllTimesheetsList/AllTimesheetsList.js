@@ -15,7 +15,6 @@ const AllTimesheetsList = () => {
   if (user === undefined || testUser === undefined) {
     window.location.reload();
   }
-  console.log(user);
   const currentUser = user.toString();
   const dispatch = useDispatch();
   React.useEffect(() => {

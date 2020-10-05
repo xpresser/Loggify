@@ -82,7 +82,7 @@ public class TimesheetRow extends BaseEntity {
         this.mondayHours = updated.getMondayHours();
         this.tuesdayHours = updated.getTuesdayHours();
         this.wednesdayHours = updated.getWednesdayHours();
-        this.thursdayHours = updated.thursdayHours;
+        this.thursdayHours = updated.getThursdayHours();
         this.fridayHours = updated.getFridayHours();
         this.saturdayHours = updated.getSaturdayHours();
         this.sundayHours = updated.getSundayHours();
