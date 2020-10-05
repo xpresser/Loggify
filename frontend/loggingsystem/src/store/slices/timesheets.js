@@ -71,9 +71,7 @@ export const fetchCurrentTimeSheet = (timesheetId) => {
   return async (dispatch) => {
     try {
       dispatch(actions.fetchTimesheetStart());
-      console.log(timesheetId);
       const results = await getTimesheetById(timesheetId);
-      console.log(results);
       dispatch(actions.fetchTimesheetSuccess(results));
     } catch (err) {
       dispatch(actions.fetchTimesheetFailure(err.response.data.message));

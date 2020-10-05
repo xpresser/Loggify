@@ -68,3 +68,15 @@ export const deleteTimesheetById = async ({ timesheetId }) => {
 
   return res.data;
 };
+
+export const getAllTasks = async () => {
+  const res = await axios.get(`${REACT_APP_API_URL}/api/v1/tasks`);
+
+  return res.data;
+};
+
+export const getAllProjects = async () => {
+  const res = await axios.get(`${REACT_APP_API_URL}/api/v1/projects`);
+
+  return res.data;
+};

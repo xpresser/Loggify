@@ -60,7 +60,6 @@ const TimesheetHeader = () => {
   const {
     params: { id },
   } = useRouteMatch();
-  console.log(id);
   let test = id;
 
   const dispatch = useDispatch();
@@ -70,10 +69,7 @@ const TimesheetHeader = () => {
   const testUserState = useSelector((state) => state?.auth.users);
   const testUser = testUserState?.[0] || [];
   const isLoading = testUserState?.isLoading ?? false;
-  console.log(user);
-  console.log(testUser);
   const currentUser = user.toString();
-  console.log(currentUser);
   React.useEffect(() => {
     dispatch(fetchCurrentUser(currentUser));
   }, [dispatch]);
@@ -82,16 +78,9 @@ const TimesheetHeader = () => {
     dispatch(fetchCurrentTimeSheet(test));
   }, [dispatch]);
 
-  console.log(testSheet);
   const sheetId = testSheet.id;
   const totalHours = testSheet.totalHours;
   const testId = testUser.id;
-
-  console.log(testId);
-
-  console.log(sheetId);
-  console.log(totalHours);
-  console.log(testId);
 
   return (
     <SubContainer>

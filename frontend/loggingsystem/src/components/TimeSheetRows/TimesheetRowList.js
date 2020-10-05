@@ -19,9 +19,7 @@ function TimesheetRowList() {
   const {
     params: { id },
   } = useRouteMatch();
-  console.log(id);
   let test = id;
-  console.log(test);
   const timesheetRowsState = useSelector(
     (state) => state.timesheetRows.timesheetsRows
   );
@@ -29,7 +27,6 @@ function TimesheetRowList() {
   if (timesheetRowsState !== null) {
     timesheetRows = timesheetRowsState;
   }
-  console.log(timesheetRows);
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchRowsPerTimeSheet(test));

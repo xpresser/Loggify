@@ -41,7 +41,6 @@ export const fetchRowsPerTimeSheet = (timesheetId) => {
     try {
       dispatch(actions.fetchrowsStart());
       const results = await getTimeSheetRowsForTimeSheet({ timesheetId });
-      console.log(results);
       dispatch(actions.fetchrowsSuccess({ results }));
     } catch (err) {
       dispatch(actions.fetchrowsFailure(err?.response.data.message));

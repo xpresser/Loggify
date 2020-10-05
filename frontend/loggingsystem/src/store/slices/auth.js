@@ -115,10 +115,7 @@ export const fetchCurrentUser = (userId) => {
   return async (dispatch) => {
     try {
       dispatch(actions.fetchUserStart());
-      console.log(userId);
       const results = await getCurrentUser(userId);
-      console.log(results);
-      console.log(results);
       dispatch(actions.fetchfetchUserStartSuccess(results));
     } catch (err) {
       dispatch(
