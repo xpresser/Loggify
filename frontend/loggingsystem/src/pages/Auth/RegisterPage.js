@@ -40,6 +40,7 @@ const RegisterPage = () => {
           }}
           onSubmit={(values) => {
             dispatch(register(values));
+            // <Alert variant="success">Successfully Created User!</Alert>
             window.location.href = "/login";
           }}
           validationSchema={SignupValidationSchema}

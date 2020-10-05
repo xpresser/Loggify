@@ -39,6 +39,7 @@ const { reducer: timesheetReducer, actions } = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    reset: () => initialState,
   },
 });
 
@@ -79,3 +80,5 @@ export const fetchCurrentTimeSheet = (timesheetId) => {
     }
   };
 };
+
+export const resetSheets = actions.reset;
