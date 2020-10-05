@@ -10,6 +10,7 @@ import {
   TimesheetBottom,
   TimesheetFormBody,
 } from "../components/CreateTimesheets";
+import { fetchCurrentTimeSheet } from "../store/slices/timesheets";
 
 const CustomCol = styled(Col)`
   border: 1px solid grey;
@@ -48,6 +49,13 @@ const ViewTimesheetPage = () => {
     dispatch(fetchRowsPerTimeSheet(test));
   }, [dispatch]);
 
+  const timesheetState = useSelector((state) => state.timesheets.updateSheet);
+  const testSheet = timesheetState?.[0] || [];
+
+  React.useEffect(() => {
+    dispatch(fetchCurrentTimeSheet(test));
+  }, [dispatch]);
+
   console.log(timesheetRows);
   return (
     <div
@@ -62,12 +70,16 @@ const ViewTimesheetPage = () => {
       }}
     >
       <h1 className={"text-center mb-4"}>
-        Timesheet for week {timesheet.timesheets[0].week}:
+        Timesheet for week {testSheet.startingDate}:
       </h1>
       <TimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
-        <div className="alert alert-info" role="alert">
+        <div
+          className="alert alert-info m-auto"
+          style={{ width: "86%" }}
+          role="alert"
+        >
           This timesheet do not have any rows!
         </div>
       ) : (
