@@ -1,6 +1,7 @@
 import React from "react";
 import { Col, Container, Row, Dropdown, Button } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
 
 const TimesheetRow = ({ timesheetRow }) => {
   const secondColStyle = {
@@ -33,6 +34,21 @@ const TimesheetRow = ({ timesheetRow }) => {
   const StyledInput = {
     marginTop: "0.45rem",
   };
+
+  const projectsState = useSelector((state) => state.seeds.projects);
+  const projects = projectsState?.[0] || [];
+  const tasksState = useSelector((state) => state.seeds.tasks);
+  const tasks = tasksState?.[0] || [];
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
 
   return (
     <Container>

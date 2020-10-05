@@ -3,7 +3,8 @@ import { Col, Container, Row, Dropdown, Button } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
 library.add(faTrash);
 
 const TimesheetRow = ({ timesheetRow }) => {
