@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getCurrentUser } from "src/api/users";
+import { resetSheets } from "src/store/slices/timesheets";
 import { PageCaption } from "../components/generic/PageCaption/PageCaption.styled";
 import { AllTimesheetsList } from "../components/timesheets/AllTimesheetsList/AllTimesheetsList";
-import { user } from "../mocks/user";
 
 const AllTimesheetsPage = () => {
-  const [loggedUser, setUser] = useState(user);
+  const user = useSelector((state) => state.auth.user.username);
+  if (user === undefined) {
+    window.location.reload();
+  }
+  console.log(user);
+  const currentUser = user.toString();
+  const getLoggedUser = getCurrentUser(currentUser);
+  const current = [];
+  getLoggedUser.then((value) => {
+    let content = value;
+    current.push(value);
+  });
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    return () => {
+      dispatch(resetSheets());
+    };
+  }, [dispatch]);
 
   return (
     <div>
       <PageCaption>Your timesheets:</PageCaption>
-      <AllTimesheetsList user={loggedUser} />
+      <AllTimesheetsList user={current[0]} />
     </div>
   );
 };
