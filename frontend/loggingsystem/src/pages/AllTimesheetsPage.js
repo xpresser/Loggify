@@ -18,14 +18,6 @@ const AllTimesheetsPage = () => {
     current.push(value);
   });
 
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    return () => {
-      dispatch(resetSheets());
-    };
-  }, [dispatch]);
-
   return (
     <div>
       <PageCaption>Your timesheets:</PageCaption>

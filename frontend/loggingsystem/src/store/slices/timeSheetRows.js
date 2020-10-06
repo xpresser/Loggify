@@ -31,6 +31,7 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    reset: () => initialState,
   },
 });
 
@@ -47,3 +48,5 @@ export const fetchRowsPerTimeSheet = (timesheetId) => {
     }
   };
 };
+
+export const resetTimesheetsRow = actions.reset;

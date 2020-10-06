@@ -5,12 +5,14 @@ import styled from "styled-components";
 import { timesheets as timesheet } from "../mocks/timesheets";
 import { ViewTimesheetRow } from "../components/TimeSheetRows/ViewTimesheetRow";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchRowsPerTimeSheet } from "../store/slices/timeSheetRows";
 import {
-  TimesheetBottom,
-  TimesheetFormBody,
-} from "../components/CreateTimesheets";
-import { fetchCurrentTimeSheet } from "../store/slices/timesheets";
+  fetchRowsPerTimeSheet,
+  refreshRowsState,
+  resetTimesheetsRow,
+} from "../store/slices/timeSheetRows";
+import { fetchCurrentTimeSheet, resetSheets } from "../store/slices/timesheets";
+import { ViewTimesheetFormBody } from "../components/TimeSheetRows/ViewTimesheetFormBody";
+import { ViewTimesheetBottom } from "../components/TimeSheetRows/ViewTimesheetBottom";
 
 const CustomCol = styled(Col)`
   border: 1px solid grey;
@@ -36,6 +38,7 @@ const ViewTimesheetPage = () => {
   console.log(id);
   let test = id;
   console.log(test);
+
   const timesheetRowsState = useSelector(
     (state) => state.timesheetRows.timesheetsRows
   );
@@ -44,7 +47,13 @@ const ViewTimesheetPage = () => {
     timesheetRows = timesheetRowsState;
   }
   console.log(timesheetRows);
+
   const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(resetTimesheetsRow());
+  }, [dispatch]);
+
   React.useEffect(() => {
     dispatch(fetchRowsPerTimeSheet(test));
   }, [dispatch]);
@@ -55,6 +64,10 @@ const ViewTimesheetPage = () => {
   React.useEffect(() => {
     dispatch(fetchCurrentTimeSheet(test));
   }, [dispatch]);
+
+  if (timesheetRows === undefined) {
+    return <div>Loading...</div>;
+  }
 
   console.log(timesheetRows);
   return (
@@ -72,14 +85,10 @@ const ViewTimesheetPage = () => {
       <h1 className={"text-center mb-4"}>
         Timesheet for week {testSheet.startingDate}:
       </h1>
-      <TimesheetFormBody />
+      <ViewTimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
-        <div
-          className="alert alert-info m-auto"
-          style={{ width: "86%" }}
-          role="alert"
-        >
+        <div className="alert alert-info" role="alert">
           This timesheet do not have any rows!
         </div>
       ) : (
@@ -92,7 +101,7 @@ const ViewTimesheetPage = () => {
             />
           ))
       )}
-      <TimesheetBottom />
+      <ViewTimesheetBottom timesheetRows={timesheetRows} />
     </div>
   );
 };
