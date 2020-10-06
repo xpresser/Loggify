@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTimeSheetRowsForTimeSheet } from "src/api";
+import { createTimeSheetRow } from "../../api/timeSheetRows";
 
 const initialState = {
   timesheetsRows: [],
@@ -31,6 +32,18 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    createtimesheetsRowstart: (state) => {
+      state.isLoading = true;
+    },
+    createtimesheetsRowsuccess: (state, action) => {
+      state.isLoading = false;
+      state.timesheetsRows.push(action.payload);
+      state.error = null;
+    },
+    createPostFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
     reset: () => initialState,
   },
 });
@@ -45,6 +58,42 @@ export const fetchRowsPerTimeSheet = (timesheetId) => {
       dispatch(actions.fetchrowsSuccess({ results }));
     } catch (err) {
       dispatch(actions.fetchrowsFailure(err?.response.data.message));
+    }
+  };
+};
+
+export const createTheRow = ({
+  timeSheetId,
+  projectId,
+  taskId,
+  mondayHours,
+  tuesdayHours,
+  wednesdayHours,
+  thursdayHours,
+  fridayHours,
+  saturdayHours,
+  sundayHours,
+  totalHours,
+}) => {
+  return async (dispatch) => {
+    try {
+      dispatch(actions.createtimesheetsRowstart());
+      const createdPost = await createTimeSheetRow({
+        timeSheetId,
+        projectId,
+        taskId,
+        mondayHours,
+        tuesdayHours,
+        wednesdayHours,
+        thursdayHours,
+        fridayHours,
+        saturdayHours,
+        sundayHours,
+        totalHours,
+      });
+      dispatch(actions.createtimesheetsRowsuccess(createdPost));
+    } catch (err) {
+      dispatch(actions.createPostFailure(err?.response?.data?.message));
     }
   };
 };

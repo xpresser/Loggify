@@ -46,11 +46,7 @@ export const fetchProjects = () => {
   return async (dispatch) => {
     try {
       dispatch(actions.fetchProjectStart());
-      {
-        console.log("test");
-      }
       const results = await getAllProjects();
-      console.log(results);
       dispatch(actions.fetchProjectSuccess(results));
     } catch (err) {
       dispatch(actions.fetchProjectFailure(err?.response?.data?.message));
@@ -63,7 +59,6 @@ export const fetchTasks = () => {
     try {
       dispatch(actions.fetchTasksStart());
       const results = await getAllTasks();
-      console.log(results);
       dispatch(actions.fetchTasksSuccess(results));
     } catch (err) {
       dispatch(actions.fetchProjectFailure(err?.response?.data?.message));
