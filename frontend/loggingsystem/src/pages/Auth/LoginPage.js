@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { AuthTitle } from "src/components/generic/AuthTitle/AuthTitle.styled";
@@ -6,13 +6,18 @@ import { LoginValidationSchema } from "src/validations/schemas/login";
 import { TextInputField } from "src/components/generic/TextInputField/TextInputField";
 import { LoginRedirect } from "src/components/generic/redirects/login/LoginRedirect";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "src/store/slices/auth";
+import { login, resetErrors } from "src/store/slices/auth";
 
 const LoginPage = () => {
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetErrors());
+    };
+  }, []);
 
   return (
     <Card
@@ -40,9 +45,11 @@ const LoginPage = () => {
               <Form>
                 {error && (
                   <Alert
-                    show={show}
+                    show={!!error}
                     variant="danger"
-                    onClose={() => setShow(false)}
+                    onClose={() => {
+                      dispatch(resetErrors());
+                    }}
                     dismissible
                   >
                     {error}

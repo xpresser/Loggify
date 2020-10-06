@@ -29,15 +29,19 @@ public class DataBaseSeeder implements ApplicationRunner {
     private void seedDatabase() {
         Projects[] projects = Projects.values();
         Tasks[] tasks = Tasks.values();
-        for (Projects value : projects) {
-            Project project = new Project();
-            project.setName(value);
-            projectRepository.save(project);
+        if (projectRepository.findAll().isEmpty()) {
+            for (Projects value : projects) {
+                Project project = new Project();
+                project.setName(value);
+                projectRepository.save(project);
+            }
         }
-        for (Tasks value : tasks) {
-            Task task = new Task();
-            task.setName(value);
-            taskRepository.save(task);
+        if (taskRepository.findAll().isEmpty()) {
+            for (Tasks value : tasks) {
+                Task task = new Task();
+                task.setName(value);
+                taskRepository.save(task);
+            }
         }
     }
 

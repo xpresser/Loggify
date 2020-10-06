@@ -1,9 +1,11 @@
 package com.devcamp.loggingsystem.config;
 
+import com.devcamp.loggingsystem.exception.DuplicateUsernameException;
 import com.devcamp.loggingsystem.exception.ResourceNotFoundException;
 import com.devcamp.loggingsystem.exception.TimeSheetRowNotFoundException;
 import com.devcamp.loggingsystem.exception.TimesheetNotFoundException;
 import com.devcamp.loggingsystem.exception.UserNotFoundException;
+import com.devcamp.loggingsystem.exception.DuplicateEmailException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -35,6 +37,18 @@ public class ControllerValidationHandler {
     public ResponseEntity<String> userNotFoundException(UserNotFoundException exception) {
 
         return new ResponseEntity<>(exception.getMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(DuplicateUsernameException.class)
+    public ResponseEntity<String> duplicateUsernameException(DuplicateUsernameException exception) {
+
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<String> duplicateEmailException(DuplicateEmailException exception) {
+
+        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     /**
