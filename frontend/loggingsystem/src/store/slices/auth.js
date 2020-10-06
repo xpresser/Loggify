@@ -14,7 +14,7 @@ const initialState = {
   user: userInitialState,
   error: null,
   isLoading: null,
-  isSessionChecked: false,
+  messages: {},
 };
 
 const { reducer: authReducer, actions } = createSlice({
@@ -32,6 +32,7 @@ const { reducer: authReducer, actions } = createSlice({
     registerSuccess: (state, action) => {
       state.isLoading = false;
       state.error = null;
+      state.messages.userCreated = "User successfully created!";
     },
     authFailure: (state, action) => {
       state.isLoading = false;
@@ -54,6 +55,9 @@ const { reducer: authReducer, actions } = createSlice({
     reset: () => initialState,
     resetErrors: (state) => {
       state.error = null;
+    },
+    resetMessages: (state) => {
+      state.messages = {};
     },
   },
 });
@@ -138,6 +142,12 @@ export const fetchCurrentUser = (userId) => {
 export const resetErrors = () => {
   return async (dispatch) => {
     dispatch(actions.resetErrors());
+  };
+};
+
+export const resetMessages = () => {
+  return async (dispatch) => {
+    dispatch(actions.resetMessages());
   };
 };
 
