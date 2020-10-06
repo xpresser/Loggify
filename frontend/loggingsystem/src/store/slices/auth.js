@@ -48,6 +48,9 @@ const { reducer: authReducer, actions } = createSlice({
       state.error = action.payload;
     },
     reset: () => initialState,
+    resetErrors: (state) => {
+      state.error = null;
+    },
   },
 });
 
@@ -95,7 +98,7 @@ export const register = ({ fullName, username, email, password }) => {
       });
       dispatch(actions.authSuccess(user));
     } catch (err) {
-      dispatch(actions.authFailure(err?.response?.data?.message));
+      dispatch(actions.authFailure(err?.response?.data));
     }
   };
 };
@@ -122,6 +125,12 @@ export const fetchCurrentUser = (userId) => {
         actions.fetchTfetchUserStartFailure(err?.response?.data?.message)
       );
     }
+  };
+};
+
+export const resetErrors = () => {
+  return async (dispatch) => {
+    dispatch(actions.resetErrors());
   };
 };
 
