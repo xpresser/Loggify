@@ -54,8 +54,8 @@ const TimesheetRow = ({ timesheetRow }) => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
-  let timesheetProject = projects[timesheetRow.projectId];
-  let taskProject = tasks[timesheetRow.taskId];
+  let timesheetProject = projects[timesheetRow.projectId - 1];
+  let taskProject = tasks[timesheetRow.taskId - 1];
 
   console.log(timesheetProject);
   return (

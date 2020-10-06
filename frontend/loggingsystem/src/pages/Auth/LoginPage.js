@@ -6,16 +6,18 @@ import { LoginValidationSchema } from "src/validations/schemas/login";
 import { TextInputField } from "src/components/generic/TextInputField/TextInputField";
 import { LoginRedirect } from "src/components/generic/redirects/login/LoginRedirect";
 import { useSelector, useDispatch } from "react-redux";
-import { login, resetErrors } from "src/store/slices/auth";
+import { login, resetErrors, resetMessages } from "src/store/slices/auth";
 
 const LoginPage = () => {
   const error = useSelector((state) => state.auth.error);
+  const messages = useSelector((state) => state.auth.messages);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
 
   useEffect(() => {
     return () => {
       dispatch(resetErrors());
+      dispatch(resetMessages());
     };
   }, []);
 
@@ -55,6 +57,16 @@ const LoginPage = () => {
                     {error}
                   </Alert>
                 )}
+                <Alert
+                  show={messages.hasOwnProperty("userCreated")}
+                  variant="success"
+                  onClose={() => {
+                    dispatch(resetMessages());
+                  }}
+                  dismissible
+                >
+                  {messages.userCreated}
+                </Alert>
                 <TextInputField name="username" label="Username" />
                 <TextInputField
                   name="password"

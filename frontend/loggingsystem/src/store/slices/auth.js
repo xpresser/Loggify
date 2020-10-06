@@ -14,7 +14,7 @@ const initialState = {
   user: userInitialState,
   error: null,
   isLoading: null,
-  isSessionChecked: false,
+  messages: {},
 };
 
 const { reducer: authReducer, actions } = createSlice({
@@ -24,10 +24,15 @@ const { reducer: authReducer, actions } = createSlice({
     authStart: (state) => {
       state.isLoading = false;
     },
-    authSuccess: (state, action) => {
+    loginSuccess: (state, action) => {
       state.isLoading = false;
       state.user = action.payload;
       state.error = null;
+    },
+    registerSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+      state.messages.userCreated = "User successfully created!";
     },
     authFailure: (state, action) => {
       state.isLoading = false;
@@ -51,6 +56,9 @@ const { reducer: authReducer, actions } = createSlice({
     resetErrors: (state) => {
       state.error = null;
     },
+    resetMessages: (state) => {
+      state.messages = {};
+    },
   },
 });
 
@@ -72,7 +80,7 @@ export const login = ({ username, password }) => {
       localStorage.setItem("token", token);
       localStorage.setItem("username", username);
 
-      dispatch(actions.authSuccess(res.data));
+      dispatch(actions.loginSuccess(res.data));
     } catch (err) {
       dispatch(actions.authFailure(err?.response?.data));
     }
@@ -96,9 +104,12 @@ export const register = ({ fullName, username, email, password }) => {
         email,
         password,
       });
-      dispatch(actions.authSuccess(user));
+
+      dispatch(actions.registerSuccess());
+      return true;
     } catch (err) {
       dispatch(actions.authFailure(err?.response?.data));
+      return false;
     }
   };
 };
@@ -131,6 +142,12 @@ export const fetchCurrentUser = (userId) => {
 export const resetErrors = () => {
   return async (dispatch) => {
     dispatch(actions.resetErrors());
+  };
+};
+
+export const resetMessages = () => {
+  return async (dispatch) => {
+    dispatch(actions.resetMessages());
   };
 };
 

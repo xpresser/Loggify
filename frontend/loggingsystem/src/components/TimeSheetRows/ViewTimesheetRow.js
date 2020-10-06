@@ -62,8 +62,8 @@ export const ViewTimesheetRow = ({ timesheetRow }) => {
     dispatch(fetchTasks());
   }, [dispatch]);
 
-  let timesheetProject = projects[timesheetRow.projectId];
-  let taskProject = tasks[timesheetRow.taskId];
+  let timesheetProject = projects[timesheetRow.projectId - 1];
+  let taskProject = tasks[timesheetRow.taskId - 1];
 
   return (
     <Container>
@@ -73,7 +73,7 @@ export const ViewTimesheetRow = ({ timesheetRow }) => {
             {timesheetProject ? <p>{timesheetProject.name}</p> : null}
           </Col>
           <Col style={secondColStyle} xs={2}>
-            {taskProject ? <p>{timesheetProject.name}</p> : null}
+            {taskProject ? <p>{taskProject.name}</p> : null}
           </Col>
           <Col style={secondColStyle}>
             <p style={StyledInput} size="1.5">
