@@ -1,7 +1,6 @@
 package com.devcamp.loggingsystem.controller;
 
-import com.devcamp.loggingsystem.exception.ForbiddenTimesheetDeletion;
-import com.devcamp.loggingsystem.exception.UserSignUpException;
+import com.devcamp.loggingsystem.exception.DuplicateEmailException;
 import com.devcamp.loggingsystem.service.AuthenticationService;
 import com.devcamp.loggingsystem.service.dto.login.LoginRequestDTO;
 import com.devcamp.loggingsystem.service.dto.login.LoginResponseDTO;
@@ -84,8 +83,8 @@ public class AuthenticationController {
         SecurityContextHolder.getContext().setAuthentication(null);
     }
 
-    @ExceptionHandler(UserSignUpException.class)
-    public ResponseEntity<String> handleUserSignUpException(UserSignUpException e) {
+    @ExceptionHandler(DuplicateEmailException.class)
+    public ResponseEntity<String> handleUserSignUpException(DuplicateEmailException e) {
         return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
     }
 }

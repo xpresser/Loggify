@@ -7,11 +7,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * @author - Mikael Parsekyan
  */
 @ResponseStatus(code = HttpStatus.BAD_REQUEST, reason = "User with this email already exists!")
-public class UserSignUpException extends RuntimeException {
+public class DuplicateEmailException extends RuntimeException {
 
-    private static final String EXCEPTION_MESSAGE = "User with this email already exists!";
-
-    public UserSignUpException() {
-        super(EXCEPTION_MESSAGE);
+    public DuplicateEmailException(String message) {
+        super(message);
     }
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { Card, Button, Alert } from "react-bootstrap";
 import { Formik, Form } from "formik";
 import { AuthTitle } from "src/components/generic/AuthTitle/AuthTitle.styled";
@@ -6,15 +6,18 @@ import { SignupValidationSchema } from "src/validations/schemas/register";
 import { TextInputField } from "src/components/generic/TextInputField/TextInputField";
 import { SignupRedirect } from "src/components/generic/redirects/register/SignupRedirect";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "src/store/slices/auth";
-import { useHistory } from "react-router-dom";
+import { register, resetErrors } from "src/store/slices/auth";
 
 const RegisterPage = () => {
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
-  const history = useHistory();
-  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetErrors());
+    };
+  }, []);
 
   return (
     <Card
@@ -39,8 +42,6 @@ const RegisterPage = () => {
           }}
           onSubmit={(values) => {
             dispatch(register(values));
-            // <Alert variant="success">Successfully Created User!</Alert>
-            window.location.href = "/login";
           }}
           validationSchema={SignupValidationSchema}
         >
@@ -49,9 +50,11 @@ const RegisterPage = () => {
               <Form>
                 {error && (
                   <Alert
-                    show={show}
+                    show={!!error}
                     variant={"danger"}
-                    onClose={() => setShow(false)}
+                    onClose={() => {
+                      dispatch(resetErrors());
+                    }}
                     dismissible
                   >
                     {error}
