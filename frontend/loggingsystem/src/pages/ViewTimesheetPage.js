@@ -70,25 +70,31 @@ const ViewTimesheetPage = () => {
   }
 
   console.log(timesheetRows);
+
   return (
     <div
       style={{
-        width: "80%",
         margin: "0 auto",
-        padding: "1%",
+        marginTop: "3rem",
         border: "none",
         borderRadius: "10px",
         boxShadow:
-          "0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2)",
+          "0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 2rem 0 rgba(0, 0, 0, 0.2)",
       }}
     >
-      <h1 className={"text-center mb-4"}>
+      <h1 className={"text-center m-4"}>
         Timesheet for week {testSheet.startingDate}:
       </h1>
       <ViewTimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
-        <div className="alert alert-info" role="alert">
+        <div
+          className="alert alert-info"
+          role="alert"
+          style={{
+            margin: "0 auto",
+          }}
+        >
           This timesheet do not have any rows!
         </div>
       ) : (
