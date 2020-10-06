@@ -31,6 +31,7 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    reset: () => initialState,
   },
 });
 

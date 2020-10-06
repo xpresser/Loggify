@@ -38,6 +38,7 @@ const ViewTimesheetPage = () => {
   console.log(id);
   let test = id;
   console.log(test);
+
   const timesheetRowsState = useSelector(
     (state) => state.timesheetRows.timesheetsRows
   );
@@ -46,12 +47,11 @@ const ViewTimesheetPage = () => {
     timesheetRows = timesheetRowsState;
   }
   console.log(timesheetRows);
+
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    return () => {
-      dispatch(resetTimesheetsRow());
-    };
+    dispatch(resetTimesheetsRow());
   }, [dispatch]);
 
   React.useEffect(() => {
@@ -64,6 +64,10 @@ const ViewTimesheetPage = () => {
   React.useEffect(() => {
     dispatch(fetchCurrentTimeSheet(test));
   }, [dispatch]);
+
+  if (timesheetRows === undefined) {
+    return <div>Loading...</div>;
+  }
 
   console.log(timesheetRows);
   return (
@@ -84,11 +88,7 @@ const ViewTimesheetPage = () => {
       <ViewTimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
-        <div
-          className="alert alert-info m-auto"
-          style={{ width: "86%" }}
-          role="alert"
-        >
+        <div className="alert alert-info" role="alert">
           This timesheet do not have any rows!
         </div>
       ) : (
