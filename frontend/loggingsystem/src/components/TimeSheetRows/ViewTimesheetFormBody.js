@@ -7,6 +7,8 @@ const ViewTimesheetFormBody = () => {
     borderTop: "1px solid black",
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
+    display: "flex",
+    justifyContent: "center",
   };
 
   const colRightStyle = {
@@ -14,8 +16,9 @@ const ViewTimesheetFormBody = () => {
     borderRight: "1px solid black",
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
-    textAlign: "center",
     height: "4rem",
+    display: "flex",
+    justifyContent: "center",
   };
 
   const secondColStyle = {

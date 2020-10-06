@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { timesheets as timesheet } from "../mocks/timesheets";
@@ -74,8 +74,8 @@ const ViewTimesheetPage = () => {
   return (
     <div
       style={{
-        margin: "0 auto",
-        marginTop: "3rem",
+        margin: "3rem auto",
+        paddingTop: "0.5rem",
         border: "none",
         borderRadius: "10px",
         boxShadow:
@@ -88,15 +88,27 @@ const ViewTimesheetPage = () => {
       <ViewTimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
-        <div
-          className="alert alert-info"
-          role="alert"
+        <Row
           style={{
-            margin: "0 auto",
+            display: "flex",
+            justifyContent: "center",
           }}
         >
-          This timesheet do not have any rows!
-        </div>
+          <Col sm={10} xs={12}>
+            <div
+              className="alert alert-info"
+              role="alert"
+              style={{
+                width: "92%",
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              This timesheet do not have any rows!
+            </div>
+          </Col>
+        </Row>
       ) : (
         timesheetRows
           .filter((value) => value.timesheetId === timesheet.id)
