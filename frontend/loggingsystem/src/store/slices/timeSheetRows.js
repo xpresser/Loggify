@@ -44,7 +44,7 @@ export const fetchRowsPerTimeSheet = (timesheetId) => {
       const results = await getTimeSheetRowsForTimeSheet({ timesheetId });
       dispatch(actions.fetchrowsSuccess({ results }));
     } catch (err) {
-      dispatch(actions.fetchrowsFailure(err?.response.data.message));
+      dispatch(actions.fetchrowsFailure(err?.response?.data?.message));
     }
   };
 };

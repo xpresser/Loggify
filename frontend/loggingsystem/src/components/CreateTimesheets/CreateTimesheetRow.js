@@ -39,6 +39,25 @@ const TimesheetRow = ({ timesheetRow }) => {
     marginTop: "0.45rem",
   };
 
+  const projectsState = useSelector((state) => state.seeds.projects);
+  const projects = projectsState?.[0] || [];
+  const tasksState = useSelector((state) => state.seeds.tasks);
+  const tasks = tasksState?.[0] || [];
+
+  const dispatch = useDispatch();
+
+  React.useEffect(() => {
+    dispatch(fetchProjects());
+  }, [dispatch]);
+
+  React.useEffect(() => {
+    dispatch(fetchTasks());
+  }, [dispatch]);
+
+  let timesheetProject = projects[timesheetRow.projectId];
+  let taskProject = tasks[timesheetRow.taskId];
+
+  console.log(timesheetProject);
   return (
     <Container>
       <div>
@@ -52,28 +71,28 @@ const TimesheetRow = ({ timesheetRow }) => {
             </button>
           </Col>
           <Col style={secondColStyle} xs={2}>
-            <Dropdown>
-              <Dropdown.Toggle style={StyledDropButton} id="dropdown-basic">
-                Select Project
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            <select style={{ marginTop: "0.5rem", width: "8.5rem" }}>
+              {projects.map((project) => (
+                <option key={project.id} value={project.name}>
+                  {project.name}
+                </option>
+              ))}
+              {timesheetProject ? (
+                <option selected>{timesheetProject.name}</option>
+              ) : null}
+            </select>
           </Col>
           <Col style={secondColStyle} xs={2}>
-            <Dropdown>
-              <Dropdown.Toggle style={StyledDropButton} id="dropdown-basic">
-                Select Project
-              </Dropdown.Toggle>
-              <Dropdown.Menu>
-                <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-                <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-                <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-              </Dropdown.Menu>
-            </Dropdown>
+            <select style={{ marginTop: "0.5rem", width: "8.5rem" }}>
+              {tasks.map((task) => (
+                <option key={task.id} value={task.name}>
+                  {task.name}
+                </option>
+              ))}
+              {taskProject ? (
+                <option selected>{taskProject.name}</option>
+              ) : null}
+            </select>
           </Col>
           <Col style={secondColStyle}>
             <input
