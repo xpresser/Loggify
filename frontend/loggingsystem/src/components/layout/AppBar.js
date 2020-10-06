@@ -52,10 +52,10 @@ const AppBar = () => {
         <Navbar.Collapse id="responsive-navbar-nav">
           <Nav className="ml-auto">
             <Nav.Link eventKey="1" as={NavLink} to="/login" exact>
-              Sing in
+              Sign in
             </Nav.Link>
             <Nav.Link eventKey="2" as={NavLink} to="/signup" exact>
-              Sing up
+              Sign up
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>

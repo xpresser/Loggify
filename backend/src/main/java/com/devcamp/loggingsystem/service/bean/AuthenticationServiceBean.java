@@ -1,7 +1,8 @@
 package com.devcamp.loggingsystem.service.bean;
 
+import com.devcamp.loggingsystem.exception.DuplicateUsernameException;
 import com.devcamp.loggingsystem.exception.ResourceNotFoundException;
-import com.devcamp.loggingsystem.exception.UserSignUpException;
+import com.devcamp.loggingsystem.exception.DuplicateEmailException;
 import com.devcamp.loggingsystem.persistence.entity.User;
 import com.devcamp.loggingsystem.persistence.repository.UserRepository;
 import com.devcamp.loggingsystem.service.AuthenticationService;
@@ -15,6 +16,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 /**
  * @author Metodi Vladimirov
@@ -43,12 +46,20 @@ public class AuthenticationServiceBean implements AuthenticationService {
     }
 
     @Override
-    public UserResponseDTO register(UserRequestDTO userRequestDTO) throws UserSignUpException {
+    public UserResponseDTO register(UserRequestDTO userRequestDTO) throws DuplicateEmailException {
 
-        User userByEmail = this.userRepository.findUserByEmail(userRequestDTO.getEmail());
+        Optional<User> userByEmail = this.userRepository
+                .findUserByEmail(userRequestDTO.getEmail());
 
-        if (userByEmail != null) {
-            throw new UserSignUpException();
+        if (userByEmail.isPresent()) {
+            throw new DuplicateEmailException("User with this email already exists!");
+        }
+
+        Optional<User> userByUsername = this.userRepository
+                .findByUsername(userRequestDTO.getUsername());
+
+        if (userByUsername.isPresent()) {
+            throw new DuplicateUsernameException("User with this username already exists!");
         }
 
         User userToRegister = this.modelMapper.map(userRequestDTO, User.class);
@@ -67,10 +78,10 @@ public class AuthenticationServiceBean implements AuthenticationService {
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
         User user = this.userRepository
                 .findByUsername(loginRequestDTO.getUsername())
-                .orElseThrow(() -> new ResourceNotFoundException("No existing username or password"));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid username or password"));
 
         if (!bCryptPasswordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
-            throw new ResourceNotFoundException("No existing username or password");
+            throw new ResourceNotFoundException("Invalid username or password");
         }
 
         log.info("Successfully logged user: {} in the system", user.getUsername());
