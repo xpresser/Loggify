@@ -78,10 +78,10 @@ public class AuthenticationServiceBean implements AuthenticationService {
     public LoginResponseDTO login(LoginRequestDTO loginRequestDTO) {
         User user = this.userRepository
                 .findByUsername(loginRequestDTO.getUsername())
-                .orElseThrow(() -> new ResourceNotFoundException("No existing username or password"));
+                .orElseThrow(() -> new ResourceNotFoundException("Invalid username or password"));
 
         if (!bCryptPasswordEncoder.matches(loginRequestDTO.getPassword(), user.getPassword())) {
-            throw new ResourceNotFoundException("No existing username or password");
+            throw new ResourceNotFoundException("Invalid username or password");
         }
 
         log.info("Successfully logged user: {} in the system", user.getUsername());
