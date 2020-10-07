@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
 library.add(faTrash);
 
-const TimesheetRow = ({ timesheetRow }) => {
+const TimesheetRow = ({ timesheetRow, setMondayTotalHours }) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
@@ -43,6 +43,40 @@ const TimesheetRow = ({ timesheetRow }) => {
     marginTop: "0.45rem",
   };
 
+  const [mondayHoursRows, setMondayHoursRows] = React.useState(
+    timesheetRow.mondayHours
+  );
+  const [tuesdayHoursRows, setTuesdayHoursRows] = React.useState(
+    timesheetRow.tuesdayHours
+  );
+  const [wednesdayHoursRows, setWednesdayHoursRows] = React.useState(
+    timesheetRow.wednesdayHours
+  );
+  const [thursdayHoursRows, setThursdayHoursRows] = React.useState(
+    timesheetRow.thursdayHours
+  );
+  const [fridayHoursRows, setFridayHoursRows] = React.useState(
+    timesheetRow.fridayHours
+  );
+  const [saturdayHoursRows, setSaturdayHoursRows] = React.useState(
+    timesheetRow.saturdayHours
+  );
+  const [sundayHoursRows, setSundayHoursRows] = React.useState(
+    timesheetRow.sundayHours
+  );
+
+  function calcTotal() {
+    return (
+      mondayHoursRows +
+      tuesdayHoursRows +
+      wednesdayHoursRows +
+      thursdayHoursRows +
+      fridayHoursRows +
+      saturdayHoursRows +
+      sundayHoursRows
+    );
+  }
+
   const projectsState = useSelector((state) => state.seeds.projects);
   const projects = projectsState?.[0] || [];
   const tasksState = useSelector((state) => state.seeds.tasks);
@@ -67,14 +101,14 @@ const TimesheetRow = ({ timesheetRow }) => {
       <div>
         {console.log(timesheetRow)}
         <Row fluid="md">
-          <Col style={secondColStyle}>
+          <Col style={secondColStyle} xs={1}>
             <button className="btn btn-primary" style={StyledDeleteButton}>
               <span>
                 <FontAwesomeIcon icon="trash"></FontAwesomeIcon>
               </span>
             </button>
           </Col>
-          <Col style={secondColStyle}>
+          <Col style={secondColStyle} xs={2}>
             <select style={{ marginTop: "0.5rem", width: "8.5rem" }}>
               {projects.map((project) => (
                 <option key={project.id} value={project.name}>
@@ -86,7 +120,7 @@ const TimesheetRow = ({ timesheetRow }) => {
               ) : null}
             </select>
           </Col>
-          <Col style={secondColStyle} sm={0}>
+          <Col style={secondColStyle} xs={2}>
             <select style={{ marginTop: "0.5rem", width: "8.5rem" }}>
               {tasks.map((task) => (
                 <option key={task.id} value={task.name}>
@@ -98,58 +132,86 @@ const TimesheetRow = ({ timesheetRow }) => {
               ) : null}
             </select>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={mondayHoursRows}
+              onChange={(e) => {
+                let hours = parseInt(e.target.value);
+                setMondayHoursRows(hours);
+                setMondayTotalHours(hours);
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.mondayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={tuesdayHoursRows}
+              onChange={(e) => {
+                setTuesdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.tuesdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={wednesdayHoursRows}
+              onChange={(e) => {
+                setWednesdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.wednesdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={thursdayHoursRows}
+              onChange={(e) => {
+                setThursdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.thursdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={fridayHoursRows}
+              onChange={(e) => {
+                setFridayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.fridayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={saturdayHoursRows}
+              onChange={(e) => {
+                setSaturdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.saturdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
+              value={sundayHoursRows}
+              onChange={(e) => {
+                setSundayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.sundayHours}
             ></input>
           </Col>
-          <Col style={secondColRightStyle} sm={1} xs={1}>
-            {timesheetRow.totalHours}
-          </Col>
+          <Col style={secondColRightStyle}>{calcTotal()}</Col>
         </Row>
       </div>
     </Container>

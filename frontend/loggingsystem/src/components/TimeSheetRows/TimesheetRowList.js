@@ -15,7 +15,7 @@ const LoadMoreButton = styled.span`
   display: inline-block;
 `;
 
-function TimesheetRowList() {
+function TimesheetRowList({ setMondayTotalHours }) {
   const {
     params: { id },
   } = useRouteMatch();
@@ -46,6 +46,7 @@ function TimesheetRowList() {
         <TimesheetRow
           key={timesheetRow.id}
           timesheetRow={timesheetRow}
+          setMondayTotalHours={setMondayTotalHours}
         ></TimesheetRow>
       ))}
     </div>
