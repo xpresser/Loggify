@@ -5,6 +5,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
+import { deleteTheRow } from "../../store/slices/timeSheetRows";
 library.add(faTrash);
 
 const TimesheetRow = ({ timesheetRow }) => {
@@ -13,8 +14,6 @@ const TimesheetRow = ({ timesheetRow }) => {
     borderBottom: "1px solid black",
     textAlign: "center",
     height: "3rem",
-    display: "flex",
-    justifyContent: "center",
   };
 
   const secondColRightStyle = {
@@ -23,8 +22,6 @@ const TimesheetRow = ({ timesheetRow }) => {
     borderBottom: "1px solid black",
     textAlign: "center",
     height: "3rem",
-    display: "flex",
-    justifyContent: "center",
   };
 
   const StyledDropButton = {
@@ -67,14 +64,20 @@ const TimesheetRow = ({ timesheetRow }) => {
       <div>
         {console.log(timesheetRow)}
         <Row fluid="md">
-          <Col style={secondColStyle}>
-            <button className="btn btn-primary" style={StyledDeleteButton}>
+          <Col style={secondColStyle} xs={1}>
+            <button
+              onClick={() => {
+                dispatch(deleteTheRow(timesheetRow?.id));
+              }}
+              className="btn btn-primary"
+              style={StyledDeleteButton}
+            >
               <span>
                 <FontAwesomeIcon icon="trash"></FontAwesomeIcon>
               </span>
             </button>
           </Col>
-          <Col style={secondColStyle}>
+          <Col style={secondColStyle} xs={2}>
             <select style={{ marginTop: "0.5rem", width: "8.5rem" }}>
               {projects.map((project) => (
                 <option key={project.id} value={project.name}>
@@ -86,7 +89,7 @@ const TimesheetRow = ({ timesheetRow }) => {
               ) : null}
             </select>
           </Col>
-          <Col style={secondColStyle} sm={0}>
+          <Col style={secondColStyle} xs={2}>
             <select style={{ marginTop: "0.5rem", width: "8.5rem" }}>
               {tasks.map((task) => (
                 <option key={task.id} value={task.name}>
@@ -98,58 +101,56 @@ const TimesheetRow = ({ timesheetRow }) => {
               ) : null}
             </select>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.mondayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.tuesdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.wednesdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.thursdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.fridayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.saturdayHours}
             ></input>
           </Col>
-          <Col style={secondColStyle} sm={1} xs={1}>
+          <Col style={secondColStyle}>
             <input
               style={StyledInput}
               size="1.5"
               value={timesheetRow.sundayHours}
             ></input>
           </Col>
-          <Col style={secondColRightStyle} sm={1} xs={1}>
-            {timesheetRow.totalHours}
-          </Col>
+          <Col style={secondColRightStyle}>{timesheetRow.totalHours}</Col>
         </Row>
       </div>
     </Container>
