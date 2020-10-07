@@ -122,28 +122,28 @@ const ViewTimesheetBottom = ({ timesheetRows }) => {
           <Col style={BottomColStyle} xs={4}>
             <h6 style={StyledRowTextInput}>Total</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcMondayTotal()}</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcTuesdayTotal()}</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcWednesdayTotal()}</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcThursdayTotal()}</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcFridayTotal()}</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcSaturdayTotal()}</h6>
           </Col>
-          <Col style={BottomColStyle}>
+          <Col style={BottomColStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcSundayTotal()}</h6>
           </Col>
-          <Col style={BottomColRightStyle}>
+          <Col style={BottomColRightStyle} xs={1}>
             <h6 style={StyledRowTextInput}>{calcTotal()}</h6>
           </Col>
         </Row>
