@@ -15,7 +15,17 @@ const LoadMoreButton = styled.span`
   display: inline-block;
 `;
 
-function TimesheetRowList({ setMondayTotalHours }) {
+function TimesheetRowList({
+  hours: {
+    setMondayHoursRows,
+    setTuesdayHoursRows,
+    setWednesdayHoursRows,
+    setThursdayHoursRows,
+    setFridayHoursRows,
+    setSaturdayHoursRows,
+    setSundayHoursRows,
+  },
+}) {
   const {
     params: { id },
   } = useRouteMatch();
@@ -46,7 +56,15 @@ function TimesheetRowList({ setMondayTotalHours }) {
         <TimesheetRow
           key={timesheetRow.id}
           timesheetRow={timesheetRow}
-          setMondayTotalHours={setMondayTotalHours}
+          hours={{
+            setMondayHoursRows,
+            setTuesdayHoursRows,
+            setWednesdayHoursRows,
+            setThursdayHoursRows,
+            setFridayHoursRows,
+            setSaturdayHoursRows,
+            setSundayHoursRows,
+          }}
         ></TimesheetRow>
       ))}
     </div>

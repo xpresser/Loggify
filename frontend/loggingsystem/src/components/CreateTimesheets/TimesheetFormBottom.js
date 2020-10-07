@@ -29,7 +29,17 @@ const StyledRowTextInput = {
   paddingTop: "0.75rem",
 };
 
-const TimesheetBottom = ({ mondayTotal }) => {
+const TimesheetBottom = ({
+  hours: {
+    mondayHoursRows,
+    tuesdayHoursRows,
+    wednesdayHoursRows,
+    thursdayHoursRows,
+    fridayHoursRows,
+    saturdayHoursRows,
+    sundayHoursRows,
+  },
+}) => {
   return (
     <Container>
       <div>
@@ -38,25 +48,25 @@ const TimesheetBottom = ({ mondayTotal }) => {
             <h6 style={StyledRowTextInput}>Total</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>{mondayTotal}</h6>
+            <h6 style={StyledRowTextInput}>{mondayHoursRows}</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>{tuesdayHoursRows}</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>{wednesdayHoursRows}</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>{thursdayHoursRows}</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>{fridayHoursRows}</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>{saturdayHoursRows}</h6>
           </Col>
           <Col style={BottomColStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>{sundayHoursRows}</h6>
           </Col>
           <Col style={BottomColRightStyle}>
             <h6 style={StyledRowTextInput}>XX</h6>

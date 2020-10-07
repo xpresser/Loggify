@@ -6,7 +6,7 @@ import { fetchCurrentTimeSheet } from "src/store/slices/timesheets";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faCheckSquare } from "@fortawesome/free-solid-svg-icons";
-import { Formik, Form, useFormik } from "formik";
+import { useFormik } from "formik";
 import { useRouteMatch } from "react-router-dom";
 import { createTheRow } from "src/store/slices/timeSheetRows";
 library.add(faCheckSquare);
@@ -85,13 +85,9 @@ const TimesheetRowForm = () => {
     onSubmit: (values) => {
       console.log(values);
       dispatch(createTheRow(values));
+      formik.resetForm();
     },
   });
-
-  const handleSelect = (e) => {
-    formik.initialValues.projectId = e.target.value;
-    formik.initialValues.taskId = e.target.value;
-  };
 
   return (
     <Container>
@@ -111,7 +107,10 @@ const TimesheetRowForm = () => {
             </Col>
             <Col style={secondColStyle} xs={2}>
               <select
-                onChange={handleSelect}
+                id="projectId"
+                name="projectId"
+                onChange={formik.handleChange}
+                value={formik.values.projectId}
                 style={{ marginTop: "0.5rem", width: "8.5rem" }}
               >
                 {projects.map((project) => (
@@ -123,7 +122,10 @@ const TimesheetRowForm = () => {
             </Col>
             <Col style={secondColStyle} xs={2}>
               <select
-                onChange={handleSelect}
+                id="taskId"
+                name="taskId"
+                onChange={formik.handleChange}
+                value={formik.values.taskId}
                 style={{ marginTop: "0.5rem", width: "8.5rem" }}
               >
                 {tasks.map((task) => (
@@ -137,6 +139,7 @@ const TimesheetRowForm = () => {
               <input
                 id="mondayHours"
                 name="mondayHours"
+                onInput="validity.valid||(value='');"
                 onChange={formik.handleChange}
                 value={formik.values.mondayHours}
                 type="number"

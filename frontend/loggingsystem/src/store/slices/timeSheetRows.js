@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTimeSheetRowsForTimeSheet } from "src/api";
-import { createTimeSheetRow } from "../../api/timeSheetRows";
+import { createTimeSheetRow, deleteRow } from "../../api/timeSheetRows";
 
 const initialState = {
   timesheetsRows: [],
@@ -40,7 +40,21 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
       state.timesheetsRows.push(action.payload);
       state.error = null;
     },
-    createPostFailure: (state, action) => {
+    createtimesheetsRowFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+    deleterowStart: (state) => {
+      state.isLoading = true;
+    },
+    deleterowSuccess: (state, action) => {
+      state.isLoading = false;
+      state.timesheetsRows = state.timesheetsRows.filter(
+        (row) => row.id !== action.payload
+      );
+      state.error = null;
+    },
+    deleterowFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -78,7 +92,7 @@ export const createTheRow = ({
   return async (dispatch) => {
     try {
       dispatch(actions.createtimesheetsRowstart());
-      const createdPost = await createTimeSheetRow({
+      const createdrow = await createTimeSheetRow({
         timeSheetId,
         projectId,
         taskId,
@@ -91,9 +105,23 @@ export const createTheRow = ({
         sundayHours,
         totalHours,
       });
-      dispatch(actions.createtimesheetsRowsuccess(createdPost));
+      dispatch(actions.createtimesheetsRowsuccess(createdrow));
     } catch (err) {
-      dispatch(actions.createPostFailure(err?.response?.data?.message));
+      dispatch(
+        actions.createtimesheetsRowFailure(err?.response?.data?.message)
+      );
+    }
+  };
+};
+
+export const deleteTheRow = (rowId) => {
+  return async (dispatch) => {
+    try {
+      dispatch(actions.deleterowStart());
+      await deleteRow(rowId);
+      dispatch(actions.deleterowSuccess(rowId));
+    } catch (err) {
+      dispatch(actions.deleterowFailure(err?.response?.data?.message));
     }
   };
 };

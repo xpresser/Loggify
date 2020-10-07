@@ -31,10 +31,28 @@ const TimesheetForm = ({ timesheet }) => {
       <TimesheetFormBody></TimesheetFormBody>
       <TimesheetRowList
         timesheet={timesheet}
-        setMondayTotalHours={setMondayHoursRows}
+        hours={{
+          setMondayHoursRows,
+          setTuesdayHoursRows,
+          setWednesdayHoursRows,
+          setThursdayHoursRows,
+          setFridayHoursRows,
+          setSaturdayHoursRows,
+          setSundayHoursRows,
+        }}
       ></TimesheetRowList>
       <TimesheetRowForm></TimesheetRowForm>
-      <TimesheetBottom mondayTotal={mondayHoursRows}></TimesheetBottom>
+      <TimesheetBottom
+        hours={{
+          mondayHoursRows,
+          tuesdayHoursRows,
+          wednesdayHoursRows,
+          thursdayHoursRows,
+          fridayHoursRows,
+          saturdayHoursRows,
+          sundayHoursRows,
+        }}
+      ></TimesheetBottom>
     </Container>
   );
 };

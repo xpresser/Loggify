@@ -5,9 +5,21 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
+import { deleteTheRow } from "../../store/slices/timeSheetRows";
 library.add(faTrash);
 
-const TimesheetRow = ({ timesheetRow, setMondayTotalHours }) => {
+const TimesheetRow = ({
+  timesheetRow: timesheetRow,
+  hours: {
+    setMondayHoursRowsTotal,
+    setTuesdayHoursRowsTotal,
+    setWednesdayHoursRowsTotal,
+    setThursdayHoursRowsTotal,
+    setFridayHoursRowsTotal,
+    setSaturdayHoursRowsTotal,
+    setSundayHoursRowsTotal,
+  },
+}) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
@@ -102,7 +114,13 @@ const TimesheetRow = ({ timesheetRow, setMondayTotalHours }) => {
         {console.log(timesheetRow)}
         <Row fluid="md">
           <Col style={secondColStyle} xs={1}>
-            <button className="btn btn-primary" style={StyledDeleteButton}>
+            <button
+              onClick={() => {
+                dispatch(deleteTheRow(timesheetRow?.id));
+              }}
+              className="btn btn-primary"
+              style={StyledDeleteButton}
+            >
               <span>
                 <FontAwesomeIcon icon="trash"></FontAwesomeIcon>
               </span>
@@ -138,7 +156,6 @@ const TimesheetRow = ({ timesheetRow, setMondayTotalHours }) => {
               onChange={(e) => {
                 let hours = parseInt(e.target.value);
                 setMondayHoursRows(hours);
-                setMondayTotalHours(hours);
                 calcTotal();
               }}
               style={StyledInput}
