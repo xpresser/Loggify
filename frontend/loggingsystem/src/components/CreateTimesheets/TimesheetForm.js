@@ -7,7 +7,7 @@ import { TimesheetHeader } from "./TimesheetFormHeader";
 
 const Container = styled.div`
   width: 80%;
-  margin: 100px auto;
+  margin: 1% auto;
   padding: 1rem;
   background-color: white;
   border: none;
@@ -17,13 +17,42 @@ const Container = styled.div`
 `;
 
 const TimesheetForm = ({ timesheet }) => {
+  const [mondayHoursRows, setMondayHoursRows] = React.useState(0);
+  const [tuesdayHoursRows, setTuesdayHoursRows] = React.useState(0);
+  const [wednesdayHoursRows, setWednesdayHoursRows] = React.useState(0);
+  const [thursdayHoursRows, setThursdayHoursRows] = React.useState(0);
+  const [fridayHoursRows, setFridayHoursRows] = React.useState(0);
+  const [saturdayHoursRows, setSaturdayHoursRows] = React.useState(0);
+  const [sundayHoursRows, setSundayHoursRows] = React.useState(0);
+
   return (
     <Container>
       <TimesheetHeader></TimesheetHeader>
       <TimesheetFormBody></TimesheetFormBody>
-      <TimesheetRowList timesheet={timesheet}></TimesheetRowList>
+      <TimesheetRowList
+        timesheet={timesheet}
+        hours={{
+          setMondayHoursRows,
+          setTuesdayHoursRows,
+          setWednesdayHoursRows,
+          setThursdayHoursRows,
+          setFridayHoursRows,
+          setSaturdayHoursRows,
+          setSundayHoursRows,
+        }}
+      ></TimesheetRowList>
       <TimesheetRowForm></TimesheetRowForm>
-      <TimesheetBottom></TimesheetBottom>
+      <TimesheetBottom
+        hours={{
+          mondayHoursRows,
+          tuesdayHoursRows,
+          wednesdayHoursRows,
+          thursdayHoursRows,
+          fridayHoursRows,
+          saturdayHoursRows,
+          sundayHoursRows,
+        }}
+      ></TimesheetBottom>
     </Container>
   );
 };

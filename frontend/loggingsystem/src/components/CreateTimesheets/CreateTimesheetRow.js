@@ -8,12 +8,25 @@ import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
 import { deleteTheRow } from "../../store/slices/timeSheetRows";
 library.add(faTrash);
 
-const TimesheetRow = ({ timesheetRow }) => {
+const TimesheetRow = ({
+  timesheetRow: timesheetRow,
+  hours: {
+    setMondayHoursRowsTotal,
+    setTuesdayHoursRowsTotal,
+    setWednesdayHoursRowsTotal,
+    setThursdayHoursRowsTotal,
+    setFridayHoursRowsTotal,
+    setSaturdayHoursRowsTotal,
+    setSundayHoursRowsTotal,
+  },
+}) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
     textAlign: "center",
     height: "3rem",
+    display: "flex",
+    justifyContent: "center",
   };
 
   const secondColRightStyle = {
@@ -22,6 +35,8 @@ const TimesheetRow = ({ timesheetRow }) => {
     borderBottom: "1px solid black",
     textAlign: "center",
     height: "3rem",
+    display: "flex",
+    justifyContent: "center",
   };
 
   const StyledDropButton = {
@@ -39,6 +54,40 @@ const TimesheetRow = ({ timesheetRow }) => {
   const StyledInput = {
     marginTop: "0.45rem",
   };
+
+  const [mondayHoursRows, setMondayHoursRows] = React.useState(
+    timesheetRow.mondayHours
+  );
+  const [tuesdayHoursRows, setTuesdayHoursRows] = React.useState(
+    timesheetRow.tuesdayHours
+  );
+  const [wednesdayHoursRows, setWednesdayHoursRows] = React.useState(
+    timesheetRow.wednesdayHours
+  );
+  const [thursdayHoursRows, setThursdayHoursRows] = React.useState(
+    timesheetRow.thursdayHours
+  );
+  const [fridayHoursRows, setFridayHoursRows] = React.useState(
+    timesheetRow.fridayHours
+  );
+  const [saturdayHoursRows, setSaturdayHoursRows] = React.useState(
+    timesheetRow.saturdayHours
+  );
+  const [sundayHoursRows, setSundayHoursRows] = React.useState(
+    timesheetRow.sundayHours
+  );
+
+  function calcTotal() {
+    return (
+      mondayHoursRows +
+      tuesdayHoursRows +
+      wednesdayHoursRows +
+      thursdayHoursRows +
+      fridayHoursRows +
+      saturdayHoursRows +
+      sundayHoursRows
+    );
+  }
 
   const projectsState = useSelector((state) => state.seeds.projects);
   const projects = projectsState?.[0] || [];
@@ -103,54 +152,83 @@ const TimesheetRow = ({ timesheetRow }) => {
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={mondayHoursRows}
+              onChange={(e) => {
+                let hours = parseInt(e.target.value);
+                setMondayHoursRows(hours);
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.mondayHours}
             ></input>
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={tuesdayHoursRows}
+              onChange={(e) => {
+                setTuesdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.tuesdayHours}
             ></input>
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={wednesdayHoursRows}
+              onChange={(e) => {
+                setWednesdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.wednesdayHours}
             ></input>
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={thursdayHoursRows}
+              onChange={(e) => {
+                setThursdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.thursdayHours}
             ></input>
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={fridayHoursRows}
+              onChange={(e) => {
+                setFridayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.fridayHours}
             ></input>
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={saturdayHoursRows}
+              onChange={(e) => {
+                setSaturdayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.saturdayHours}
             ></input>
           </Col>
           <Col style={secondColStyle}>
             <input
+              value={sundayHoursRows}
+              onChange={(e) => {
+                setSundayHoursRows(parseInt(e.target.value));
+                calcTotal();
+              }}
               style={StyledInput}
               size="1.5"
-              value={timesheetRow.sundayHours}
             ></input>
           </Col>
-          <Col style={secondColRightStyle}>{timesheetRow.totalHours}</Col>
+          <Col style={secondColRightStyle}>{calcTotal()}</Col>
         </Row>
       </div>
     </Container>
