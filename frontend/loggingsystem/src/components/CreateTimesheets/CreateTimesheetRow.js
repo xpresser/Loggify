@@ -10,15 +10,7 @@ library.add(faTrash);
 
 const TimesheetRow = ({
   timesheetRow: timesheetRow,
-  hours: {
-    setMondayHoursRowsTotal,
-    setTuesdayHoursRowsTotal,
-    setWednesdayHoursRowsTotal,
-    setThursdayHoursRowsTotal,
-    setFridayHoursRowsTotal,
-    setSaturdayHoursRowsTotal,
-    setSundayHoursRowsTotal,
-  },
+  allMondayHours: allMondayHours,
 }) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
@@ -155,6 +147,7 @@ const TimesheetRow = ({
               value={mondayHoursRows}
               onChange={(e) => {
                 let hours = parseInt(e.target.value);
+                hours.push(mondayHoursRows);
                 setMondayHoursRows(hours);
                 calcTotal();
               }}

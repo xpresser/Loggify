@@ -31,15 +31,7 @@ const TimesheetForm = ({ timesheet }) => {
       <TimesheetFormBody></TimesheetFormBody>
       <TimesheetRowList
         timesheet={timesheet}
-        hours={{
-          setMondayHoursRows,
-          setTuesdayHoursRows,
-          setWednesdayHoursRows,
-          setThursdayHoursRows,
-          setFridayHoursRows,
-          setSaturdayHoursRows,
-          setSundayHoursRows,
-        }}
+        setMondayHoursRows={setMondayHoursRows}
       ></TimesheetRowList>
       <TimesheetRowForm></TimesheetRowForm>
       <TimesheetBottom

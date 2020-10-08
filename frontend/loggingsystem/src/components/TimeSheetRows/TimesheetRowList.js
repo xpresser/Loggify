@@ -15,17 +15,7 @@ const LoadMoreButton = styled.span`
   display: inline-block;
 `;
 
-function TimesheetRowList({
-  hours: {
-    setMondayHoursRows,
-    setTuesdayHoursRows,
-    setWednesdayHoursRows,
-    setThursdayHoursRows,
-    setFridayHoursRows,
-    setSaturdayHoursRows,
-    setSundayHoursRows,
-  },
-}) {
+function TimesheetRowList({ setMondayHoursRows: setMondayHoursRows }) {
   const {
     params: { id },
   } = useRouteMatch();
@@ -50,21 +40,20 @@ function TimesheetRowList({
     );
   }
 
+  let totalMondayHours = 0;
+  let allMondayHours = [];
+
+  allMondayHours.forEach((value) => (totalMondayHours += value));
+
+  setMondayHoursRows(totalMondayHours);
+
   return (
     <div>
       {timesheetRows.map((timesheetRow) => (
         <TimesheetRow
+          allMondayHours={allMondayHours}
           key={timesheetRow.id}
           timesheetRow={timesheetRow}
-          hours={{
-            setMondayHoursRows,
-            setTuesdayHoursRows,
-            setWednesdayHoursRows,
-            setThursdayHoursRows,
-            setFridayHoursRows,
-            setSaturdayHoursRows,
-            setSundayHoursRows,
-          }}
         ></TimesheetRow>
       ))}
     </div>
