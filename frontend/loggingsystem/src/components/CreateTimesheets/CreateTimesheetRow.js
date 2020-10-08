@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Col, Container, Row } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash, faPen, faOm } from "@fortawesome/free-solid-svg-icons";
@@ -14,18 +14,7 @@ import { useFormik } from "formik";
 import { updateTimeSheetRow } from "../../api/timeSheetRows";
 library.add(faTrash, faPen);
 
-const TimesheetRow = ({
-  timesheetRow: timesheetRow,
-  hours: {
-    setMondayHoursRowsTotal,
-    setTuesdayHoursRowsTotal,
-    setWednesdayHoursRowsTotal,
-    setThursdayHoursRowsTotal,
-    setFridayHoursRowsTotal,
-    setSaturdayHoursRowsTotal,
-    setSundayHoursRowsTotal,
-  },
-}) => {
+const TimesheetRow = ({ timesheetRow: timesheetRow }) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",

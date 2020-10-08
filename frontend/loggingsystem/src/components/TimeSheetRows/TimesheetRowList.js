@@ -9,6 +9,9 @@ import {
   resetRoWMessages,
 } from "../../store/slices/timeSheetRows";
 import { useRouteMatch } from "react-router-dom";
+import { getTimesheetById } from "src/api/timesheets";
+import { TimesheetRowForm } from "./TimesheetRowForm";
+import { TimesheetBottom } from "../CreateTimesheets";
 
 const LoadMoreButton = styled.span`
   color: #969696;
@@ -17,17 +20,15 @@ const LoadMoreButton = styled.span`
   display: inline-block;
 `;
 
-function TimesheetRowList({
-  hours: {
-    setMondayHoursRows,
-    setTuesdayHoursRows,
-    setWednesdayHoursRows,
-    setThursdayHoursRows,
-    setFridayHoursRows,
-    setSaturdayHoursRows,
-    setSundayHoursRows,
-  },
-}) {
+function TimesheetRowList() {
+  let mondayHoursRows = 0;
+  let tuesdayHoursRows = 0;
+  let wednesdayHoursRows = 0;
+  let thursdayHoursRows = 0;
+  let fridayHoursRows = 0;
+  let saturdayHoursRows = 0;
+  let sundayHoursRows = 0;
+
   const {
     params: { id },
   } = useRouteMatch();
@@ -45,6 +46,8 @@ function TimesheetRowList({
     dispatch(fetchRowsPerTimeSheet(test));
   }, [dispatch]);
 
+  let mondayHours = 0;
+
   if (timesheetRows === undefined) {
     return (
       <Spinner animation="border" variant="primary">
@@ -53,23 +56,36 @@ function TimesheetRowList({
     );
   }
 
+  timesheetRows.forEach((value) => (mondayHoursRows += value.mondayHours));
+  timesheetRows.forEach((value) => (thursdayHoursRows += value.tuesdayHours));
+  timesheetRows.forEach(
+    (value) => (wednesdayHoursRows += value.wednesdayHours)
+  );
+  timesheetRows.forEach((value) => (thursdayHoursRows += value.thursdayHours));
+  timesheetRows.forEach((value) => (fridayHoursRows += value.fridayHours));
+  timesheetRows.forEach((value) => (saturdayHoursRows += value.saturdayHours));
+  timesheetRows.forEach((value) => (sundayHoursRows += value.sundayHours));
+
   return (
     <div>
       {timesheetRows.map((timesheetRow) => (
         <TimesheetRow
           key={timesheetRow.id}
           timesheetRow={timesheetRow}
-          hours={{
-            setMondayHoursRows,
-            setTuesdayHoursRows,
-            setWednesdayHoursRows,
-            setThursdayHoursRows,
-            setFridayHoursRows,
-            setSaturdayHoursRows,
-            setSundayHoursRows,
-          }}
         ></TimesheetRow>
       ))}
+      <TimesheetRowForm></TimesheetRowForm>
+      <TimesheetBottom
+        hours={{
+          mondayHoursRows,
+          tuesdayHoursRows,
+          wednesdayHoursRows,
+          thursdayHoursRows,
+          fridayHoursRows,
+          saturdayHoursRows,
+          sundayHoursRows,
+        }}
+      ></TimesheetBottom>
     </div>
   );
 }
