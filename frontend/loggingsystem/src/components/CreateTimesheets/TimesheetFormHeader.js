@@ -1,8 +1,8 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useRouteMatch } from "react-router-dom";
-import { updateTimesheet } from "src/api/timesheets";
+import { useRouteMatch, useHistory } from "react-router-dom";
+import { deleteTimesheetById, updateTimesheet } from "src/api/timesheets";
 import { getCurrentUser } from "src/api/users";
 import { fetchCurrentTimeSheet } from "src/store/slices/timesheets";
 import { fetchCurrentUser } from "src/store/slices/auth";
@@ -69,6 +69,8 @@ const TimesheetHeader = () => {
   const testUser = testUserState?.[0] || [];
   const isLoading = testUserState?.isLoading ?? false;
   const currentUser = user.toString();
+  const history = useHistory();
+
   React.useEffect(() => {
     dispatch(fetchCurrentUser(currentUser));
   }, [dispatch]);
@@ -89,8 +91,23 @@ const TimesheetHeader = () => {
         <h5>Timesheet for week : {testSheet.startingDate}</h5>
       </TimeSheetInfo>
       <ButtoneLayout>
-        <Button style={DeleteButtonStyled}>DELETE</Button>
-        <Button style={SaveButtonStyled}>SAVE</Button>
+        <Button
+          style={DeleteButtonStyled}
+          onClick={() => {
+            deleteTimesheetById({ timesheetId: id });
+            history.push("/timesheets");
+          }}
+        >
+          DELETE
+        </Button>
+        <Button
+          style={SaveButtonStyled}
+          onClick={() => {
+            history.push("/timesheets");
+          }}
+        >
+          SAVE
+        </Button>
         <Button
           disabled={isSubmitted}
           onClick={() => {

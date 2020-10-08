@@ -162,7 +162,7 @@ const TimesheetRow = ({ timesheetRow: timesheetRow }) => {
               </button>
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-primary ml-1"
                 style={StyledEditButton}
               >
                 <span>
