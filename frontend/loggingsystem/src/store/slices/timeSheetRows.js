@@ -9,7 +9,9 @@ import {
 const initialState = {
   timesheetsRows: [],
   isLoading: false,
+  isUpdating: false,
   error: null,
+  messages: {},
 };
 
 const { reducer: timesheetRowReducer, actions } = createSlice({
@@ -74,10 +76,13 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
           break;
         }
       }
+      state.messages.updateRow = "Row updated!";
+      state.isUpdating = true;
     },
     updatetimesheetRowFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+      state.isUpdating = false;
     },
 
     deleterowStart: (state) => {
@@ -93,6 +98,9 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
     deleterowFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    resetMessages: (state) => {
+      state.messages = {};
     },
     reset: () => initialState,
   },
@@ -197,6 +205,12 @@ export const deleteTheRow = (rowId) => {
     } catch (err) {
       dispatch(actions.deleterowFailure(err?.response?.data?.message));
     }
+  };
+};
+
+export const resetRoWMessages = () => {
+  return async (dispatch) => {
+    dispatch(actions.resetMessages());
   };
 };
 

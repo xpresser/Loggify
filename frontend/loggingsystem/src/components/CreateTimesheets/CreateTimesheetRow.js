@@ -1,11 +1,15 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Alert, Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash, faPen, faOm } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
-import { deleteTheRow, updateTheRow } from "../../store/slices/timeSheetRows";
+import {
+  deleteTheRow,
+  resetRoWMessages,
+  updateTheRow,
+} from "../../store/slices/timeSheetRows";
 import { useFormik } from "formik";
 import { updateTimeSheetRow } from "../../api/timeSheetRows";
 library.add(faTrash, faPen);
@@ -127,7 +131,7 @@ const TimesheetRow = ({
     },
     onSubmit: (values) => {
       formik.initialValues.totalHours = calcTotal();
-      dispatch(updateTimeSheetRow(values));
+      dispatch(updateTheRow(values));
     },
   });
 
@@ -152,11 +156,9 @@ const TimesheetRow = ({
     console.log(e);
   };
 
-  console.log(timesheetProject);
   return (
     <Container>
       <div>
-        {console.log(timesheetRow)}
         <form onSubmit={formik.handleSubmit}>
           <Row fluid="md">
             <Col style={secondColStyle} xs={1}>

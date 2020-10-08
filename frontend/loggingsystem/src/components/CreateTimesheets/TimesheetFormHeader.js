@@ -81,6 +81,8 @@ const TimesheetHeader = () => {
   const totalHours = testSheet.totalHours;
   const testId = testUser.id;
 
+  const isSubmitted = testSheet.status === "SUBMITTED";
+
   return (
     <SubContainer>
       <TimeSheetInfo>
@@ -90,6 +92,7 @@ const TimesheetHeader = () => {
         <Button style={DeleteButtonStyled}>DELETE</Button>
         <Button style={SaveButtonStyled}>SAVE</Button>
         <Button
+          disabled={isSubmitted}
           onClick={() => {
             updateTimesheet(
               {

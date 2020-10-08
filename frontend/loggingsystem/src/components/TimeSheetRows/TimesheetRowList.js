@@ -1,12 +1,14 @@
 import React from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Alert, Container, Spinner } from "react-bootstrap";
 import { getTimeSheetRowsForTimeSheet } from "../../api/timeSheetRows";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { TimesheetRow } from "../CreateTimesheets/CreateTimesheetRow";
-import { fetchRowsPerTimeSheet } from "../../store/slices/timeSheetRows";
+import {
+  fetchRowsPerTimeSheet,
+  resetRoWMessages,
+} from "../../store/slices/timeSheetRows";
 import { useRouteMatch } from "react-router-dom";
-import { getTimesheetById } from "src/api/timesheets";
 
 const LoadMoreButton = styled.span`
   color: #969696;
@@ -37,6 +39,7 @@ function TimesheetRowList({
   if (timesheetRowsState !== null) {
     timesheetRows = timesheetRowsState;
   }
+
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchRowsPerTimeSheet(test));
@@ -72,28 +75,3 @@ function TimesheetRowList({
 }
 
 export { TimesheetRowList };
-
-// const timesheet = getTimesheetById({ timesheetId: test })
-// console.log(timesheet)
-// const current = [];
-// const currentRows = [];
-// timesheet.then((timesheetRow) => {
-//     let content = timesheetRow;
-//     current.push(content);
-// });
-// console.log(current)
-// const dispatch = useDispatch();
-// React.useEffect(() => {
-//     dispatch(getRowsForTimesheet(test))
-// }, [dispatch])
-
-// const rows = useSelector(state => state.timesheetRows.timesheetsRows) || [];
-// // rows.then((value) => {
-// //     let content = value;
-// //     currentRows.push(content);
-// // });
-// const testArray = [];
-// testArray.push(1,2,3,4)
-// console.log(testArray)
-// console.log(currentRows[0])
-// console.log((currentRows))

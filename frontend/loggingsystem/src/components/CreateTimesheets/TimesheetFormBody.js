@@ -1,5 +1,7 @@
 import React from "react";
-import { Col, Container, Row } from "react-bootstrap";
+import { Alert, Col, Container, Row } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { resetRoWMessages } from "../../store/slices/timeSheetRows";
 
 const TimesheetFormBody = () => {
   const colStyle = {
@@ -50,9 +52,27 @@ const TimesheetFormBody = () => {
   const StyledFirstRowTextInput = {
     paddingTop: "1rem",
   };
+  const messages = useSelector((state) => state.timesheetRows.messages);
+
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    return () => {
+      dispatch(resetRoWMessages());
+    };
+  }, []);
 
   return (
     <Container>
+      <Alert
+        show={messages.hasOwnProperty("updateRow")}
+        variant="success"
+        onClose={() => {
+          dispatch(resetRoWMessages());
+        }}
+        dismissible
+      >
+        {messages.updateRow}
+      </Alert>
       <div>
         <Row fluid="md">
           <Col style={colStyle} xs={1}></Col>
