@@ -69,7 +69,15 @@ const TimesheetBottom = ({
             <h6 style={StyledRowTextInput}>{sundayHoursRows}</h6>
           </Col>
           <Col style={BottomColRightStyle}>
-            <h6 style={StyledRowTextInput}>XX</h6>
+            <h6 style={StyledRowTextInput}>
+              {mondayHoursRows +
+                tuesdayHoursRows +
+                wednesdayHoursRows +
+                thursdayHoursRows +
+                fridayHoursRows +
+                saturdayHoursRows +
+                sundayHoursRows}
+            </h6>
           </Col>
         </Row>
       </div>
