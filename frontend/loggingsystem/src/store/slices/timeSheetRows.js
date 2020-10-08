@@ -1,6 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTimeSheetRowsForTimeSheet } from "src/api";
-import { createTimeSheetRow, deleteRow } from "../../api/timeSheetRows";
+import {
+  createTimeSheetRow,
+  deleteRow,
+  updateTimeSheetRow,
+} from "../../api/timeSheetRows";
 
 const initialState = {
   timesheetsRows: [],
@@ -44,6 +48,38 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    updatetimesheetRowStart: (state) => {
+      state.isLoading = true;
+    },
+    updatetimesheetRowSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+
+      for (let i = 0; i < state.timesheetsRows.length; i++) {
+        const timesheetRow = state.timesheetsRows[i];
+
+        if (timesheetRow.id === action.payload.timesheetRowId) {
+          timesheetRow.projectId = action.payload.timesheetRow.projectId;
+          timesheetRow.taskId = action.payload.timesheetRow.taskId;
+          timesheetRow.mondayHours = action.payload.timesheetRow.mondayHours;
+          timesheetRow.tuesdayHours = action.payload.timesheetRow.tuesdayHours;
+          timesheetRow.wednesdayHours =
+            action.payload.timesheetRow.wednesdayHours;
+          timesheetRow.thursdayHours =
+            action.payload.timesheetRow.thursdayHours;
+          timesheetRow.fridayHours = action.payload.timesheetRow.fridayHours;
+          timesheetRow.saturdayHours =
+            action.payload.timesheetRow.saturdayHours;
+          timesheetRow.sundayHours = action.payload.timesheetRow.sundayHours;
+          break;
+        }
+      }
+    },
+    updatetimesheetRowFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
+
     deleterowStart: (state) => {
       state.isLoading = true;
     },
@@ -110,6 +146,44 @@ export const createTheRow = ({
       dispatch(
         actions.createtimesheetsRowFailure(err?.response?.data?.message)
       );
+    }
+  };
+};
+
+export const updateTheRow = ({
+  id,
+  timeSheetId,
+  projectId,
+  taskId,
+  mondayHours,
+  tuesdayHours,
+  wednesdayHours,
+  thursdayHours,
+  fridayHours,
+  saturdayHours,
+  sundayHours,
+  totalHours,
+}) => {
+  return async (dispatch) => {
+    try {
+      dispatch(actions.updatetimesheetRowStart());
+      const createdrow = await updateTimeSheetRow({
+        id,
+        timeSheetId,
+        projectId,
+        taskId,
+        mondayHours,
+        tuesdayHours,
+        wednesdayHours,
+        thursdayHours,
+        fridayHours,
+        saturdayHours,
+        sundayHours,
+        totalHours,
+      });
+      dispatch(actions.updatetimesheetRowSuccess(createdrow));
+    } catch (err) {
+      dispatch(actions.updatetimesheetRowFailure(err?.response?.data?.message));
     }
   };
 };

@@ -41,6 +41,39 @@ export const createTimeSheetRow = async ({
   return res.data;
 };
 
+export const updateTimeSheetRow = async ({
+  id,
+  timeSheetId,
+  projectId,
+  taskId,
+  mondayHours,
+  tuesdayHours,
+  wednesdayHours,
+  thursdayHours,
+  fridayHours,
+  saturdayHours,
+  sundayHours,
+  totalHours,
+}) => {
+  const res = await httpClient.put(
+    `${REACT_APP_API_URL}/api/v1/timesheetrows/${id}`,
+    {
+      timeSheetId,
+      projectId,
+      taskId,
+      mondayHours,
+      tuesdayHours,
+      wednesdayHours,
+      thursdayHours,
+      fridayHours,
+      saturdayHours,
+      sundayHours,
+      totalHours,
+    }
+  );
+  return res.data;
+};
+
 export const deleteRow = async (rowId) => {
   const res = await axios.delete(
     `${REACT_APP_API_URL}/api/v1/timesheetrows/${rowId}`
