@@ -1,11 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { getTimeSheetRowsForTimeSheet } from "src/api";
-import { createTimeSheetRow, deleteRow } from "../../api/timeSheetRows";
+import {
+  createTimeSheetRow,
+  deleteRow,
+  updateTimeSheetRow,
+} from "../../api/timeSheetRows";
 
 const initialState = {
   timesheetsRows: [],
   isLoading: false,
+  isUpdating: false,
   error: null,
+  messages: {},
 };
 
 const { reducer: timesheetRowReducer, actions } = createSlice({
@@ -44,6 +50,41 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+    updatetimesheetRowStart: (state) => {
+      state.isLoading = true;
+    },
+    updatetimesheetRowSuccess: (state, action) => {
+      state.isLoading = false;
+      state.error = null;
+
+      for (let i = 0; i < state.timesheetsRows.length; i++) {
+        const timesheetRow = state.timesheetsRows[i];
+
+        if (timesheetRow.id === action.payload.timesheetRowId) {
+          timesheetRow.projectId = action.payload.timesheetRow.projectId;
+          timesheetRow.taskId = action.payload.timesheetRow.taskId;
+          timesheetRow.mondayHours = action.payload.timesheetRow.mondayHours;
+          timesheetRow.tuesdayHours = action.payload.timesheetRow.tuesdayHours;
+          timesheetRow.wednesdayHours =
+            action.payload.timesheetRow.wednesdayHours;
+          timesheetRow.thursdayHours =
+            action.payload.timesheetRow.thursdayHours;
+          timesheetRow.fridayHours = action.payload.timesheetRow.fridayHours;
+          timesheetRow.saturdayHours =
+            action.payload.timesheetRow.saturdayHours;
+          timesheetRow.sundayHours = action.payload.timesheetRow.sundayHours;
+          break;
+        }
+      }
+      state.messages.updateRow = "Row updated!";
+      state.isUpdating = true;
+    },
+    updatetimesheetRowFailure: (state, action) => {
+      state.isLoading = false;
+      state.error = action.payload;
+      state.isUpdating = false;
+    },
+
     deleterowStart: (state) => {
       state.isLoading = true;
     },
@@ -57,6 +98,9 @@ const { reducer: timesheetRowReducer, actions } = createSlice({
     deleterowFailure: (state, action) => {
       state.isLoading = false;
       state.error = action.payload;
+    },
+    resetMessages: (state) => {
+      state.messages = {};
     },
     reset: () => initialState,
   },
@@ -114,6 +158,44 @@ export const createTheRow = ({
   };
 };
 
+export const updateTheRow = ({
+  id,
+  timeSheetId,
+  projectId,
+  taskId,
+  mondayHours,
+  tuesdayHours,
+  wednesdayHours,
+  thursdayHours,
+  fridayHours,
+  saturdayHours,
+  sundayHours,
+  totalHours,
+}) => {
+  return async (dispatch) => {
+    try {
+      dispatch(actions.updatetimesheetRowStart());
+      const createdrow = await updateTimeSheetRow({
+        id,
+        timeSheetId,
+        projectId,
+        taskId,
+        mondayHours,
+        tuesdayHours,
+        wednesdayHours,
+        thursdayHours,
+        fridayHours,
+        saturdayHours,
+        sundayHours,
+        totalHours,
+      });
+      dispatch(actions.updatetimesheetRowSuccess(createdrow));
+    } catch (err) {
+      dispatch(actions.updatetimesheetRowFailure(err?.response?.data?.message));
+    }
+  };
+};
+
 export const deleteTheRow = (rowId) => {
   return async (dispatch) => {
     try {
@@ -123,6 +205,12 @@ export const deleteTheRow = (rowId) => {
     } catch (err) {
       dispatch(actions.deleterowFailure(err?.response?.data?.message));
     }
+  };
+};
+
+export const resetRoWMessages = () => {
+  return async (dispatch) => {
+    dispatch(actions.resetMessages());
   };
 };
 

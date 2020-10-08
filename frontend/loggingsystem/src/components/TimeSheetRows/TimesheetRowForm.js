@@ -139,7 +139,6 @@ const TimesheetRowForm = () => {
               <input
                 id="mondayHours"
                 name="mondayHours"
-                onInput="validity.valid||(value='');"
                 onChange={formik.handleChange}
                 value={formik.values.mondayHours}
                 type="number"
