@@ -1,17 +1,15 @@
 import React from "react";
-import { Col, Container, Row, Dropdown, Button } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, fetchTasks } from "src/store/slices/seeds";
 import { deleteTheRow } from "../../store/slices/timeSheetRows";
+
 library.add(faTrash);
 
-const TimesheetRow = ({
-  timesheetRow: timesheetRow,
-  allMondayHours: allMondayHours,
-}) => {
+const TimesheetRow = ({ timesheetRow: timesheetRow }) => {
   const secondColStyle = {
     borderLeft: "1px solid black",
     borderBottom: "1px solid black",
@@ -99,11 +97,9 @@ const TimesheetRow = ({
   let timesheetProject = projects[timesheetRow.projectId - 1];
   let taskProject = tasks[timesheetRow.taskId - 1];
 
-  console.log(timesheetProject);
   return (
     <Container>
       <div>
-        {console.log(timesheetRow)}
         <Row fluid="md">
           <Col style={secondColStyle} xs={1}>
             <button
@@ -147,7 +143,6 @@ const TimesheetRow = ({
               value={mondayHoursRows}
               onChange={(e) => {
                 let hours = parseInt(e.target.value);
-                hours.push(mondayHoursRows);
                 setMondayHoursRows(hours);
                 calcTotal();
               }}
