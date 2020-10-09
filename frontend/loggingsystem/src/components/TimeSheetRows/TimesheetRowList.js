@@ -1,12 +1,17 @@
 import React from "react";
-import { Container, Spinner } from "react-bootstrap";
+import { Alert, Container, Spinner } from "react-bootstrap";
 import { getTimeSheetRowsForTimeSheet } from "../../api/timeSheetRows";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { TimesheetRow } from "../CreateTimesheets/CreateTimesheetRow";
-import { fetchRowsPerTimeSheet } from "../../store/slices/timeSheetRows";
+import {
+  fetchRowsPerTimeSheet,
+  resetRoWMessages,
+} from "../../store/slices/timeSheetRows";
 import { useRouteMatch } from "react-router-dom";
 import { getTimesheetById } from "src/api/timesheets";
+import { TimesheetRowForm } from "./TimesheetRowForm";
+import { TimesheetBottom } from "../CreateTimesheets";
 
 const LoadMoreButton = styled.span`
   color: #969696;
@@ -16,6 +21,14 @@ const LoadMoreButton = styled.span`
 `;
 
 function TimesheetRowList() {
+  let mondayHoursRows = 0;
+  let tuesdayHoursRows = 0;
+  let wednesdayHoursRows = 0;
+  let thursdayHoursRows = 0;
+  let fridayHoursRows = 0;
+  let saturdayHoursRows = 0;
+  let sundayHoursRows = 0;
+
   const {
     params: { id },
   } = useRouteMatch();
@@ -27,10 +40,13 @@ function TimesheetRowList() {
   if (timesheetRowsState !== null) {
     timesheetRows = timesheetRowsState;
   }
+
   const dispatch = useDispatch();
   React.useEffect(() => {
     dispatch(fetchRowsPerTimeSheet(test));
   }, [dispatch]);
+
+  let mondayHours = 0;
 
   if (timesheetRows === undefined) {
     return (
@@ -40,6 +56,16 @@ function TimesheetRowList() {
     );
   }
 
+  timesheetRows.forEach((value) => (mondayHoursRows += value.mondayHours));
+  timesheetRows.forEach((value) => (thursdayHoursRows += value.tuesdayHours));
+  timesheetRows.forEach(
+    (value) => (wednesdayHoursRows += value.wednesdayHours)
+  );
+  timesheetRows.forEach((value) => (thursdayHoursRows += value.thursdayHours));
+  timesheetRows.forEach((value) => (fridayHoursRows += value.fridayHours));
+  timesheetRows.forEach((value) => (saturdayHoursRows += value.saturdayHours));
+  timesheetRows.forEach((value) => (sundayHoursRows += value.sundayHours));
+
   return (
     <div>
       {timesheetRows.map((timesheetRow) => (
@@ -48,33 +74,20 @@ function TimesheetRowList() {
           timesheetRow={timesheetRow}
         ></TimesheetRow>
       ))}
+      <TimesheetRowForm></TimesheetRowForm>
+      <TimesheetBottom
+        hours={{
+          mondayHoursRows,
+          tuesdayHoursRows,
+          wednesdayHoursRows,
+          thursdayHoursRows,
+          fridayHoursRows,
+          saturdayHoursRows,
+          sundayHoursRows,
+        }}
+      ></TimesheetBottom>
     </div>
   );
 }
 
 export { TimesheetRowList };
-
-// const timesheet = getTimesheetById({ timesheetId: test })
-// console.log(timesheet)
-// const current = [];
-// const currentRows = [];
-// timesheet.then((timesheetRow) => {
-//     let content = timesheetRow;
-//     current.push(content);
-// });
-// console.log(current)
-// const dispatch = useDispatch();
-// React.useEffect(() => {
-//     dispatch(getRowsForTimesheet(test))
-// }, [dispatch])
-
-// const rows = useSelector(state => state.timesheetRows.timesheetsRows) || [];
-// // rows.then((value) => {
-// //     let content = value;
-// //     currentRows.push(content);
-// // });
-// const testArray = [];
-// testArray.push(1,2,3,4)
-// console.log(testArray)
-// console.log(currentRows[0])
-// console.log((currentRows))

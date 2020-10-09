@@ -1,5 +1,5 @@
 import React from "react";
-import { Col, Container } from "react-bootstrap";
+import { Col, Container, Row } from "react-bootstrap";
 import { useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 import { timesheets as timesheet } from "../mocks/timesheets";
@@ -70,27 +70,46 @@ const ViewTimesheetPage = () => {
   }
 
   console.log(timesheetRows);
+
   return (
     <div
       style={{
-        width: "80%",
         margin: "0 auto",
-        padding: "1%",
+        paddingTop: "0.5rem",
+        paddingBottom: "2rem",
         border: "none",
         borderRadius: "10px",
         boxShadow:
-          "0 1px 2px 0 rgba(0, 0, 0, 0.2), 0 10px 20px 0 rgba(0, 0, 0, 0.2)",
+          "0 0.5rem 1rem 0 rgba(0, 0, 0, 0.2), 0 1rem 2rem 0 rgba(0, 0, 0, 0.2)",
       }}
     >
-      <h1 className={"text-center mb-4"}>
+      <h1 className={"text-center m-4"}>
         Timesheet for week {testSheet.startingDate}:
       </h1>
       <ViewTimesheetFormBody />
       {timesheetRows.filter((value) => value.timesheetId === timesheet.id)
         .length === 0 ? (
-        <div className="alert alert-info" role="alert">
-          This timesheet do not have any rows!
-        </div>
+        <Row
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <Col sm={10} xs={12}>
+            <div
+              className="alert alert-info"
+              role="alert"
+              style={{
+                width: "92%",
+                margin: "0 auto",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
+              This timesheet do not have any rows!
+            </div>
+          </Col>
+        </Row>
       ) : (
         timesheetRows
           .filter((value) => value.timesheetId === timesheet.id)

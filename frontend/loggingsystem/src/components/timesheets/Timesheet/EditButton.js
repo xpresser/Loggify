@@ -16,7 +16,11 @@ const EditButton = ({ timesheetId }) => {
         }}
         variant={"info"}
         className={"m-1"}
-        style={{ border: "1px solid black" }}
+        style={{
+          border: "1px solid black",
+          paddingLeft: "1rem",
+          paddingRight: "1rem",
+        }}
       >
         Edit
       </Button>

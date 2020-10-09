@@ -7,11 +7,13 @@ import { TextInputField } from "src/components/generic/TextInputField/TextInputF
 import { SignupRedirect } from "src/components/generic/redirects/register/SignupRedirect";
 import { useDispatch, useSelector } from "react-redux";
 import { register, resetErrors } from "src/store/slices/auth";
+import { useHistory } from "react-router-dom";
 
 const RegisterPage = () => {
   const error = useSelector((state) => state.auth.error);
   const isLoading = useSelector((state) => state.auth.isLoading);
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     return () => {
@@ -40,8 +42,12 @@ const RegisterPage = () => {
             password: "",
             email: "",
           }}
-          onSubmit={(values) => {
-            dispatch(register(values));
+          onSubmit={async (values) => {
+            const hasRegistered = await dispatch(register(values));
+
+            if (hasRegistered) {
+              history.push("/login");
+            }
           }}
           validationSchema={SignupValidationSchema}
         >
