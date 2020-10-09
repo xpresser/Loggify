@@ -74,8 +74,9 @@ const ViewTimesheetPage = () => {
   return (
     <div
       style={{
-        margin: "3rem auto",
+        margin: "0 auto",
         paddingTop: "0.5rem",
+        paddingBottom: "2rem",
         border: "none",
         borderRadius: "10px",
         boxShadow:
