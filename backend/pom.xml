@@ -7,7 +7,7 @@
         <version>2.3.4.RELEASE</version>
     </parent>
 
-    <groupId>com.devcamp</groupId>
+    <groupId>com.loggingsystem</groupId>
     <artifactId>loggingsystem</artifactId>
     <version>0.0.1</version>
     <name>loggingsystem</name>
